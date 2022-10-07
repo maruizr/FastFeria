@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venta local</title>
+</head>
+<body>
+    <div class="row">
+        <h1>Listado de ventas locales</h1>
+    </div>
+    <table>
+        <tr><td>Nombre Cliente</td><td>Direccion</td><td>Numero de calle</td><td>Region</td><td>Comuna</td></tr>
+        {% for ve in ventas %}
+        <tr> <td>{{ve.nom_cli}}</td> <td>{{ve.direc_cli}}</td> <td>{{ve.num_calle}}</td> <td>{{ve.region}}</td> <td>{{ve.comuna}}</td> </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
