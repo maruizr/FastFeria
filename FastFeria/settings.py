@@ -77,9 +77,9 @@ WSGI_APPLICATION = 'FastFeria.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.oracle',
-        'NAME': '127.0.0.1:1521/xe',
-        'USER': 'C##FASTFERIA',
-        'PASSWORD': '1234',
+        'NAME': 'tcps://adb.sa-santiago-1.oraclecloud.com:1522/g63f290d1fcd1d7_test_high.adb.oraclecloud.com?wallet_location=DB_WALLET',
+        'USER': 'prueba',
+        'PASSWORD': 'Tj9gdrgqvPct',
         'TEST': {
             'USER': 'default_test',
             'TBLSPACE': 'default_test_tbls',

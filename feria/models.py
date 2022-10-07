@@ -194,6 +194,22 @@ class Transporte(models.Model):
         db_table = 'transporte'
 
 
+class Usuarios(models.Model):
+    usuarios_id_user = models.AutoField(primary_key=True)
+    rut = models.CharField(max_length=20)
+    nombre = models.CharField(max_length=25)
+    apellido = models.CharField(max_length=25)
+    direccion = models.CharField(max_length=50)
+    num_calle = models.IntegerField()
+    localidad = models.CharField(max_length=50)
+    fecha_nac = models.DateField()
+    foto = models.CharField(max_length=200)
+
+    class Meta:
+        managed = False
+        db_table = 'usuarios'
+
+
 class VentExtran(models.Model):
     id_vent_ex = models.AutoField(primary_key=True)
     proces_venta_id_proc_venta = models.ForeignKey(ProcesVenta, models.DO_NOTHING, db_column='proces_venta_id_proc_venta')
