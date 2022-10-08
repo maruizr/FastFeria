@@ -9,6 +9,9 @@ def index(request):
 def login(request):
     return render(request, 'registration/login.html')
 
+def registro(request):
+    return render(request, 'registration/registro.html')
+
 #Formato del Listar
 def listarVentLocal(request):
     #Accediendo al objeto que contiene los datos en la base de datos
