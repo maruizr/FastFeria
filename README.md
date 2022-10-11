@@ -11,9 +11,11 @@ GRANT CONNECT, RESOURCE TO C##FASTFERIA;
 ALTER USER C##FASTFERIA DEFAULT TABLESPACE USERS QUOTA UNLIMITED ON USERS; )
 Comando para inspeccionar la base de datos y generar modelos automaticamente: #: py manage.py inspectdb > [app]\models.py
 
+En caso de que al ejectur el comando "py manage.py runserver" y de un mensaje de error relacionado con los "null bytes" o "null" en el models.py
+Debes copiar lo ingresado en models.py, borrar el archivo y crear uno nuevo con el mismo nombre "models.py", pegar los modelos tal como en el anterior y ejecutar.
 
 
-Link drive: https://drive.google.com/file/d/1K-Q1nFzly8YStth-TtT77SpBSGbkHL7f/view?usp=sharing
+
 
 Para subir los cambios al repositorio, hagan uso de los siguientes comandos en el git bush o cmd:
 
@@ -21,7 +23,5 @@ git add .
 
 git commit -m "text commit"
 
-git remote add origin https://github.com/maruizr/FastFeria.git
-
-git push -u origin master
+git push 
 
