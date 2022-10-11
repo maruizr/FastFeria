@@ -25,3 +25,16 @@ git commit -m "text commit"
 
 git push 
 
+Para bajar los cambios del repositorio, hagan uso de los siguientes comandos en el git bush o cmd:
+
+git pull 
+
+En caso de pedirles guardar los cambios hechos por ustedes, ejecutar el comando:
+
+git add .
+
+git stash
+
+Para volver a aplicar sus cambios, ejecutar el comando:
+
+git stash pop
