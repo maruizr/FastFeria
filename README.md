@@ -1,17 +1,17 @@
 # FastFeria
 Proyecto portafolio feria virtual
 
-Primero descargar la base de datos Oracle 21C XE en el siguiente link (El primer link de descarga):
+Para administrar la base de datos en oracle cloud debes ingresar con la cuenta que esta en el Discord.
+Y para usar sql debes ingresar con el usuario y la contraseña ubicada en el settings.py
 
-https://www.oracle.com/cl/database/technologies/xe-downloads.html
 
-Segundo se debe crear el usuario con los siguientes comandos en el programa de SQL developer:
 
-CREATE USER C##FASTFERIA IDENTIFIED BY 1234;
+Comando para crear un usuario nuevo de ser necesario ( CREATE USER C##FASTFERIA IDENTIFIED BY 1234;
 GRANT CONNECT, RESOURCE TO C##FASTFERIA;
-ALTER USER C##FASTFERIA DEFAULT TABLESPACE USERS QUOTA UNLIMITED ON USERS;
+ALTER USER C##FASTFERIA DEFAULT TABLESPACE USERS QUOTA UNLIMITED ON USERS; )
+Comando para inspeccionar la base de datos y generar modelos automaticamente: #: py manage.py inspectdb > [app]\models.py
 
-Luego ejecutar el scripts de las tablas adjuntado en el archivo de texto: "Script_Crea_Tablas"
+
 
 Link drive: https://drive.google.com/file/d/1K-Q1nFzly8YStth-TtT77SpBSGbkHL7f/view?usp=sharing
 
