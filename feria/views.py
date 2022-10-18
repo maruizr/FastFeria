@@ -1,6 +1,12 @@
+from multiprocessing import connection
 from django.shortcuts import render
-from .models import VentLocal, VentExtran, Usuarios
-from .forms import AgregarUsuForm
+from django.http import HttpResponse, JsonResponse
+from django.db import connection
+import cx_Oracle
+import base64
+from django.core.files.base import ContentFile
+from .models import *
+from .forms import *
 
 # Create your views here.
 
@@ -44,4 +50,71 @@ def agregarUsuarios(request):
             data["mensaje"] = "Agregado"
         else:
             data["form"] = formulario
-    return render(request, 'registration/agregarUsuarios.html', data )
+    return render(request, 'registration/agregarUsuarios.html', data)
+
+def agregarProducto(request):
+    data = {
+        'usuarios': listar_usuarios(),
+    }
+
+    if request.method == 'POST':
+        nom_prod = request.POST.get('nombre')
+        precio_prod = request.POST.get('precio')
+        desc_prod = request.POST.get('descripcion')
+        stock_prod = request.POST.get('stock')
+        usuarios_rut = request.POST.get('usuarios')
+        foto = request.FILES['foto'].read()
+
+        salida = agregar_producto(nom_prod, precio_prod, desc_prod, stock_prod, usuarios_rut, foto)
+        if salida == 1:
+            data['mensaje'] = 'agregado correctamente'
+        else:
+            data['mensaje'] = 'no se ha podido guardar'
+        
+    return render(request, 'productos/agregarProducto.html', data)
+
+def listarProducto(request):
+
+    data = {
+        'productos': listar_productos
+    }
+
+    return render(request, 'productos/listarProductos.html', data)
+
+def listar_usuarios():
+    django_cursor = connection.cursor()
+    cursor = django_cursor.connection.cursor()
+    out_cur = django_cursor.connection.cursor()
+
+    cursor.callproc('FASTFERIA.SP_LISTAR_USUARIOS', [out_cur])
+
+    lista = []
+    for fila in out_cur:
+        lista.append(fila)
+
+    return lista
+
+def listar_productos():
+    django_cursor = connection.cursor()
+    cursor = django_cursor.connection.cursor()
+    out_cur = django_cursor.connection.cursor()
+
+    cursor.callproc('FASTFERIA.SP_LISTAR_PRODUCTOS', [out_cur])
+
+    lista = []
+    for i in out_cur:
+        data = {
+            'data': i,
+            'imagen':str(base64.b64encode(i[6].read()), 'utf-8')
+            }
+        lista.append(data)
+
+    return lista
+
+def agregar_producto(nom_prod, precio_prod, desc_prod, stock_prod, usuarios_rut, foto):
+    django_cursor = connection.cursor()
+    cursor = django_cursor.connection.cursor()
+    salida = cursor.var(cx_Oracle.NUMBER)
+    cursor.callproc('FASTFERIA.SP_AGREGAR_PRODUCTO', [nom_prod, precio_prod, desc_prod, stock_prod, usuarios_rut, foto, salida])
+
+    return salida.getvalue()

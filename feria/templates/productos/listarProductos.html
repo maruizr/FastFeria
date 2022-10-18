@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Imagen</th>
+        </tr>
+        {% for p in productos %}
+        <tr>
+            <td>{{ p.data.1 }}</td>
+            <td>{{ p.data.2 }}</td>
+            <td>
+                {% if p.imagen %}
+                    <img src="data:imagen/png;base64, {{p.imagen}}" alt="" width="100" height="100">
+                {% endif %}    
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

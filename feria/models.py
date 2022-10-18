@@ -7,7 +7,6 @@
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 
-
 class Contratos(models.Model):
     id_contrat = models.AutoField(primary_key=True)
     usuarios_rut = models.ForeignKey('Usuarios', models.DO_NOTHING, db_column='usuarios_rut')
@@ -34,7 +33,6 @@ class DetallCompra(models.Model):
     class Meta:
         managed = False
         db_table = 'detall_compra'
-
 
 class MetodoPago(models.Model):
     id_pago = models.AutoField(primary_key=True)

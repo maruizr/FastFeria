@@ -79,7 +79,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.oracle',
         'NAME': 'tcps://adb.sa-santiago-1.oraclecloud.com:1522/g63f290d1fcd1d7_test_high.adb.oraclecloud.com?wallet_location=DB_WALLET',
         'USER': 'FASTFERIA',
-        'PASSWORD': 'Tj9gdrgqvPct',
+        'PASSWORD': '7sc3uCbcFxwbCMA',
         'TEST': {
             'USER': 'default_test',
             'TBLSPACE': 'default_test_tbls',

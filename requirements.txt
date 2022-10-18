@@ -1,0 +1,6 @@
+#Ejecutar este archivo de texto con el comando pip install -r requirements.txt 
+#para instalar todas las dependencias del proyecto
+
+django
+cx_oracle
+pillow

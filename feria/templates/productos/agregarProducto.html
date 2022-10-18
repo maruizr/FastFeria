@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="">Producto</label>
+        <input type="text" name="nombre">
+        <br>
+        <label for="">Precio</label>
+        <input type="number" name="precio" id="precio">
+        <br>
+        <label for="">Descripción</label>
+        <input type="text" name="descripcion">
+        <br>
+        <label for="">Stock</label>
+        <input type="text" name="stock">
+        <br>
+        <select name="usuarios" id="usuarios">
+            {% for u in usuarios %}
+                <option value="{{ u.0 }}">{{ u.1 }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <label for=""></label>
+        <input type="file" name="foto">
+
+        <input type="submit" value="Guardar">
+    </form>
+    {{mensaje}}
+    <table>
+        <tr>
+            <th>Rut</th>
+            <th>Nombre</th>
+        </tr>
+        {% for u in usuarios %}
+        <tr>
+            <td>{{ u.0 }}</td>
+            <td>{{ u.1 }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
