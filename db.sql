@@ -25,8 +25,7 @@ CREATE TABLE FASTFERIA.usuarios (
     telefono               NUMBER(11) NOT NULL,
     correo                 VARCHAR2(150) NOT NULL,
     foto                   BLOB,
-    contrasena             VARCHAR2(40) NOT NULL,
-    cambio_contrasena      NUMBER(1) DEFAULT 1
+    contrasena             VARCHAR2(40) NOT NULL
 );
 
 ALTER TABLE FASTFERIA.usuarios ADD CONSTRAINT usuarios_pk PRIMARY KEY ( rut_usr );

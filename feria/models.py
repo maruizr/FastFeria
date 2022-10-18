@@ -200,7 +200,6 @@ class Usuarios(models.Model):
     correo = models.CharField(max_length=150)
     foto = models.BinaryField(blank=True, null=True)
     contrasena = models.CharField(max_length=40)
-    cambio_contrasena = models.BooleanField(blank=True, null=True)
 
     class Meta:
         managed = False

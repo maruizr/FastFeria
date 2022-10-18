@@ -17,7 +17,7 @@ CREATE OR REPLACE PROCEDURE FASTFERIA.SP_AGREGAR_PRODUCTO(
     v_stock_prod NUMBER,
     v_usuarios_rut VARCHAR2,
     v_blob BLOB,
-    v_salida OUT NUMBER,
+    v_salida OUT NUMBER
 )
 IS 
 BEGIN
@@ -29,5 +29,30 @@ BEGIN
     EXCEPTION
 
     WHEN OTHERS THEN
+        v_salida:=0;
+END;
+
+CREATE OR REPLACE PROCEDURE FASTFERIA.SP_AGREGAR_USUARIOS (
+    v_rut_usr VARCHAR2,
+    v_nombre VARCHAR2,
+    v_apellido_p VARCHAR2,
+    v_apellido_m VARCHAR2,
+    v_direccion VARCHAR2,
+    v_telefono NUMBER,
+    v_correo VARCHAR2,
+    v_blob BLOB, 
+    v_contrasena VARCHAR2,
+    v_salida out number
+)
+IS 
+BEGIN
+    INSERT INTO usuarios(rut_usr, nombre, apellido_p, apellido_m, direccion, telefono, correo, foto, contrasena )
+    VALUES(v_rut_usr, v_nombre, v_apellido_p, v_apellido_m, v_direccion, v_telefono, v_correo, v_blob, v_contrasena);
+    COMMIT;
+    v_salida:=1;
+
+    EXCEPTION
+
+    when OTHERS THEN
         v_salida:=0;
 END;
