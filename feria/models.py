@@ -191,7 +191,8 @@ class Transporte(models.Model):
 
 
 class Usuarios(models.Model):
-    rut_usr = models.CharField(primary_key=True, max_length=9)
+    id_usr = models.AutoField(primary_key=True)
+    rut_usr = models.CharField(max_length=9)
     nombre = models.CharField(max_length=30)
     apellido_p = models.CharField(max_length=30)
     apellido_m = models.CharField(max_length=30)
@@ -200,6 +201,7 @@ class Usuarios(models.Model):
     correo = models.CharField(max_length=150)
     foto = models.BinaryField(blank=True, null=True)
     contrasena = models.CharField(max_length=40)
+    rol = models.IntegerField()
 
     class Meta:
         managed = False
