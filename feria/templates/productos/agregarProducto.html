@@ -23,7 +23,7 @@
         <br>
         <select name="usuarios" id="usuarios">
             {% for u in usuarios %}
-                <option value="{{ u.0 }}">{{ u.1 }}</option>
+                <option value="{{ u.0 }}">{{ u.2 }}</option>
             {% endfor %}
         </select>
         <br>
@@ -40,8 +40,8 @@
         </tr>
         {% for u in usuarios %}
         <tr>
-            <td>{{ u.0 }}</td>
             <td>{{ u.1 }}</td>
+            <td>{{ u.2 }}</td>
         </tr>
         {% endfor %}
     </table>
