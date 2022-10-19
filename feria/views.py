@@ -68,6 +68,7 @@ def agregarProducto(request):
         salida = agregar_producto(nom_prod, precio_prod, desc_prod, stock_prod, usuarios_rut, foto)
         if salida == 1:
             data['mensaje'] = 'agregado correctamente'
+            data['usuarios'] = listar_usuarios()
         else:
             data['mensaje'] = 'no se ha podido guardar'
         
@@ -81,6 +82,42 @@ def listarProducto(request):
 
     return render(request, 'productos/listarProductos.html', data)
 
+def usuarios(request):
+
+    datos_usuarios = listar_usuarios()
+
+    arreglo = []
+    for i in datos_usuarios:
+        data = {
+            'data': i,
+            'foto':str(base64.b64encode(i[8].read()), 'utf-8')
+        }
+        arreglo.append(data)
+
+    data = {
+        'usuarios': arreglo,
+    }
+
+    if request.method== 'POST':
+        rut_usr = request.POST.get('Rut')
+        nombre = request.POST.get('Nombre')
+        apellido_p = request.POST.get('ApellidoP')
+        apellido_m = request.POST.get('ApellidoM')
+        direccion = request.POST.get('Direccion')
+        telefono = request.POST.get('Telefono')
+        correo = request.POST.get('Correo')
+        foto = request.FILES['foto'].read()
+        contrasena = request.POST.get('Contraseña')
+        rol = request.POST.get('Rol')
+        
+        salida = agregar_usuarios(rut_usr, nombre, apellido_p, apellido_m, direccion, telefono, correo, foto, contrasena, rol)
+        if salida == 1:
+            data['mensaje'] = 'agregado correctamente'
+        else:
+            data['mensaje'] = 'no se pudo agregar'
+
+    return render(request, "usuarios/listarUsuarios.html", data)
+
 def listar_usuarios():
     django_cursor = connection.cursor()
     cursor = django_cursor.connection.cursor()
@@ -91,8 +128,20 @@ def listar_usuarios():
     lista = []
     for fila in out_cur:
         lista.append(fila)
+        
 
     return lista
+    
+    
+
+def agregar_usuarios(rut_usr, nombre, apellido_p, apellido_m, direccion, telefono, correo, foto, contrasena, rol):
+    django_cursor = connection.cursor()
+    cursor = django_cursor.connection.cursor()
+    salida = cursor.var(cx_Oracle.NUMBER)
+    cursor.callproc('FASTFERIA.SP_AGREGAR_USUARIOS', [rut_usr, nombre, apellido_p, apellido_m, direccion, telefono, correo, foto, contrasena, rol, salida])
+
+    return salida.getvalue()
+
 
 def listar_productos():
     django_cursor = connection.cursor()
