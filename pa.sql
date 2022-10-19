@@ -42,12 +42,13 @@ CREATE OR REPLACE PROCEDURE FASTFERIA.SP_AGREGAR_USUARIOS (
     v_correo VARCHAR2,
     v_blob BLOB, 
     v_contrasena VARCHAR2,
+    v_rol number,
     v_salida out number
 )
 IS 
 BEGIN
-    INSERT INTO usuarios(rut_usr, nombre, apellido_p, apellido_m, direccion, telefono, correo, foto, contrasena )
-    VALUES(v_rut_usr, v_nombre, v_apellido_p, v_apellido_m, v_direccion, v_telefono, v_correo, v_blob, v_contrasena);
+    INSERT INTO usuarios(rut_usr, nombre, apellido_p, apellido_m, direccion, telefono, correo, foto, contrasena, rol )
+    VALUES(v_rut_usr, v_nombre, v_apellido_p, v_apellido_m, v_direccion, v_telefono, v_correo, v_blob, v_contrasena, v_rol);
     COMMIT;
     v_salida:=1;
 
