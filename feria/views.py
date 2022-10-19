@@ -1,5 +1,5 @@
 from multiprocessing import connection
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.db import connection
 import cx_Oracle
@@ -68,7 +68,7 @@ def agregarProducto(request):
         salida = agregar_producto(nom_prod, precio_prod, desc_prod, stock_prod, usuarios_rut, foto)
         if salida == 1:
             data['mensaje'] = 'agregado correctamente'
-            data['usuarios'] = listar_usuarios()
+            return redirect('listarProducto')
         else:
             data['mensaje'] = 'no se ha podido guardar'
         
@@ -113,6 +113,7 @@ def usuarios(request):
         salida = agregar_usuarios(rut_usr, nombre, apellido_p, apellido_m, direccion, telefono, correo, foto, contrasena, rol)
         if salida == 1:
             data['mensaje'] = 'agregado correctamente'
+            return redirect('usuarios')
         else:
             data['mensaje'] = 'no se pudo agregar'
 
