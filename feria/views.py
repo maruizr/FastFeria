@@ -19,18 +19,67 @@ def login(request):
 def registro(request):
     return render(request, 'registration/registro.html')
 
-#Formato del Listar
-def listarVentLocal(request):
-    #Accediendo al objeto que contiene los datos en la base de datos
-    #con el .all() se traen todos los objetos que esten en la tabla
-    ventas = VentLocal.objects.all()
-    # con esta variable 'ventas' se le pasa los datos al template
-    datos = {
-        'ventas': ventas
+def ventaLocal(request):
+    data = {
+        'proceso_Venta': listar_procesoVenta(),
+        'venta_Local': listar_ventaLocal(request)
     }
 
-    #ahora hay que retornar todo para que lo envie al template
-    return render(request, 'ventas/listarVentaLocal.html', datos)
+    if request.method == 'POST':
+        proceso_venta = request.POST.get('procesosventas')
+        nom_cli = request.POST.get('nombre_cliente')
+        ape_cli = request.POST.get('apellido_cliente')
+        email = request.POST.get('correo')
+        direccion = request.POST.get('direccion')
+        num_calle = request.POST.get('num_calle')
+        depto = request.POST.get('depto')
+        region = request.POST.get('region')
+        comuna = request.POST.get('comuna')
+        salida = agregar_ventaLocal(proceso_venta, nom_cli, ape_cli, email, direccion, num_calle, depto, region, comuna)
+        if salida == 1:
+            data['mensaje'] = 'Se agrego la weaasdkfjhaskdjfhasdkjfh'
+        else:
+            data['mensaje'] = 'no se agregojfh'
+
+
+    return render(request, 'ventas/listarVentaLocal.html', data)
+
+def listar_ventaLocal(request):
+    django_cursor = connection.cursor()
+    cursor = django_cursor.connection.cursor()
+    out_cur = django_cursor.connection.cursor()
+
+    cursor.callproc('FASTFERIA.SP_LISTAR_VENTALOCAL', [out_cur])
+
+    lista = []
+    for i in out_cur:
+        data = {
+            'data': i,
+            }
+        lista.append(data)
+
+    return lista
+
+def listar_procesoVenta():
+    django_cursor = connection.cursor()
+    cursor = django_cursor.connection.cursor()
+    out_cur = django_cursor.connection.cursor()
+
+    cursor.callproc('FASTFERIA.SP_LISTAR_PROCESO_VENTA', [out_cur])
+
+    lista = []
+    for fila in out_cur:
+        lista.append(fila)
+
+    return lista
+
+def agregar_ventaLocal(proces_venta, nom_cli, ape_cli, email, direc_cli, num_calle, depto, region, comuna):
+    django_cursor = connection.cursor()
+    cursor = django_cursor.connection.cursor()
+    salida = cursor.var(cx_Oracle.NUMBER)
+    cursor.callproc('FASTFERIA.SP_AGREGAR_VENTALOCAL', [proces_venta, nom_cli, ape_cli, email, direc_cli, num_calle, depto, region, comuna, salida])
+
+    return salida.getvalue()
 
 def agregarUsuarios(request):
     #crea la variable "form" para posteriormente llamarla en la plantilla html
