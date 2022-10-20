@@ -9,6 +9,6 @@ urlpatterns=[
     path('ventas/',ventasLocales, name="ventas"),
     path('agregarUsuario/',agregarUsuarios, name="agregarUsuarios"),
     path('usuarios/',usuarios, name="usuarios"),
-    path('agregar-producto/', agregarProducto, name="agregarProducto"),
-    path('productos/', listarProducto, name="listarProducto"),
+    path('agregar-producto/', agregarProducto, name="agregar-producto"),
+    path('productos/', listarProducto, name="productos"),
 ]
