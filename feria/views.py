@@ -62,10 +62,10 @@ def agregarProducto(request):
         precio_prod = request.POST.get('precio')
         desc_prod = request.POST.get('descripcion')
         stock_prod = request.POST.get('stock')
-        usuarios_rut = request.POST.get('usuarios')
+        usuarios_id = request.POST.get('usuarios')
         foto = request.FILES['foto'].read()
 
-        salida = agregar_producto(nom_prod, precio_prod, desc_prod, stock_prod, usuarios_rut, foto)
+        salida = agregar_producto(nom_prod, precio_prod, desc_prod, stock_prod, usuarios_id, foto)
         if salida == 1:
             data['mensaje'] = 'agregado correctamente'
             return redirect('listarProducto')
@@ -83,19 +83,8 @@ def listarProducto(request):
     return render(request, 'productos/listarProductos.html', data)
 
 def usuarios(request):
-
-    datos_usuarios = listar_usuarios()
-
-    arreglo = []
-    for i in datos_usuarios:
-        data = {
-            'data': i,
-            'foto':str(base64.b64encode(i[8].read()), 'utf-8')
-        }
-        arreglo.append(data)
-
     data = {
-        'usuarios': arreglo,
+        'usuarios': listar_usuarios()
     }
 
     if request.method== 'POST':
@@ -128,7 +117,11 @@ def listar_usuarios():
 
     lista = []
     for fila in out_cur:
-        lista.append(fila)
+        data = {
+            'data': fila,
+            'foto':str(base64.b64encode(fila[8].read()), 'utf-8')
+        }
+        lista.append(data)
         
 
     return lista
@@ -161,10 +154,10 @@ def listar_productos():
 
     return lista
 
-def agregar_producto(nom_prod, precio_prod, desc_prod, stock_prod, usuarios_rut, foto):
+def agregar_producto(nom_prod, precio_prod, desc_prod, stock_prod, usuarios_id, foto):
     django_cursor = connection.cursor()
     cursor = django_cursor.connection.cursor()
     salida = cursor.var(cx_Oracle.NUMBER)
-    cursor.callproc('FASTFERIA.SP_AGREGAR_PRODUCTO', [nom_prod, precio_prod, desc_prod, stock_prod, usuarios_rut, foto, salida])
+    cursor.callproc('FASTFERIA.SP_AGREGAR_PRODUCTO', [nom_prod, precio_prod, desc_prod, stock_prod, usuarios_id, foto, salida])
 
     return salida.getvalue()
