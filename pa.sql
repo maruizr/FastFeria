@@ -10,6 +10,12 @@ BEGIN
     OPEN productos FOR SELECT * FROM productos;
 END;
 
+CREATE OR REPLACE PROCEDURE FASTFERIA.SP_LISTAR_PEDIDO (pedido out SYS_REFCURSOR)
+IS 
+BEGIN
+    OPEN pedido FOR SELECT * FROM pedido;
+END;
+
 CREATE OR REPLACE PROCEDURE FASTFERIA.SP_AGREGAR_PRODUCTO(
     v_nom_prod VARCHAR2,
     v_precio_prod NUMBER,
@@ -55,5 +61,32 @@ BEGIN
     EXCEPTION
 
     when OTHERS THEN
+        v_salida:=0;
+END;
+
+CREATE OR REPLACE PROCEDURE FASTFERIA.SP_AGREGAR_PEDIDO(
+    v_tipo VARCHAR2,
+    v_cantidad NUMBER,
+    v_fecha DATE,
+    v_descrip VARCHAR2,
+    v_usuarios_id NUMBER,
+    v_productos NUMBER,
+    v_estado_admin NUMBER,
+    v_estado_prod NUMBER,
+    v_refrigeracion NUMBER,
+    v_est_edit_user NUMBER,
+    v_est_edit_admin NUMBER,
+    v_salida OUT NUMBER
+)
+IS 
+BEGIN
+    INSERT INTO pedido(tipo, cantidad, fecha, descrip, usuarios_id, productos, estado_admin, estado_productor, refrigeracion, estado_edit_user, estado_edit_admin)
+    VALUES(v_tipo, v_cantidad, v_fecha, v_descrip, v_usuarios_id, v_productos, v_estado_admin, v_estado_prod, v_refrigeracion, v_est_edit_user, v_est_edit_admin);
+    COMMIT;
+    v_salida:=1;
+
+    EXCEPTION
+
+    WHEN OTHERS THEN
         v_salida:=0;
 END;

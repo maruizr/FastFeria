@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+{% endblock %}
+{% block content %}
+<div class="container">
+
+    <h1>Ejemplo de API de comidas</h1><br>
+
+    <button type="button" id="enviar" class="btn btn-primary">Cargando Datos</button>
+    <br>
+    <table class="table" id="categorias">
+        <thead>
+            <th> Tipo</th>
+            <th> Cantidad</th>
+            <th> Fecha</th>
+            <th> Imagen Categoría</th>
+            <th> Descripción Categoría</th>
+        </thead>
+        <tbody>
+            {% for p in pedido %}
+            <tr>
+                <td>{{ p.1 }}</td>
+                <td>{{ p.2 }}</td>
+                <td>{{ p.3 }}</td>
+                
+                <!-- {% for d in productos %}
+                    {% if p.data.6 == d.data.1 %}
+                        <td><img src="data:imagen/png;base64, {{d.imagen}}" class="img-fluid" alt=""></td>
+                    {% else %}
+                        <td>No hay foto</td>
+                    {% endif %}
+                {% endfor %} -->
+                <td>{{ p.4 }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+{% endblock %}
+{% block js %}
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery.validate.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+{% endblock %}

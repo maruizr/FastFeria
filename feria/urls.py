@@ -7,8 +7,9 @@ urlpatterns=[
     path('login/', login, name="login"),
     path('registro/', registro, name="registro"),
     path('ventas/',ventasLocales, name="ventas"),
-    path('agregarUsuario/',agregarUsuarios, name="agregarUsuarios"),
-    path('usuarios/',usuarios, name="usuarios"),
+    path('usuarios/',agregarUsuarios, name="usuarios"),
     path('agregar-producto/', agregarProducto, name="agregar-producto"),
     path('productos/', listarProducto, name="productos"),
+    path('agregar-pedido/', agregarPedido, name="agregar-pedido"),
+    path('pedidos/', listarPedido, name="pedidos"),
 ]
