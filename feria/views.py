@@ -244,3 +244,191 @@ def agregar_ventaLocal(proces_venta, nom_cli, ape_cli, email, direc_cli, num_cal
     cursor.callproc('FASTFERIA.SP_AGREGAR_VENTALOCAL', [proces_venta, nom_cli, ape_cli, email, direc_cli, num_calle, depto, region, comuna, salida])
 
     return salida.getvalue()
+
+
+def agregarMetodoPago(request):
+    data = {
+        'usuarios': listar_usuarios(),
+    }
+
+    if request.method == 'POST':
+        usuarios_id = request.POST.get('usuarios')
+        tipo_cuenta = request.POST.get('tipocuenta')
+        numero_cuenta = request.POST.get('numerocuenta')
+        tipo_banco = request.POST.get('tipobanco')
+        nombre_titular = request.POST.get('nombretitular')
+        #--
+        recargas = ""
+        saldo_total = "0"
+        
+
+
+        salida = agregar_metodopagos(usuarios_id, tipo_cuenta, numero_cuenta, tipo_banco, nombre_titular)
+        salida = agregar_saldo(usuarios_id, recargas, saldo_total)
+        
+        if salida == 1:
+            data['mensaje'] = 'agregado correctamente'
+            return redirect('agregarMetodoPago')
+        else:
+            data['mensaje'] = 'no se ha podido guardar'
+        
+    return render(request, 'pagos/agregarMetodoPago.html', data)
+
+def agregar_metodopagos(usuarios_id, tipo_cuenta, numero_cuenta, tipo_banco, nombre_titular):
+    django_cursor = connection.cursor()
+    cursor = django_cursor.connection.cursor()
+    salida = cursor.var(cx_Oracle.NUMBER)
+    cursor.callproc('FASTFERIA.SP_agregar_MetodoPago', [usuarios_id, tipo_cuenta, numero_cuenta, tipo_banco, nombre_titular, salida])
+
+    return salida.getvalue()
+
+
+def agregar_saldo(usuarios_id, recargas, saldo_total):
+    django_cursor = connection.cursor()
+    cursor = django_cursor.connection.cursor()
+    salida = cursor.var(cx_Oracle.NUMBER)
+    cursor.callproc('FASTFERIA.SP_comprar_saldos', [usuarios_id, recargas, saldo_total, salida])
+
+    return salida.getvalue()
+
+def recargadeSaldo(request):
+    data = {
+        'usuarios': listar_usuarios(),
+        'metodopagos': listar_metodopago(),
+    }
+
+
+    if request.method == 'POST':
+        metodo_pago = request.POST.get('metodo_pago')
+        saldo_recargado = request.POST.get('saldorecargado')
+       
+        
+        salida = recargar_saldo(metodo_pago, saldo_recargado)
+        if salida == 1:
+            data['mensaje'] = 'agregado correctamente'
+            return redirect('recargadeSaldo')
+        else:
+            data['mensaje'] = 'no se ha podido guardar'
+        
+    return render(request, 'pagos/recargarSaldo.html', data)
+
+
+
+def recargar_saldo(metodo_pago, saldo_recargado):
+    django_cursor = connection.cursor()
+    cursor = django_cursor.connection.cursor()
+    salida = cursor.var(cx_Oracle.NUMBER)
+    cursor.callproc('FASTFERIA.SP_recargar_saldo', [metodo_pago, saldo_recargado, salida])
+
+    return salida.getvalue()
+
+def listar_metodopago():
+    django_cursor = connection.cursor()
+    cursor = django_cursor.connection.cursor()
+    out_cur = django_cursor.connection.cursor()
+
+    cursor.callproc('FASTFERIA.SP_LISTAR_METODOPAGO', [out_cur])
+
+    lista = []
+    for fila in out_cur:
+        lista.append(fila)
+    
+    return lista
+
+def procesodeVenta(request):
+    data = {
+        'usuarios': listar_usuarios(),
+        'proces_pedido': listar_proces_pedido(),
+        'pedido': listar_pedido(),
+        'listaprocesventa': ProcesPedido.objects.all(),
+        'tran': Transporte.objects.all(),
+        'ped': Pedido.objects.all(),
+        'usu': Usuarios.objects.all(),
+        
+    }
+
+        
+    return render(request, 'ventas/procesoVenta.html', data)
+
+def listar_proces_pedido():
+    django_cursor = connection.cursor()
+    cursor = django_cursor.connection.cursor()
+    out_cur = django_cursor.connection.cursor()
+
+    cursor.callproc('FASTFERIA.SP_LISTAR_PROCES_VENTA', [out_cur])
+
+    lista = []
+    for fila in out_cur:
+        lista.append(fila)
+        
+
+    return lista
+
+def listar_pedido():
+    django_cursor = connection.cursor()
+    cursor = django_cursor.connection.cursor()
+    out_cur = django_cursor.connection.cursor()
+
+    cursor.callproc('FASTFERIA.SP_LISTAR_PEDIDO', [out_cur])
+
+    lista = []
+    for fila in out_cur:
+        lista.append(fila)
+        
+
+    return lista
+
+def agregarProcesoVenta(request,id_proc_pedido):
+    data = {
+        'usuarios': listar_usuarios(),
+        'idventa': ProcesPedido.objects.get(id_proc_pedido = id_proc_pedido),
+        'ped': Pedido.objects.all(),
+    }
+    
+    if request.method == 'POST':
+        proces_pedido = id_proc_pedido
+        id_proc_pedido = id_proc_pedido
+        estado_pago_cliente = request.POST.get('numerocero')
+        estado_pago_product = request.POST.get('numerocero')
+        estado_pago_transport = request.POST.get('numerocero')
+        estado_venta = request.POST.get('numerocero')
+        estado_detalle = request.POST.get('numerocero')
+        #--
+        id_proc_pedido = request.POST.get('id_proc_pedido2')
+        transportes = request.POST.get('transportes2')
+        pedido = request.POST.get('pedido2')
+        estado_proceso = request.POST.get('estado_proceso2')
+        estado_proces_venta = request.POST.get('estado_proces_venta2')
+        estado_seguimiento = request.POST.get('estado_seguimiento2')
+        
+
+        salida = agregar_procesoventa(proces_pedido, estado_pago_cliente, estado_pago_product, estado_pago_transport, estado_venta, estado_detalle)
+       
+        if salida == 1:
+            data['mensaje'] = 'agregado correctamente'
+            return redirect('procesodeVenta')
+        else:
+            data['mensaje'] = 'no se ha podido guardar'
+        
+    return render(request, 'ventas/agregarProcesoVenta.html', data)
+
+
+
+def agregar_procesoventa(proces_pedido, estado_pago_cliente, estado_pago_product, estado_pago_transport, estado_venta, estado_detalle):
+    django_cursor = connection.cursor()
+    cursor = django_cursor.connection.cursor()
+    salida = cursor.var(cx_Oracle.NUMBER)
+    cursor.callproc('FASTFERIA.SP_agregar_ProcesVenta', [proces_pedido, estado_pago_cliente, estado_pago_product, estado_pago_transport, estado_venta, estado_detalle, salida])
+
+    return salida.getvalue()
+
+
+
+
+def editar_procesopedido(id_proc_pedido,estado_seguimiento):
+    django_cursor = connection.cursor()
+    cursor = django_cursor.connection.cursor()
+    salida2 = cursor.var(cx_Oracle.NUMBER)
+    cursor.callproc('FASTFERIA.SP_UPDATE_ProcesPedidos', [id_proc_pedido,estado_seguimiento, salida2])
+
+    return salida2.getvalue()

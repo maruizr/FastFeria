@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/form-prod.css' %}">
+{% endblock %}
+{% block content %}
+<div class="content">
+    
+    <div class="container">
+      <div class="row align-items-stretch justify-content-center no-gutters">
+        <div class="col-md-7">
+          <div class="form h-100 contact-wrap p-5">
+            <h3 class="text-center">Agregar Metodo de Pago</h3>
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+              <div class="row mt-5">
+                <div class="col-md-6 form-group mb-3">
+                  <label for="" class="col-form-label">Banco *</label>
+                  <input type="text" class="form-control" name="tipobanco" id="tipobanco" placeholder="Tipo de Banco">
+                </div>
+                <div class="col-md-6 form-group mb-3">
+                  <label for="" class="col-form-label">Cuenta *</label>
+                  <input type="text" class="form-control" name="tipocuenta" id="tipocuenta"  placeholder="Tipo de Cuenta">
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12 form-group mb-3">
+                  <label for="descripcion" class="col-form-label">Numero de Cuenta *</label>
+                  <input type="text" class="form-control" name="numerocuenta" id="numerocuenta"  placeholder="">
+                </div>
+              </div>
+
+              <div class="row  mb-5">
+                <div class="col-md-12 form-group mb-3">
+                    <label for="" class="col-form-label">Nombre Titular *</label>
+                    <input type="text" class="form-control" name="nombretitular" id="nombretitular"  placeholder="">
+                  </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12 form-group mb-3">
+                    <select name="usuarios" id="usuarios">
+                        {% for u in usuarios %}
+                            <option value="{{ u.data.0 }}">{{ u.data.2 }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+              </div>
+
+              
+
+              
+              <div class="row justify-content-center">
+                <div class="col-md-5 form-group text-center">
+                  <input type="submit" value="Guardar" class="btn btn-block btn-primary rounded-0 py-2 px-4">
+                  <span class="submitting"></span>
+                </div>
+              </div>
+            </form>
+
+            <div id="form-message-warning mt-4"></div> 
+            <div id="form-message-success">{{mensaje}}
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+{% block js %}
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery.validate.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+{% endblock %}

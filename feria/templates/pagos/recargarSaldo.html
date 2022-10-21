@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/form-prod.css' %}">
+{% endblock %}
+{% block content %}
+<div class="content">
+    
+    <div class="container">
+      <div class="row align-items-stretch justify-content-center no-gutters">
+        <div class="col-md-7">
+          <div class="form h-100 contact-wrap p-5">
+            <h3 class="text-center">Recargar Saldo</h3>
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+              <div class="row mt-5">
+                <div class="col-md-12 form-group mb-3">
+                  <label for="" class="col-form-label">Medio de Pago *</label>
+                  <select name="metodo_pago" class="form-control col-10" required="" id="metodo_pago">
+                    {% if metodopagos %}
+                        <option value="" selected="">---------</option>
+                        {% for MedioPago in metodopagos %}
+              
+                                <option value="{{ MedioPago.0 }}">{{ MedioPago.4 }}-, {{ MedioPago.2 }} {{ MedioPago.3 }}</option>
+                       
+                        {% endfor %}
+                    {% else %}
+                        <h1>No tienes metodos de pago registrado </h1>
+                    {% endif %}
+                </select>
+                 
+                </div>
+                
+              </div>
+
+              <div class="row">
+                <div class="col-md-5 form-group mb-3">
+                  <label for="descripcion" class="col-form-label">Monto del depósito $  *</label>
+                  <input type="text" class="form-control" name="saldorecargado" id="id_saldo_recargado"  placeholder="">
+                </div>
+              </div>
+            </br>
+              <div class="row  mb-5">
+                <div class="col-md-12 form-group mb-3">
+
+                    <h6>Confirmar <input type="checkbox" name="check" id="check" onchange="javascript:showContent()" /></h6>
+                  </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12 form-group mb-3">
+                    <select name="usuarios" id="usuarios">
+                        {% for u in usuarios %}
+                            <option value="{{ u.data.0 }}">{{ u.data.2 }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+              </div>
+
+              
+
+              
+              <div class="row justify-content-center">
+                <div class="col-md-5 form-group text-center">
+                  <input type="submit" value="Guardar" class="btn btn-block btn-primary rounded-0 py-2 px-4">
+                  <span class="submitting"></span>
+                </div>
+              </div>
+            </form>
+
+            <div id="form-message-warning mt-4"></div> 
+            <div id="form-message-success">{{mensaje}}
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+{% endblock %}
+{% block js %}
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery.validate.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+{% endblock %}

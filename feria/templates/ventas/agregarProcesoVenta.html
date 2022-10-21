@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/form-prod.css' %}">
+{% endblock %}
+{% block content %}
+<div class="content">
+    
+    <div class="container">
+      <div class="row align-items-stretch justify-content-center no-gutters">
+        <div class="col-md-7">
+          <div class="form h-100 contact-wrap p-5">
+            <h3 class="text-center">Crear proceso Venta</h3>
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+              <div class="row mt-5">
+                <div class="col-md-6 form-group mb-3 text-center">
+                  <label for="" class="col-form-label">Para el producto de: {{ idventa.pedido.tipo }} </label>
+                </div>
+                <div class="col-md-6 form-group mb-3 text-center">
+                  <label for="" class="col-form-label">Fecha de entrega:  {{ idventa.pedido.fecha }}
+                    <input type="text" name="numerocero" class="form-control col-10" required="" id="numerocero" value="0" style="display: none;">
+
+                    <input type="text" name="id_proc_pedido2" class="form-control col-10" required="" id="id_proc_pedido2" value="{{ idventa.id_proc_pedido }}" style="display: none;">
+
+                    <input type="text" name="transportes2" class="form-control col-10" required="" id="transportes2" value="{{ idventa.transportes }}" style="display: none;">
+                    <input type="text" name="pedido2" class="form-control col-10" required="" id="pedido2" value="{{ idventa.pedido }}" style="display: none;">
+                    <input type="text" name="estado_proceso2" class="form-control col-10" required="" id="estado_proceso2" value="{{ idventa.estado_proceso }}" style="display: none;">
+                    <input type="text" name="estado_seguimiento2" class="form-control col-10" required="" id="estado_seguimiento2" value="{{ idventa.estado_seguimiento }}" style="display: none;">
+                    <input type="text" name="estado_proces_venta2" class="form-control col-10" required="" id="estado_proces_venta2" value="1" style="display: none;">
+
+                    
+                  </label>
+                 
+                </div>
+              </div>
+
+            
+          
+              
+            </br>
+              
+              <div class="row justify-content-center">
+                <div class="col-md-5 form-group text-center">
+                  <input type="submit" value="Crear Proceso de Venta" class="btn btn-block btn-primary rounded-0 py-2 px-4">
+                  <span class="submitting"></span>
+                </div>
+              </div>
+            </form>
+
+            <div id="form-message-warning mt-4"></div> 
+            <div id="form-message-success">{{mensaje}}
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+{% block js %}
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery.validate.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+{% endblock %}
