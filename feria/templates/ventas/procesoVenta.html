@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block content %}
+</br></br>
+        <div class="col-md-5 form-group text-center">
+           
+            <span class="submitting"></span>
+        </div>
+    </br>
+    
+    <table class="table table-bordered">
+								<thead>
+									<tr>
+
+										<th><center>Tipo de Producto</center></th>
+										<th><center>Cantidad</center></th>
+										<th><center>Fecha Solicitada</center></th>
+										<th><center>Comprador</center></th>
+										<th><center>Vendedor</center></th>
+										<th><center>Transportista</center></th>
+										<th><center>Acción</center></th>
+									</tr>
+								</thead>
+
+								<tbody>
+
+							
+
+									{% if listaprocesventa %}
+									{% for lista in listaprocesventa %}
+										
+										<tr>
+										<td><center>{{ lista.pedido.tipo }} </center></td>
+										<td><center>{{ lista.pedido.cantidad }}</center></td>
+										<td><center>{{ lista.pedido.fecha }}</center></td>
+										<td><center>{{ lista.pedido.usuarios.nombre }}</center></td>
+										<td><center>{{ lista.pedido.productos.usuarios.nombre }}</center></td>
+										<td><center>{{ lista.transportes.usuarios.nombre }}</center></td>
+											{% if lista.estado_proces_venta == False %}
+                                            <td><center><a class="btn btn-primary" href="{% url 'agregarProcesoVenta' lista.id_proc_pedido %}">Crear proceso de venta</a></center></td>
+											{% else %}
+											<td><center>En proceso</center></td>
+											{% endif %}
+										</tr>
+										
+									{% endfor %}
+									{% else %}
+
+									<h1>No hay procesos</h1>
+
+									{% endif %}
+
+								</tbody>
+                            
+							</table>
+                        </br></br></br></br></br></br></br></br>
+{% endblock %}
