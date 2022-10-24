@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Contratos, Usuarios, DetallCompra, MetodoPago, Pedido, ProcesPedido, ProcesVenta, Productos, Recargas, ReportMerma,  ReportVenta, Reportes, Saldos, Seguimiento, Transporte, VentExtran, VentLocal
+from .models import Contratos,DetallCompra, MetodoPago, Pedido, ProcesPedido, ProcesVenta, Productos, Recargas, ReportMerma,  ReportVenta, Reportes, Saldos, Seguimiento, Transporte, VentExtran, VentLocal
 
 #Register your models here.
 admin.site.register(Contratos)
@@ -16,6 +16,6 @@ admin.site.register(Reportes)
 admin.site.register(Saldos)
 admin.site.register(Seguimiento)
 admin.site.register(Transporte)
-admin.site.register(Usuarios)
+# admin.site.register(Usuarios)
 admin.site.register(VentExtran)
 admin.site.register(VentLocal)
