@@ -87,7 +87,7 @@ def agregarProducto(request):
         salida = agregar_producto(nom_prod, precio_prod, desc_prod, stock_prod, usuarios_id, foto)
         if salida == 1:
             data['mensaje'] = 'agregado correctamente'
-            return redirect('listarProducto')
+            return redirect('productos')
         else:
             data['mensaje'] = 'no se ha podido guardar'
         
@@ -142,7 +142,7 @@ def listar_usuarios():
     cursor = django_cursor.connection.cursor()
     out_cur = django_cursor.connection.cursor()
 
-    cursor.callproc('FASTFERIA.SP_LISTAR_USUARIOS', [out_cur])
+    cursor.callproc('FERIAFAST.SP_LISTAR_USUARIOS', [out_cur])
 
     lista = []
     for fila in out_cur:
@@ -158,7 +158,7 @@ def agregar_usuarios(rut_usr, nombre, apellido_p, apellido_m, direccion, telefon
     django_cursor = connection.cursor()
     cursor = django_cursor.connection.cursor()
     salida = cursor.var(cx_Oracle.NUMBER)
-    cursor.callproc('FASTFERIA.SP_AGREGAR_USUARIOS', [rut_usr, nombre, apellido_p, apellido_m, direccion, telefono, correo, foto, contrasena, rol, salida])
+    cursor.callproc('FERIAFAST.SP_AGREGAR_USUARIOS', [rut_usr, nombre, apellido_p, apellido_m, direccion, telefono, correo, foto, contrasena, rol, salida])
 
     return salida.getvalue()
 
@@ -168,7 +168,7 @@ def listar_productos():
     cursor = django_cursor.connection.cursor()
     out_cur = django_cursor.connection.cursor()
 
-    cursor.callproc('FASTFERIA.SP_LISTAR_PRODUCTOS', [out_cur])
+    cursor.callproc('FERIAFAST.SP_LISTAR_PRODUCTOS', [out_cur])
 
     lista = []
     for i in out_cur:
@@ -184,7 +184,7 @@ def agregar_producto(nom_prod, precio_prod, desc_prod, stock_prod, usuarios_id, 
     django_cursor = connection.cursor()
     cursor = django_cursor.connection.cursor()
     salida = cursor.var(cx_Oracle.NUMBER)
-    cursor.callproc('FASTFERIA.SP_AGREGAR_PRODUCTO', [nom_prod, precio_prod, desc_prod, stock_prod, usuarios_id, foto, salida])
+    cursor.callproc('FERIAFAST.SP_AGREGAR_PRODUCTO', [nom_prod, precio_prod, desc_prod, stock_prod, usuarios_id, foto, salida])
 
     return salida.getvalue()
 
@@ -193,7 +193,7 @@ def listar_pedido():
     cursor = django_cursor.connection.cursor()
     out_cur = django_cursor.connection.cursor()
 
-    cursor.callproc('FASTFERIA.SP_LISTAR_PEDIDO', [out_cur])
+    cursor.callproc('FERIAFAST.SP_LISTAR_PEDIDO', [out_cur])
 
     lista = []
     for fila in out_cur:
@@ -205,7 +205,7 @@ def agregar_pedido(tipo, cantidad, fecha, descrip, usuarios_id, productos, estad
     django_cursor = connection.cursor()
     cursor = django_cursor.connection.cursor()
     salida = cursor.var(cx_Oracle.NUMBER)
-    cursor.callproc('FASTFERIA.SP_AGREGAR_PEDIDO', [tipo, cantidad, fecha, descrip, usuarios_id, productos, estado_admin, estado_productor, refrigeracion, estado_edit_user, estado_edit_admin, salida])
+    cursor.callproc('FERIAFAST.SP_AGREGAR_PEDIDO', [tipo, cantidad, fecha, descrip, usuarios_id, productos, estado_admin, estado_productor, refrigeracion, estado_edit_user, estado_edit_admin, salida])
 
 
 def listar_ventaLocal(request):
@@ -213,7 +213,7 @@ def listar_ventaLocal(request):
     cursor = django_cursor.connection.cursor()
     out_cur = django_cursor.connection.cursor()
 
-    cursor.callproc('FASTFERIA.SP_LISTAR_VENTALOCAL', [out_cur])
+    cursor.callproc('FERIAFAST.SP_LISTAR_VENTALOCAL', [out_cur])
 
     lista = []
     for i in out_cur:
@@ -229,7 +229,7 @@ def listar_procesoVenta():
     cursor = django_cursor.connection.cursor()
     out_cur = django_cursor.connection.cursor()
 
-    cursor.callproc('FASTFERIA.SP_LISTAR_PROCESO_VENTA', [out_cur])
+    cursor.callproc('FERIAFAST.SP_LISTAR_PROCESO_VENTA', [out_cur])
 
     lista = []
     for fila in out_cur:
@@ -241,7 +241,7 @@ def agregar_ventaLocal(proces_venta, nom_cli, ape_cli, email, direc_cli, num_cal
     django_cursor = connection.cursor()
     cursor = django_cursor.connection.cursor()
     salida = cursor.var(cx_Oracle.NUMBER)
-    cursor.callproc('FASTFERIA.SP_AGREGAR_VENTALOCAL', [proces_venta, nom_cli, ape_cli, email, direc_cli, num_calle, depto, region, comuna, salida])
+    cursor.callproc('FERIAFAST.SP_AGREGAR_VENTALOCAL', [proces_venta, nom_cli, ape_cli, email, direc_cli, num_calle, depto, region, comuna, salida])
 
     return salida.getvalue()
 
@@ -278,7 +278,7 @@ def agregar_metodopagos(usuarios_id, tipo_cuenta, numero_cuenta, tipo_banco, nom
     django_cursor = connection.cursor()
     cursor = django_cursor.connection.cursor()
     salida = cursor.var(cx_Oracle.NUMBER)
-    cursor.callproc('FASTFERIA.SP_agregar_MetodoPago', [usuarios_id, tipo_cuenta, numero_cuenta, tipo_banco, nombre_titular, salida])
+    cursor.callproc('FERIAFAST.SP_agregar_MetodoPago', [usuarios_id, tipo_cuenta, numero_cuenta, tipo_banco, nombre_titular, salida])
 
     return salida.getvalue()
 
@@ -287,7 +287,7 @@ def agregar_saldo(usuarios_id, recargas, saldo_total):
     django_cursor = connection.cursor()
     cursor = django_cursor.connection.cursor()
     salida = cursor.var(cx_Oracle.NUMBER)
-    cursor.callproc('FASTFERIA.SP_comprar_saldos', [usuarios_id, recargas, saldo_total, salida])
+    cursor.callproc('FERIAFAST.SP_comprar_saldos', [usuarios_id, recargas, saldo_total, salida])
 
     return salida.getvalue()
 
@@ -318,7 +318,7 @@ def recargar_saldo(metodo_pago, saldo_recargado):
     django_cursor = connection.cursor()
     cursor = django_cursor.connection.cursor()
     salida = cursor.var(cx_Oracle.NUMBER)
-    cursor.callproc('FASTFERIA.SP_recargar_saldo', [metodo_pago, saldo_recargado, salida])
+    cursor.callproc('FERIAFAST.SP_recargar_saldo', [metodo_pago, saldo_recargado, salida])
 
     return salida.getvalue()
 
@@ -327,7 +327,7 @@ def listar_metodopago():
     cursor = django_cursor.connection.cursor()
     out_cur = django_cursor.connection.cursor()
 
-    cursor.callproc('FASTFERIA.SP_LISTAR_METODOPAGO', [out_cur])
+    cursor.callproc('FERIAFAST.SP_LISTAR_METODOPAGO', [out_cur])
 
     lista = []
     for fila in out_cur:
@@ -345,9 +345,7 @@ def procesodeVenta(request):
         'ped': Pedido.objects.all(),
         'usu': Usuarios.objects.all(),
         
-    }
-
-        
+    }  
     return render(request, 'ventas/procesoVenta.html', data)
 
 def listar_proces_pedido():
@@ -355,13 +353,11 @@ def listar_proces_pedido():
     cursor = django_cursor.connection.cursor()
     out_cur = django_cursor.connection.cursor()
 
-    cursor.callproc('FASTFERIA.SP_LISTAR_PROCES_VENTA', [out_cur])
+    cursor.callproc('FERIAFAST.SP_LISTAR_PROCES_VENTA', [out_cur])
 
     lista = []
     for fila in out_cur:
         lista.append(fila)
-        
-
     return lista
 
 def listar_pedido():
@@ -369,7 +365,7 @@ def listar_pedido():
     cursor = django_cursor.connection.cursor()
     out_cur = django_cursor.connection.cursor()
 
-    cursor.callproc('FASTFERIA.SP_LISTAR_PEDIDO', [out_cur])
+    cursor.callproc('FERIAFAST.SP_LISTAR_PEDIDO', [out_cur])
 
     lista = []
     for fila in out_cur:
@@ -418,7 +414,7 @@ def agregar_procesoventa(proces_pedido, estado_pago_cliente, estado_pago_product
     django_cursor = connection.cursor()
     cursor = django_cursor.connection.cursor()
     salida = cursor.var(cx_Oracle.NUMBER)
-    cursor.callproc('FASTFERIA.SP_agregar_ProcesVenta', [proces_pedido, estado_pago_cliente, estado_pago_product, estado_pago_transport, estado_venta, estado_detalle, salida])
+    cursor.callproc('FERIAFAST.SP_agregar_ProcesVenta', [proces_pedido, estado_pago_cliente, estado_pago_product, estado_pago_transport, estado_venta, estado_detalle, salida])
 
     return salida.getvalue()
 
@@ -429,6 +425,9 @@ def editar_procesopedido(id_proc_pedido,estado_seguimiento):
     django_cursor = connection.cursor()
     cursor = django_cursor.connection.cursor()
     salida2 = cursor.var(cx_Oracle.NUMBER)
-    cursor.callproc('FASTFERIA.SP_UPDATE_ProcesPedidos', [id_proc_pedido,estado_seguimiento, salida2])
+    cursor.callproc('FERIAFAST.SP_UPDATE_ProcesPedidos', [id_proc_pedido,estado_seguimiento, salida2])
 
     return salida2.getvalue()
+
+
+

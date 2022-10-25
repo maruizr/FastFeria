@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'feria',
+    'usuario',
 ]
 
 MIDDLEWARE = [
@@ -78,8 +79,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.oracle',
         'NAME': 'tcps://adb.sa-santiago-1.oraclecloud.com:1522/g63f290d1fcd1d7_test_high.adb.oraclecloud.com?wallet_location=DB_WALLET',
-        'USER': 'FASTFERIA',
-        'PASSWORD': '7sc3uCbcFxwbCMA',
+        'USER': 'FERIAFAST',
+        'PASSWORD': 'Tj9gdrgqvPct',
         'TEST': {
             'USER': 'default_test',
             'TBLSPACE': 'default_test_tbls',
@@ -107,6 +108,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = 'usuario.Usuario'
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/

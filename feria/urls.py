@@ -16,4 +16,6 @@ urlpatterns=[
     path('RecargarSaldo/', recargadeSaldo, name="recargadeSaldo"),
     path('ProcesoVenta/', procesodeVenta, name="procesodeVenta"),
     path('agregarprocesoventas/<int:id_proc_pedido>', agregarProcesoVenta, name="agregarProcesoVenta"),
+
+
 ]

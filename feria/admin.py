@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Contratos, Usuarios, DetallCompra, MetodoPago, Pedido, ProcesPedido, ProcesVenta, Productos, Recargas, ReportMerma,  ReportVenta, Reportes, Saldos, Seguimiento, Transporte, VentExtran, VentLocal
+from .models import Contratos,Usuarios ,DetallCompra, MetodoPago, Pedido, ProcesPedido, ProcesVenta, Productos, Recargas, ReportMerma,  ReportVenta, Reportes, Saldos, Seguimiento, Transporte, VentExtran, VentLocal
 
 #Register your models here.
 admin.site.register(Contratos)
