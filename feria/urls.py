@@ -6,7 +6,7 @@ urlpatterns=[
     path('', index, name="index"),
     path('login/', login, name="login"),
     path('registro/', registro, name="registro"),
-    path('ventas/',ventasLocales, name="ventas"),
+    path('AgregarVentaLocal/',Agregar_ventas_Locales, name="AgregarVentaLol"),
     path('usuarios/',agregarUsuarios, name="usuarios"),
     path('agregar-producto/', agregarProducto, name="agregar-producto"),
     path('productos/', listarProducto, name="productos"),
@@ -16,6 +16,7 @@ urlpatterns=[
     path('RecargarSaldo/', recargadeSaldo, name="recargadeSaldo"),
     path('ProcesoVenta/', procesodeVenta, name="procesodeVenta"),
     path('agregarprocesoventas/<int:id_proc_pedido>', agregarProcesoVenta, name="agregarProcesoVenta"),
+    path('ventasLocales/', listarVentasLocales, name="Ventas Locales")
 
 
 ]

@@ -19,10 +19,10 @@ def login(request):
 def registro(request):
     return render(request, 'registration/registro.html')
 
-def ventasLocales(request):
+def Agregar_ventas_Locales(request):
     data = {
-        'proceso_Venta': listar_procesoVenta(),
-        'venta_Local': listar_ventaLocal(request)
+        'proceso_Venta': listar_procesoVenta()
+        
     }
 
     if request.method == 'POST':
@@ -43,7 +43,15 @@ def ventasLocales(request):
             data['mensaje'] = 'no se agregojfh'
 
 
-    return render(request, 'ventas/listarVentaLocal.html', data)
+    return render(request, 'ventas/AgregarVentaLocal.html', data)
+
+def listarVentasLocales(request):
+
+    data = {
+        'venta_Local': listar_ventaLocal(request)
+    }
+
+    return render(request, 'ventas/ListarVentaLocal.html', data)
 
 def agregarUsuarios(request):
     data = {
