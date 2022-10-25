@@ -1,70 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
-    <title>Venta local</title>
-</head>
-<body>
-    <h1>
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    </h1>
-    <form action="" method="POST">
-        {% csrf_token %}
-        <label for="">Nombre Cliente</label>
-        <input type="text" name="nombre_cliente"><br>
-        <label for="">Apellido Cliente</label>
-        <input type="text" name="apellido_cliente"><br>
-        <label for="">Correo</label>
-        <input type="text" name="correo"><br>
-        <label for="">Direccion</label>
-        <input type="text" name="direccion"><br>
-        <label for="">Numero Calle</label>
-        <input type="text" name="num_calle"><br>
-        <label for="">Depto</label>
-        <input type="text" name="depto"><br>
-        <label for="">Region</label>
-        <input type="text" name="region"><br>
-        <label for="">Comuna</label>
-        <input type="text" name="comuna"><br>
-        <select name="procesosventas" id="procesosventas">
-        {% for i in proceso_Venta %}
-            <option value="{{i.0}}">{{i.1                                                                                                                                           }}</option>
-        {% endfor %}
-        </select>
-        <input type="submit" value="Guardar">
-        </form> 
-        {{mensaje}}
-        <h1>Listado de ventas locales</h1>
-    <table class="table table-bordered">
-        <tr>
-            <td>Proceso de venta</td>
-            <td>Nombre cliente</td>
-            <td>Apellido cliente</td>
-            <td>Correo</td>
-            <td>Direccion</td>
-            <td>Numero calle</td>
-            <td>Depto</td>
-            <td>Region</td>
-            <td>Comuna</td>
-        </tr>
-        {% for p in venta_Local %}
-        <tr> 
-            <td>{{ p.data.1 }}</td>
-            <td>{{ p.data.2 }}</td>
-            <td>{{ p.data.3 }}</td>
-            <td>{{ p.data.4 }}</td>
-            <td>{{ p.data.5 }}</td>
-            <td>{{ p.data.6 }}</td>
-            <td>{{ p.data.7 }}</td>
-            <td>{{ p.data.8 }}</td>
-            <td>{{ p.data.9 }}</td>
-        </tr>
-        {% endfor %}
-    </table>
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/form-prod.css' %}">
+{% endblock %}
+{% block content %}
+<!-- ======= Portfolio Section ======= -->
+<section id="portfolio" class="portfolio">
+    <div class="container">
+        <div class="container mt-3">
+            <h2>Listado de Ventas Locales</h2>
+            <div class="mb-5 mt-2 text-center">
+                <a class="btn btn-block btn-primary rounded-0 py-2 px-4" href="{% url 'AgregarVentaLol' %}" style="float: right;">Agregar producto</a>
+            </div>
+            <table class=" col-md-5 table">
+                <tr>
+                    <th>Proceso de venta</th>
+                    <th>Nombre Cliente </th>
+                    <th>Apellido </th>
+                    <th>Correo</th>
+                    <th>Direccion</th>
+                    <th>Numero calle</th>
+                    <th>Departamento</th>
+                    <th>Region</th>
+                    <th>Comuna</th>
+                </tr>
+        
+                {% for i in venta_Local %}
+                    <tr>
+                        <td>{{i.data.1}}</td>
+                        <td>{{i.data.2}}</td>
+                        <td>{{i.data.3}}</td>
+                        <td>{{i.data.4}}</td>
+                        <td>{{i.data.5}}</td>
+                        <td>{{i.data.6}}</td>
+                        <td>{{i.data.7}}</td>
+                        <td>{{i.data.8}}</td>
+                        <td>{{i.data.9}}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+          </div>
 
-</body>
-</html>
+    </div>
+  </section><!-- End Portfolio Section -->
+{% endblock %}
+{% block js %}
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery.validate.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+{% endblock %}

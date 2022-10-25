@@ -20,10 +20,10 @@ def login(request):
 def registro(request):
     return render(request, 'registration/registro.html')
 
-def ventasLocales(request):
+def Agregar_ventas_Locales(request):
     data = {
-        'proceso_Venta': listar_procesoVenta(),
-        'venta_Local': listar_ventaLocal(request)
+        'proceso_Venta': listar_procesoVenta()
+        
     }
 
     if request.method == 'POST':
@@ -44,7 +44,15 @@ def ventasLocales(request):
             data['mensaje'] = 'no se agregojfh'
 
 
-    return render(request, 'ventas/listarVentaLocal.html', data)
+    return render(request, 'ventas/AgregarVentaLocal.html', data)
+
+def listarVentasLocales(request):
+
+    data = {
+        'venta_Local': listar_ventaLocal(request)
+    }
+
+    return render(request, 'ventas/ListarVentaLocal.html', data)
 
 def agregarUsuarios(request):
     data = {
@@ -432,3 +440,69 @@ def editar_procesopedido(id_proc_pedido,estado_seguimiento):
 
 
 
+def ingresar_transporte(request):
+    data = {
+        'usuarios': listar_usuarios(),
+    }
+
+    if request.method == 'POST':
+        tip_transporte = request.POST.get('tipot')
+        tamano_trans = request.POST.get('tamano')
+        capacidad_trans = request.POST.get('capacidad')
+        refri = request.POST.get('refri')
+        if refri == "true":
+            refrigeracion_trans = 1
+        else:
+            refrigeracion_trans = 0
+        
+        usuarios_id = request.POST.get('usuarios')
+        foto = request.FILES['foto'].read()
+        patente = request.POST.get('patente')
+
+        salida = agregar_transporte(tip_transporte, tamano_trans, capacidad_trans, refrigeracion_trans, usuarios_id, foto, patente)
+        if salida == 1:
+            data['mensaje'] = 'agregado correctamente'
+        else:
+            data['mensaje'] = 'no se ha podido guardar'
+        
+    return render(request, 'transporte/ingresar-transporte.html', data)
+
+
+
+
+def agregar_transporte(tip_transporte, tamano_trans, capacidad_trans, refrigeracion_trans, usuarios_id, foto, patente):
+    django_cursor = connection.cursor()
+    cursor = django_cursor.connection.cursor()
+    salida = cursor.var(cx_Oracle.NUMBER)
+    cursor.callproc('FERIAFAST.SP_AGREGAR_TRANSPORTE', [tip_transporte, tamano_trans, capacidad_trans, refrigeracion_trans, usuarios_id, foto, patente, salida])
+
+    return salida.getvalue()
+
+
+
+
+def listar_transporte(request):
+    data2 = {
+        'transporte': listartrans(),
+    }
+
+
+    return render(request, 'transporte/listarTransporte.html', data2)
+
+
+def listartrans():
+    django_cursor = connection.cursor()
+    cursor = django_cursor.connection.cursor()
+    out_cur = django_cursor.connection.cursor()
+
+    cursor.callproc('FERIAFAST.SP_LISTAR_TRANSPORTE', [out_cur])
+
+    lista = []
+    for i in out_cur:
+        data = {
+            'data': i,
+            'imagen':str(base64.b64encode(i[6].read()), 'utf-8')
+            }
+        lista.append(data)
+
+    return lista
