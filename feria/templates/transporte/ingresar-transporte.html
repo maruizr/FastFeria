@@ -15,7 +15,7 @@
               <div class="row mt-5">
                 <div class="col-md-6 form-group mb-3">
                   <label for="" class="col-form-label">Tipo *</label>
-                  <select name="tipot">
+                  <select class="form-control" name="tipot">
                     <option value="selected">Seleccione tipo</option>
                     <option value="39">Cama Baja "Cuello Cisne"/Escalonado</option>
                     <option value="29">Frigorífico</option>
@@ -54,7 +54,7 @@
               </div>
               <div class="row">
                 <div class="col-md-12 form-group mb-3">
-                    <select name="usuarios" id="usuarios">
+                    <select class="form-control" name="usuarios" id="usuarios">
                         {% for u in usuarios %}
                             <option value="{{ u.data.0 }}">{{ u.data.2 }}</option>
                         {% endfor %}
