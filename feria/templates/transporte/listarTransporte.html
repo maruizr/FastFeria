@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/form-prod.css' %}">
+{% endblock %}
+{% block content %}
+<!-- ======= Portfolio Section ======= -->
+<section id="portfolio" class="portfolio">
+    <div class="container">
+
+      <div class="section-title">
+        <h2>Transporte</h2>
+        <p>Aquí se encuentran todos los tipos de camiones a subastar.</p>
+      </div>
+
+      <div class="row portfolio-container">
+        {% csrf_token %}
+        {% for p in transporte %}
+
+        <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+            {% if p.imagen %}
+          <div class="portfolio-wrap">
+            <img src="data:imagen/png;base64, {{p.imagen}}" class="img-fluid" alt="">
+            <div class="portfolio-info">
+              
+              <h4>{{ p.data.1 }}</h4>
+              <p>{{ p.data.2 }}</p>
+              <div class="portfolio-links">
+                <a href="data:imagen/png;base64, {{p.imagen}}" data-gallery="portfolioGallery" class="portfolio-lightbox" title="App 1"><i class="bx bx-plus"></i></a>
+                <a href="#" title="More Details"><i class="bx bx-link"></i></a>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+
+    </div>
+  </section><!-- End Portfolio Section -->
+{% endblock %}
+{% block js %}
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery.validate.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+{% endblock %}

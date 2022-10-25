@@ -16,7 +16,8 @@ urlpatterns=[
     path('RecargarSaldo/', recargadeSaldo, name="recargadeSaldo"),
     path('ProcesoVenta/', procesodeVenta, name="procesodeVenta"),
     path('agregarprocesoventas/<int:id_proc_pedido>', agregarProcesoVenta, name="agregarProcesoVenta"),
-    path('ventasLocales/', listarVentasLocales, name="Ventas Locales")
-
+    path('ventasLocales/', listarVentasLocales, name="Ventas Locales"),
+    path('ingresar-transporte/', ingresar_transporte, name="ingresar-transporte"),
+    path('listar-transporte/', listar_transporte, name="listar-transporte"),
 
 ]
