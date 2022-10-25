@@ -345,9 +345,7 @@ def procesodeVenta(request):
         'ped': Pedido.objects.all(),
         'usu': Usuarios.objects.all(),
         
-    }
-
-        
+    }  
     return render(request, 'ventas/procesoVenta.html', data)
 
 def listar_proces_pedido():
@@ -360,8 +358,6 @@ def listar_proces_pedido():
     lista = []
     for fila in out_cur:
         lista.append(fila)
-        
-
     return lista
 
 def listar_pedido():
@@ -418,7 +414,7 @@ def agregar_procesoventa(proces_pedido, estado_pago_cliente, estado_pago_product
     django_cursor = connection.cursor()
     cursor = django_cursor.connection.cursor()
     salida = cursor.var(cx_Oracle.NUMBER)
-    cursor.callproc('FASTFERIA.SP_agregar_ProcesVenta', [proces_pedido, estado_pago_cliente, estado_pago_product, estado_pago_transport, estado_venta, estado_detalle, salida])
+    cursor.callproc('FERIAFAST.SP_agregar_ProcesVenta', [proces_pedido, estado_pago_cliente, estado_pago_product, estado_pago_transport, estado_venta, estado_detalle, salida])
 
     return salida.getvalue()
 
@@ -432,3 +428,6 @@ def editar_procesopedido(id_proc_pedido,estado_seguimiento):
     cursor.callproc('FERIAFAST.SP_UPDATE_ProcesPedidos', [id_proc_pedido,estado_seguimiento, salida2])
 
     return salida2.getvalue()
+
+
+
