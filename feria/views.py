@@ -87,7 +87,7 @@ def agregarProducto(request):
         salida = agregar_producto(nom_prod, precio_prod, desc_prod, stock_prod, usuarios_id, foto)
         if salida == 1:
             data['mensaje'] = 'agregado correctamente'
-            return redirect('listarProducto')
+            return redirect('productos')
         else:
             data['mensaje'] = 'no se ha podido guardar'
         
