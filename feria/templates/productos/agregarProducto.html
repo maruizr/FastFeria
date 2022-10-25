@@ -2,6 +2,8 @@
 {% load static %}
 {% block css %}
 <link rel="stylesheet" href="{% static 'css/form-prod.css' %}">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
 {% endblock %}
 {% block content %}
 <div class="content">
@@ -11,40 +13,41 @@
         <div class="col-md-7">
           <div class="form h-100 contact-wrap p-5">
             <h3 class="text-center">Agregar Producto</h3>
-            <form action="" method="POST" enctype="multipart/form-data">
+            <form id="basic-form" action="" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
               <div class="row mt-5">
                 <div class="col-md-8 form-group mb-3">
-                  <label for="" class="col-form-label">Producto *</label>
-                  <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre del producto">
+                  <label for="nombre" class="col-form-label">Producto *</label>
+                  <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre del producto" required>
                 </div>
                 <div class="col-md-4 form-group mb-3">
-                  <label for="" class="col-form-label">Precio *</label>
-                  <input type="text" class="form-control" name="precio" id="precio"  placeholder="Precio del producto">
+                  <label for="precio" class="col-form-label">Precio *</label>
+                  <input type="text" class="form-control" name="precio" id="precio"  placeholder="Precio del producto" required>
                 </div>
               </div>
 
               <div class="row">
                 <div class="col-md-12 form-group mb-3">
                   <label for="descripcion" class="col-form-label">Descripción *</label>
-                  <textarea class="form-control" name="descripcion" id="descripcion" cols="30" rows="4"  placeholder="Escribe la descripción de tu producto"></textarea>
+                  <textarea class="form-control" name="descripcion" id="descripcion" cols="30" rows="4"  placeholder="Escribe la descripción de tu producto" required></textarea>
                 </div>
               </div>
 
               <div class="row  mb-5">
                 <div class="col-md-6 form-group mb-3">
-                    <label for="" class="col-form-label">Stock *</label>
-                    <input type="text" class="form-control" name="stock" id="stock"  placeholder="Stock del producto">
+                    <label for="stock" class="col-form-label">Stock *</label>
+                    <input type="text" class="form-control" name="stock" id="stock"  placeholder="Stock del producto" required>
                   </div>
                   <div class="col-md-6 form-group mb-3">
-                    <label for="" class="col-form-label">Imagen *</label>
-                    <input type="file" class="form-control" name="foto" id="foto" >
+                    <label for="foto" class="col-form-label">Imagen *</label>
+                    <input type="file" class="form-control" name="foto" id="foto" required>
                   </div>
               </div>
 
               <div class="row">
                 <div class="col-md-12 form-group mb-3">
-                    <select name="usuarios" id="usuarios">
+                    <select class="form-control" name="usuarios" id="usuarios" required>
+                        <option value="">Seleccionar una opción</option>
                         {% for u in usuarios %}
                             <option value="{{ u.data.0 }}">{{ u.data.2 }}</option>
                         {% endfor %}
@@ -72,6 +75,64 @@
       </div>
     </div>
   </div>
+  <script>
+    $(document).ready(function() {
+      $("#basic-form").validate({
+        rules: {
+          nombre: {
+            required: true,
+            minlength: 3
+          },
+          precio: {
+            required: true,
+            number: true,
+            min: 300
+          },
+          descripcion: {
+            required: true,
+            minlength: 20
+          },
+          stock: {
+            required: true,
+            number: true,
+            min: 0
+          },
+          foto: {
+            required: true
+          },
+          usuarios: {
+            required: true,
+          }
+        },
+        messages : {
+          nombre: {
+            required: "Debe ingresar el nombre del producto",
+            minlength: "Debe ingresar mínimo 3 cáracteres"
+          },
+          precio: {
+            required: "Debe ingresar el precio",
+            number: "Debe ingresar cáracteres númericos",
+            min: "Debe ser un precio mayor a 300"
+          },
+          descripcion: {
+            required: "Debe ingresar una descripción del producto",
+            minlength: "Debe ingresar mínimo 20 cáracteres"
+          },
+          stock: {
+            required: "Debe ingresar el stock del producto",
+            number: "Debe ingresar cáracteres númericos",
+            min: "Debe ser un stock mayor a 0"
+          },
+          foto: {
+            required: "Debe ingresar la imagen del producto"
+          },
+          usuarios: {
+            required: "Debe seleccionar una opción"
+          }
+        }
+      });
+    });
+  </script>
 {% endblock %}
 {% block js %}
 <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
