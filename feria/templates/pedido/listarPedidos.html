@@ -23,14 +23,11 @@
                 <td>{{ p.1 }}</td>
                 <td>{{ p.2 }}</td>
                 <td>{{ p.3 }}</td>
-                
-                <!-- {% for d in productos %}
-                    {% if p.data.6 == d.data.1 %}
-                        <td><img src="data:imagen/png;base64, {{d.imagen}}" class="img-fluid" alt=""></td>
+                    {% if p.6 == productos.data.0 %}
+                        <td><img src="data:imagen/png;base64, {{productos.imagen}}" class="img-fluid" alt=""></td>
                     {% else %}
                         <td>No hay foto</td>
                     {% endif %}
-                {% endfor %} -->
                 <td>{{ p.4 }}</td>
             </tr>
             {% endfor %}
