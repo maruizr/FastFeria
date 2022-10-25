@@ -8,6 +8,7 @@ from django.core.files.base import ContentFile
 from .models import *
 from .forms import *
 
+
 # Create your views here.
 
 def index(request):
