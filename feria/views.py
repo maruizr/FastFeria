@@ -256,6 +256,36 @@ def agregar_ventaLocal(proces_venta, nom_cli, ape_cli, email, direc_cli, num_cal
 
     return salida.getvalue()
 
+def informeexterno(request):
+
+    data = {
+        'usuarios': listar_usuarios(),
+        'proces_pedido': listar_proces_pedido(),
+        'pedido': listar_pedido(),
+        'listaprocesventa': DetallCompra.objects.all(),
+        'ventextran': VentExtran.objects.all(),
+        'tran': Transporte.objects.all(),
+        'ped': Pedido.objects.all(),
+        'usu': Usuarios.objects.all(),
+        
+    }  
+    return render(request, 'ventas/informeventaexterna.html', data)
+   
+def informeinterno(request):
+
+    data = {
+        'usuarios': listar_usuarios(),
+        'proces_pedido': listar_proces_pedido(),
+        'pedido': listar_pedido(),
+        'listaprocesventa': DetallCompra.objects.all(),
+        'ventextran': VentLocal.objects.all(),
+        'tran': Transporte.objects.all(),
+        'ped': Pedido.objects.all(),
+        'usu': Usuarios.objects.all(),
+        
+    }  
+    return render(request, 'ventas/informeventalocal.html', data)
+
 
 def agregarMetodoPago(request):
     data = {

@@ -18,5 +18,7 @@ urlpatterns=[
     path('ventasLocales/', listarVentasLocales, name="Ventas Locales"),
     path('ingresar-transporte/', ingresar_transporte, name="ingresar-transporte"),
     path('listar-transporte/', listar_transporte, name="listar-transporte"),
+    path('informe-externo/', informeexterno, name="informeexterno"),
+    path('informe-interno/', informeinterno, name="informeinterno"),
 
 ]

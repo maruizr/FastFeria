@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+
+
+</br></br>
+        <div class="col-md-5 form-group text-center">
+           
+            <span class="submitting"></span>
+        </div>
+    </br>
+    
+    <table class="table table-bordered">
+								<thead>
+									<tr>
+
+										<th><center>Producto</center></th>
+										<th><center>Cliente Extranjero</center></th>
+										<th><center>Fecha</center></th>
+										<th><center>Cantidad</center></th>
+										<th><center>Precio C/U</center></th>
+										<th><center>Total Compra</center></th>
+										<th><center>Total Compra</center></th>
+									</tr>
+								</thead>
+
+								<tbody>
+
+							        
+
+									{% if listaprocesventa %}
+									{% for lista in listaprocesventa %}
+										
+										<tr>
+										<td><center>{{ lista.nom_producto }} </center></td>
+										{% if ventextran %}
+										{% for lista2 in ventextran %}
+											{% if lista.proces_venta == lista2.proces_venta %}
+											
+												<td><center>{{ lista2.nom_cli }} </center></td>
+										    {% endif %}
+										{% endfor %}
+										{% else %}
+
+										<h1>No hay procesos</h1>
+
+										{% endif %}
+										<td><center>{{ lista.fecha_detall }}</center></td>
+										<td><center>${{ lista.cantidad }}</center></td>
+										<td><center>${{ lista.cost_producto }}</center></td>
+										<td><center>${{ lista.total_compra }}</center></td>
+										
+										<td><span class="total-list">{{ lista.total_compra }}</span></td>
+									    
+									
+										
+									
+										
+								    
+									
+										</tr>
+										
+									{% endfor %}
+									{% else %}
+
+									<h1>No hay procesos</h1>
+
+									{% endif %}
+
+								</tbody>
+                            
+							</table>
+                        </br></br></br></br></br></br></br></br>
+						
+						
+						
+	
+						
+{% endblock %}
+
