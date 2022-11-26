@@ -91,7 +91,7 @@
           <li><a class="nav-link scrollto" href="#contact">Contact</a></li> -->
           {% if request.user.is_authenticated %}
             <li><a class="nav-link scrollto" href="">{{ user.username | upper }}</a></li>
-            <li><a class="getstarted scrollto" href="{% url 'login'%}">Logout</a></li>
+            <li><a class="getstarted scrollto" href="{% url 'logout'%}">Logout</a></li>
           {% else %}
             <li><a class="getstarted scrollto" href="{% url 'login'%}">Iniciar sesion</a></li>
 
