@@ -22,7 +22,9 @@ def registro(request):
 
 def Agregar_ventas_Locales(request):
     data = {
-        'proceso_Venta': listar_procesoVenta()
+        'proceso_Venta': listar_procesoVenta(),
+        'region': listregiones(),
+        'comuna': listcomunas()
         
     }
 
@@ -505,4 +507,30 @@ def listartrans():
             }
         lista.append(data)
 
+    return lista
+
+def listregiones():
+    django_cursor = connection.cursor()
+    cursor = django_cursor.connection.cursor()
+    out_cur = django_cursor.connection.cursor()
+
+    cursor.callproc('FERIAFAST.SP_LISTAR_REGION', [out_cur])
+
+    lista = []
+    for fila in out_cur:
+        lista.append(fila)
+        
+    return lista
+
+def listcomunas():
+    django_cursor = connection.cursor()
+    cursor = django_cursor.connection.cursor()
+    out_cur = django_cursor.connection.cursor()
+
+    cursor.callproc('FERIAFAST.SP_LISTAR_COMUNA', [out_cur])
+
+    lista = []
+    for fila in out_cur:
+        lista.append(fila)
+        
     return lista

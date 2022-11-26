@@ -3,4 +3,6 @@
 
 django
 cx_oracle
+python-dateutil
+django-allauth
 pillow
