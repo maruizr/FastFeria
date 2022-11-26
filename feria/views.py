@@ -8,7 +8,6 @@ from django.core.files.base import ContentFile
 from .models import *
 from .forms import *
 
-
 # Create your views here.
 
 def index(request):
@@ -20,10 +19,10 @@ def login(request):
 def registro(request):
     return render(request, 'registration/registro.html')
 
-def Agregar_ventas_Locales(request):
+def ventasLocales(request):
     data = {
-        'proceso_Venta': listar_procesoVenta()
-        
+        'proceso_Venta': listar_procesoVenta(),
+        'venta_Local': listar_ventaLocal(request)
     }
 
     if request.method == 'POST':
@@ -44,15 +43,7 @@ def Agregar_ventas_Locales(request):
             data['mensaje'] = 'no se agregojfh'
 
 
-    return render(request, 'ventas/AgregarVentaLocal.html', data)
-
-def listarVentasLocales(request):
-
-    data = {
-        'venta_Local': listar_ventaLocal(request)
-    }
-
-    return render(request, 'ventas/ListarVentaLocal.html', data)
+    return render(request, 'ventas/listarVentaLocal.html', data)
 
 def agregarUsuarios(request):
     data = {
@@ -484,9 +475,8 @@ def agregar_transporte(tip_transporte, tamano_trans, capacidad_trans, refrigerac
 def listar_transporte(request):
     data2 = {
         'transporte': listartrans(),
+        'transportes2': Transporte.objects.all(),
     }
-
-
     return render(request, 'transporte/listarTransporte.html', data2)
 
 
@@ -506,3 +496,39 @@ def listartrans():
         lista.append(data)
 
     return lista
+    
+    
+    
+    
+    
+def informeexterno(request):
+
+    data = {
+        'usuarios': listar_usuarios(),
+        'proces_pedido': listar_proces_pedido(),
+        'pedido': listar_pedido(),
+        'listaprocesventa': DetallCompra.objects.all(),
+        'ventextran': VentExtran.objects.all(),
+        'tran': Transporte.objects.all(),
+        'ped': Pedido.objects.all(),
+        'usu': Usuarios.objects.all(),
+        
+    }  
+    return render(request, 'ventas/informeventaexterna.html', data)
+   
+   
+    
+def informeinterno(request):
+
+    data = {
+        'usuarios': listar_usuarios(),
+        'proces_pedido': listar_proces_pedido(),
+        'pedido': listar_pedido(),
+        'listaprocesventa': DetallCompra.objects.all(),
+        'ventextran': VentLocal.objects.all(),
+        'tran': Transporte.objects.all(),
+        'ped': Pedido.objects.all(),
+        'usu': Usuarios.objects.all(),
+        
+    }  
+    return render(request, 'ventas/informeventalocal.html', data)

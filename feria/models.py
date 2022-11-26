@@ -261,3 +261,5 @@ class VentLocal(models.Model):
     class Meta:
         managed = False
         db_table = 'vent_local'
+
+

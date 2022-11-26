@@ -3,9 +3,10 @@ from django.urls import path
 from .views import *
 
 urlpatterns=[ 
-    path('index/', index, name="index"),
+    path('', index, name="index"),
+    path('login/', login, name="login"),
     path('registro/', registro, name="registro"),
-    path('AgregarVentaLocal/',Agregar_ventas_Locales, name="AgregarVentaLol"),
+    path('ventas/',ventasLocales, name="ventas"),
     path('usuarios/',agregarUsuarios, name="usuarios"),
     path('agregar-producto/', agregarProducto, name="agregar-producto"),
     path('productos/', listarProducto, name="productos"),
@@ -15,8 +16,11 @@ urlpatterns=[
     path('RecargarSaldo/', recargadeSaldo, name="recargadeSaldo"),
     path('ProcesoVenta/', procesodeVenta, name="procesodeVenta"),
     path('agregarprocesoventas/<int:id_proc_pedido>', agregarProcesoVenta, name="agregarProcesoVenta"),
-    path('ventasLocales/', listarVentasLocales, name="Ventas Locales"),
     path('ingresar-transporte/', ingresar_transporte, name="ingresar-transporte"),
     path('listar-transporte/', listar_transporte, name="listar-transporte"),
+    path('informe-externo/', informeexterno, name="informeexterno"),
+    path('informe-interno/', informeinterno, name="informeinterno"),
+    
+    
 
 ]

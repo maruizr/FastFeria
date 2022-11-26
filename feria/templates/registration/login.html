@@ -16,6 +16,7 @@
         <div id="formContent">
           <!-- Tabs Titles -->
           <h2 class="active"> Iniciar sesión </h2>
+          <h2 class="inactive underlineHover">Registrarse </h2>
 
       
           <!-- Icon -->
@@ -24,16 +25,15 @@
           </div>
       
           <!-- Login Form -->
-          <form method="POST">
-            {% csrf_token %}
-            <input type="text" id="login" class="fadeIn second" placeholder="Nombre de usuario" name="username">
-            <input type="password" id="password" class="fadeIn third" placeholder="Contraseña" name="password">
-            <button type="submit" class="fadeIn fourth" value="Log In">Inicio de sesion</button>
+          <form>
+            <input type="text" id="login" class="fadeIn second" name="login" placeholder="Email">
+            <input type="text" id="password" class="fadeIn third" name="login" placeholder="Contraseña">
+            <button type="submit" class="fadeIn fourth" value="Log In">Ingresar</button>
           </form>
       
           <!-- Remind Passowrd -->
           <div id="formFooter">
-            <a class="underlineHover" href="#">¿Olvidó su contraseña?</a>
+            <a class="underlineHover" href="#">Olvidó su contraseña?</a>
           </div>
       
         </div>
