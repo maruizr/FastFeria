@@ -7,11 +7,17 @@ import base64
 from django.core.files.base import ContentFile
 from .models import *
 from .forms import *
+from usuario.models import Usuario
 
 
 # Create your views here.
 
 def index(request):
+    # user = Usuario.objects.all()
+    # data = {
+    #     'user' : user
+
+    # }
     return render(request, 'index.html')
 
 def login(request):

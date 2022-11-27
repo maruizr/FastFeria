@@ -69,7 +69,14 @@
           <li><a class="nav-link scrollto" href="{% url 'index' %}">Inicio</a></li>
           
           <!-- <li><a class="nav-link scrollto" href="{% url 'login'%}">Logout</a></li> -->
-          <li><a class="nav-link scrollto " href="{% url 'productos' %}">Productos</a></li>
+            {%if user.tipo_usuario == 'productor' or user.usuario_administrador == True %}
+              <li><a class="nav-link scrollto " href="{% url 'productos' %}"> Productos</a></li>
+            {%endif %}
+            {% if user.tipo_usuario == 'consultor' or user.usuario_administrador == True %}
+              <li><a class="nav-link scrollto " href="{% url 'Ventas Locales' %}"> Ventas</a></li>
+            {%endif %}
+
+
           <!-- <li><a class="nav-link scrollto" href="#team">Team</a></li>
           <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
