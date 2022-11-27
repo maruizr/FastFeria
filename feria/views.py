@@ -89,9 +89,13 @@ def agregarUsuarios(request):
     return render(request, "usuarios/listarUsuarios.html", data)
 
 def agregarProducto(request):
-    data = {
-        'usuarios': listar_usuarios(),
-    }
+    # data = {
+    #     'usuarios': listar_usuarios(),
+    # }
+    # user = Usuario.objects.all()
+    # data = {
+    #     'user': user
+    # }
 
     if request.method == 'POST':
         nom_prod = request.POST.get('nombre')
@@ -108,7 +112,7 @@ def agregarProducto(request):
         else:
             data['mensaje'] = 'no se ha podido guardar'
         
-    return render(request, 'productos/agregarProducto.html', data)
+    return render(request, 'productos/agregarProducto.html')
 
 def agregarPedido(request):
     data = {
