@@ -1,7 +1,12 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from .models import Usuario
-
+# roles =(
+#     ("1", "Externo"),
+#     ("2", "Interno"),
+#     ("3", "Productor"),
+#     ("4", "Consultor"),
+#     ("5", "Transportista")),
 class FormularioUsuario(forms.ModelForm):
     """ Formulario de registro de un usuario en la base de datos
     Variables:
@@ -29,7 +34,7 @@ class FormularioUsuario(forms.ModelForm):
 
     class Meta:
         model = Usuario
-        fields = ('email','username','nombres','apellidos')
+        fields = ('email','username','nombres','apellidos','tipo_usuario')
         widgets ={
             'email': forms.EmailInput(
                 attrs={
@@ -53,6 +58,11 @@ class FormularioUsuario(forms.ModelForm):
                 attrs={
                     'class':'form-control',
                     'placeholder':'Ingrese su nombre de usuario'
+                }
+            ),
+            'tipo_usuario': forms.Select(
+                attrs={
+                    'class':'form-control',
                 }
             ),
         }
