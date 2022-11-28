@@ -300,3 +300,22 @@ BEGIN
     WHERE rut_usr = v_rut_usr;
     COMMIT;
 END SP_USUARIO_DELETE;
+
+
+CREATE OR REPLACE PROCEDURE FERIAFAST.SP_ProcesoPedidoUpdateEstados (v_id_proc_pedido NUMBER, v_salida OUT NUMBER)
+
+
+    AS 
+    BEGIN
+        UPDATE proces_pedido
+        SET     estado_proces_venta = 1
+            WHERE id_proc_pedido = v_id_proc_pedido;
+        COMMIT;
+		v_salida:=1;
+	EXCEPTION
+
+    WHEN OTHERS THEN
+        v_salida:=0;
+
+    END SP_ProcesoPedidoUpdateEstados;
+	
