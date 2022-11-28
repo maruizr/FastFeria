@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/form-prod.css' %}">
+<link rel="stylesheet" href="{% static 'css/estilos.css' %}">  
+{% endblock %}
+{% block content %}
+<div class="content">
+    
+    <div class="container">
+      <div class="row align-items-stretch justify-content-center no-gutters">
+        <div class="col-md-7">
+          <div class="form h-100 contact-wrap p-5">
+            <h3 class="text-center">Ingresar transporte al pedido</h3>
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+				
+              <div class="row mt-5">
+                <div class="col-md-8 form-group mb-3">
+                  <label for="" class="col-form-label">Pedido *</label>
+                   <select class="form-control" name="numeropedido" id="numeropedido">
+				   <option value="">Seleccionar una opción</option>
+                        {% if ped %}
+						{% for u in ped %}
+                            <option value="{{ u.id_ped}}">Tipo: {{ u.tipo }} | Cantidad: {{ u.cantidad }} | Fecha: {{ u.fecha }}</option>
+                        {% endfor %}
+						{% endif %}
+                    </select>
+					
+					
+               
+				
+                </div>
+				
+				<div class="row">
+                <div class="col-md-6 form-group mb-3">
+                    <label for="" class="col-form-label">Transportes * </label>
+					<select value="test" class="form-control" name="imagenes" id="combobox" onchange="cargar_imagen(this.value)">
+					<option value="">Seleccionar una opción</option>
+							{% for u in transporte %}
+						
+								<option  value="{{u.imagen}}">{{u.data.0}}</option>
+							
+								{% endfor %}
+							</select>
+								
+							
+				
+                </div>
+				
+                </div>
+				<div class="col-md-6 form-group mb-3">
+                    <img  width="250" height="220" id="myimage"/>
+					{% for u in transporte %}
+									<a href="data:imagen/png;base64, {{p.imagen}}" ></a>
+					{% endfor %}
+	                            <input style="display: none;" type="text" name="numerocero"  required="" id="numerocero" value="0" >
+								<input style="display: none;" type="text" name="iddetransporte"  required="" id="iddetransporte" >
+								
+								
+								
+								
+                </div>
+              </div>
+				
+					  
+			
+			  
+			  
+			  
+			  
+			  
+			  
+		
+              
+
+              
+
+              
+              <div class="row justify-content-center">
+                <div class="col-md-5 form-group text-center">
+                  <input type="submit" value="Crear proceso pedido" class="btn btn-block btn-primary rounded-0 py-2 px-4">
+                  <span class="submitting"></span>
+                </div>
+              </div>
+            </form>
+
+            <div id="form-message-warning mt-4"></div> 
+            <div id="form-message-success">{{mensaje}}
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+	
+
+
+							
+<script language="javascript">
+ function cargar_imagen(imagen) {
+  var img = document.getElementById("myimage");
+  var img_dir = "data:imagen/png;base64,";
+  var select = document.getElementById("combobox"), //El <select>
+
+      
+      value = select.value, //El valor seleccionado
+      text = select.options[select.selectedIndex].innerText; //El texto de la opción seleccionada
+      document.getElementById('iddetransporte').value = text;
+
+	  
+  if (img) {
+   
+   img.src = img_dir + imagen;
+   
+   
+   
+  }
+ 
+ }
+ 
+ 
+ 
+</script>
+
+
+
+  
+  
+
+
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+{% endblock %}
+{% block js %}
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery.validate.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+{% endblock %}

@@ -22,5 +22,6 @@ urlpatterns=[
     path('listar-transporte/', login_required(listar_transporte), name="listar-transporte"),
     path('informe-externo/', login_required(informeexterno), name="informeexterno"),
     path('informe-interno/', login_required(informeinterno), name="informeinterno"),
+    path('Proceso-Pedido/', login_required(ProcesoPedido), name="Proceso-Pedido"),
 
 ]
