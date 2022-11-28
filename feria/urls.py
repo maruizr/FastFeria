@@ -4,10 +4,10 @@ from django.contrib.auth.decorators import login_required
 from .views import *
 
 urlpatterns=[ 
+    path('dashboard/', login_required(dashboard), name="dashboard"),
     path('index/', login_required(index), name="index"),
     path('registro/', login_required(registro), name="registro"),
     path('AgregarVentaLocal/',login_required(Agregar_ventas_Locales), name="AgregarVentaLol"),
-    path('usuarios/',login_required(agregarUsuarios), name="usuarios"),
     path('agregar-producto/', login_required(agregarProducto), name="agregar-producto"),
     path('productos/', login_required(listarProducto), name="productos"),
     path('agregar-pedido/', login_required(agregarPedido), name="agregar-pedido"),
@@ -21,5 +21,7 @@ urlpatterns=[
     path('listar-transporte/', login_required(listar_transporte), name="listar-transporte"),
     path('informe-externo/', login_required(informeexterno), name="informeexterno"),
     path('informe-interno/', login_required(informeinterno), name="informeinterno"),
+    path('Proceso-Pedido/', login_required(ProcesoPedido), name="Proceso-Pedido"),
+    path('publicarpedido/', login_required(publicarpedido), name="publicarpedido"),
 
 ]

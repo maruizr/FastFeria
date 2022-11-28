@@ -19,8 +19,19 @@ class RegistrarUsuario(CreateView):
 
 
 def EditarUsuario(request, id):
-    usuario = get_object_or_404(id=id)
+    usuario = get_object_or_404(Usuario, id=id)
     data = {
         'form': FormularioUsuario(instance=usuario)
     }
-    return render(request, 'usuarios/editar_usuario.html')
+    if request.method == 'POST':
+        formulario = FormularioUsuario(data = request.POST, instance=usuario, files=request.FILES)
+        if formulario.is_valid():
+            formulario.save()
+            return redirect(to="usuario:listado_usuarios")
+        data["form"] = formulario
+    return render(request, 'usuarios/editar_usuario.html',data)
+
+def EliminarUsuario(request, id):
+    usuario = get_object_or_404(Usuario, id=id)
+    usuario.delete()
+    return redirect(to="usuario:listado_usuarios")

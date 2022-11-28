@@ -26,6 +26,8 @@ def login(request):
 def registro(request):
     return render(request, 'registration/registro.html')
 
+def dashboard(request):
+    return render(request, 'dashboard/index.html')
 
 def Agregar_ventas_Locales(request):
     data = {
@@ -63,31 +65,31 @@ def listarVentasLocales(request):
 
     return render(request, 'ventas/ListarVentaLocal.html', data)
 
-def agregarUsuarios(request):
-    data = {
-        'usuarios': listar_usuarios()
-    }
+# def agregarUsuarios(request):
+#     data = {
+#         'usuarios': listar_usuarios()
+#     }
 
-    if request.method== 'POST':
-        rut_usr = request.POST.get('Rut')
-        nombre = request.POST.get('Nombre')
-        apellido_p = request.POST.get('ApellidoP')
-        apellido_m = request.POST.get('ApellidoM')
-        direccion = request.POST.get('Direccion')
-        telefono = request.POST.get('Telefono')
-        correo = request.POST.get('Correo')
-        foto = request.FILES['foto'].read()
-        contrasena = request.POST.get('Contraseña')
-        rol = request.POST.get('Rol')
+#     if request.method== 'POST':
+#         rut_usr = request.POST.get('Rut')
+#         nombre = request.POST.get('Nombre')
+#         apellido_p = request.POST.get('ApellidoP')
+#         apellido_m = request.POST.get('ApellidoM')
+#         direccion = request.POST.get('Direccion')
+#         telefono = request.POST.get('Telefono')
+#         correo = request.POST.get('Correo')
+#         foto = request.FILES['foto'].read()
+#         contrasena = request.POST.get('Contraseña')
+#         rol = request.POST.get('Rol')
         
-        salida = agregar_usuarios(rut_usr, nombre, apellido_p, apellido_m, direccion, telefono, correo, foto, contrasena, rol)
-        if salida == 1:
-            data['mensaje'] = 'agregado correctamente'
-            return redirect('usuarios')
-        else:
-            data['mensaje'] = 'no se pudo agregar'
+#         salida = agregar_usuarios(rut_usr, nombre, apellido_p, apellido_m, direccion, telefono, correo, foto, contrasena, rol)
+#         if salida == 1:
+#             data['mensaje'] = 'agregado correctamente'
+#             return redirect('usuarios')
+#         else:
+#             data['mensaje'] = 'no se pudo agregar'
 
-    return render(request, "usuarios/listarUsuarios.html", data)
+#     return render(request, "usuarios/listarUsuarios.html", data)
 
 def agregarProducto(request):
     # data = {
@@ -95,8 +97,12 @@ def agregarProducto(request):
     # }
     # user = Usuario.objects.all()
     # data = {
-    #     'user': user
+    #      'user': user,
     # }
+    data = {
+        'mensaje1': "agregado correctamente",
+        'mensaje2': "no se ha podido guardar"
+    }
 
     if request.method == 'POST':
         nom_prod = request.POST.get('nombre')
@@ -108,17 +114,17 @@ def agregarProducto(request):
 
         salida = agregar_producto(nom_prod, precio_prod, desc_prod, stock_prod, usuarios_id, foto)
         if salida == 1:
-            data['mensaje'] = 'agregado correctamente'
+            data['mensaje1'] 
             return redirect('productos')
         else:
-            data['mensaje'] = 'no se ha podido guardar'
+            data['mensaje2']
         
-    return render(request, 'productos/agregarProducto.html')
+    return render(request, 'productos/agregarProducto.html', data)
 
 def agregarPedido(request):
     data = {
         'productos': listar_productos(),
-        'usuarios': listar_usuarios(),
+        'usuarios': Usuarios.objects.all(),
     }
 
     if request.method == 'POST':
@@ -142,6 +148,14 @@ def agregarPedido(request):
 
     return render(request, 'pedido/agregarPedido.html', data)
 
+def publicarpedido(request):
+    data = {
+        'pedido': listar_pedido,
+        'productos': listar_productos
+    }
+
+    return render(request, 'dashboard/pages/publicarproceso.html', data)   
+
 def listarPedido(request):
 
     data = {
@@ -159,30 +173,30 @@ def listarProducto(request):
 
     return render(request, 'productos/listarProductos.html', data)
 
-def listar_usuarios():
-    django_cursor = connection.cursor()
-    cursor = django_cursor.connection.cursor()
-    out_cur = django_cursor.connection.cursor()
+# def listar_usuarios():
+#     django_cursor = connection.cursor()
+#     cursor = django_cursor.connection.cursor()
+#     out_cur = django_cursor.connection.cursor()
 
-    cursor.callproc('FERIAFAST.SP_LISTAR_USUARIOS', [out_cur])
+#     cursor.callproc('FERIAFAST.SP_LISTAR_USUARIOS', [out_cur])
 
-    lista = []
-    for fila in out_cur:
-        data = {
-            'data': fila,
-            'foto':str(base64.b64encode(fila[8].read()), 'utf-8')
-        }
-        lista.append(data)
+#     lista = []
+#     for fila in out_cur:
+#         data = {
+#             'data': fila,
+#             'foto':str(base64.b64encode(fila[8].read()), 'utf-8')
+#         }
+#         lista.append(data)
         
-    return lista
+#     return lista
 
-def agregar_usuarios(rut_usr, nombre, apellido_p, apellido_m, direccion, telefono, correo, foto, contrasena, rol):
-    django_cursor = connection.cursor()
-    cursor = django_cursor.connection.cursor()
-    salida = cursor.var(cx_Oracle.NUMBER)
-    cursor.callproc('FERIAFAST.SP_AGREGAR_USUARIOS', [rut_usr, nombre, apellido_p, apellido_m, direccion, telefono, correo, foto, contrasena, rol, salida])
+# def agregar_usuarios(rut_usr, nombre, apellido_p, apellido_m, direccion, telefono, correo, foto, contrasena, rol):
+#     django_cursor = connection.cursor()
+#     cursor = django_cursor.connection.cursor()
+#     salida = cursor.var(cx_Oracle.NUMBER)
+#     cursor.callproc('FERIAFAST.SP_AGREGAR_USUARIOS', [rut_usr, nombre, apellido_p, apellido_m, direccion, telefono, correo, foto, contrasena, rol, salida])
 
-    return salida.getvalue()
+#     return salida.getvalue()
 
 
 def listar_productos():
@@ -289,14 +303,13 @@ def informeinterno(request):
         'proces_pedido': listar_proces_pedido(),
         'pedido': listar_pedido(),
         'listaprocesventa': DetallCompra.objects.all(),
-        'ventextran': VentLocal.objects.all(),
+        'ventlocal': VentLocal.objects.all(),
         'tran': Transporte.objects.all(),
         'ped': Pedido.objects.all(),
         'usu': Usuarios.objects.all(),
         
     }  
     return render(request, 'ventas/informeventalocal.html', data)
-
 
 def agregarMetodoPago(request):
     data = {
@@ -485,7 +498,7 @@ def editar_procesopedido(id_proc_pedido,estado_seguimiento):
 
 def ingresar_transporte(request):
     data = {
-        'usuarios': listar_usuarios(),
+        'usuarios': Usuario.objects.all(),
     }
 
     if request.method == 'POST':
@@ -575,3 +588,40 @@ def listcomunas():
         lista.append(fila)
         
     return lista
+    
+def ProcesoPedido(request):
+    data = {
+        'usuarios': listar_usuarios(),
+        'transporte': listartrans(),
+        'ped': Pedido.objects.all(),
+    }
+
+    if request.method == 'POST':
+        transportes = request.POST.get('iddetransporte')
+        pedido = request.POST.get('numeropedido')
+        estado_proceso = request.POST.get('numerocero')
+        estado_seguimiento = request.POST.get('numerocero')
+        estado_proces_venta = request.POST.get('numerocero')
+        data['mensaje'] = transportes
+        
+
+        salida = agregar_proces_pedido(transportes, pedido, estado_proceso, estado_seguimiento, estado_proces_venta)
+        
+        
+        if salida == 1:
+            data['mensaje'] = 'agregado correctamente'
+            
+        else:
+            data['mensaje'] = 'no se ha podido guardar'
+        
+    return render(request, 'pedido/proces_pedido.html', data)
+
+def agregar_proces_pedido(transportes, pedido, estado_proceso, estado_seguimiento, estado_proces_venta):
+    django_cursor = connection.cursor()
+    cursor = django_cursor.connection.cursor()
+    salida = cursor.var(cx_Oracle.NUMBER)
+    cursor.callproc('FERIAFAST.SP_PROCESO_PEDIDO', [transportes, pedido, estado_proceso, estado_seguimiento, estado_proces_venta, salida])
+
+    return salida.getvalue()
+
+

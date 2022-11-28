@@ -42,12 +42,23 @@
                     <form method="POST">
 
                         {% csrf_token %}
-                        {{ form.as_p }}
+                        <!-- <label for="id_email">Correo electronico:</label>
+                            {{ form.email }}
+                        <label for="id_username">Nombre de usuario:</label>
+                        {{ form.username }}
+                        <label for="id_nombres">Nombres:</label>
+                        {{ form.nombres }}
+                        <label for="id_nombres">Apellidos:</label>
+                        {{ form.apellidos }}
+                        <label for="id_nombres">Tipo de usuario:</label>
+                        {{ form.tipo_usuario }} -->
+                        {{form.as_p}}
+                        <br>
 
                         <div class="d-flex justify-content-center">
                             
                             <a href="{% url 'usuario:listado_usuarios' %}" class="btn btn-danger">Cancelar</a>
-                            <a  class="btn btn-primary" type="submit">Editar</a>
+                            <button class="btn btn-primary" type="submit">Editar</button>
                             <!-- <input type="reset" value="Cancelar" class="btn btn-secondary">
                             <input type="submit" value="Guardar" class="btn btn-primary"> -->
                         </div>

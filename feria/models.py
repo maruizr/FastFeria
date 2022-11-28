@@ -7,9 +7,12 @@
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 
+
+
+
 class Contratos(models.Model):
     id_contrat = models.AutoField(primary_key=True)
-    usuarios = models.ForeignKey('Usuarios', models.DO_NOTHING)
+    usuarios = models.ForeignKey('UsuarioUsuario', models.DO_NOTHING)
     emision_contrat = models.DateField()
     fin_contrat = models.DateField()
     estado = models.BooleanField()
@@ -18,14 +21,6 @@ class Contratos(models.Model):
     class Meta:
         managed = False
         db_table = 'contratos'
-
-
-class Db(models.Model):
-    drop_table_fastferia_saldos_field = models.CharField(db_column='drop table fastferia.saldos;', max_length=4000, blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it ended with '_'.
-
-    class Meta:
-        managed = False
-        db_table = 'db'
 
 
 class DetallCompra(models.Model):
@@ -42,9 +37,55 @@ class DetallCompra(models.Model):
         managed = False
         db_table = 'detall_compra'
 
+
+class DjangoAdminLog(models.Model):
+    action_time = models.DateTimeField()
+    object_id = models.TextField(blank=True, null=True)
+    object_repr = models.CharField(max_length=200, blank=True, null=True)
+    action_flag = models.IntegerField()
+    change_message = models.TextField(blank=True, null=True)
+    content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING, blank=True, null=True)
+    user = models.ForeignKey('UsuarioUsuario', models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'django_admin_log'
+
+
+class DjangoContentType(models.Model):
+    app_label = models.CharField(max_length=100, blank=True, null=True)
+    model = models.CharField(max_length=100, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'django_content_type'
+        unique_together = (('app_label', 'model'),)
+
+
+class DjangoMigrations(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    app = models.CharField(max_length=255, blank=True, null=True)
+    name = models.CharField(max_length=255, blank=True, null=True)
+    applied = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'django_migrations'
+
+
+class DjangoSession(models.Model):
+    session_key = models.CharField(primary_key=True, max_length=40)
+    session_data = models.TextField(blank=True, null=True)
+    expire_date = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'django_session'
+
+
 class MetodoPago(models.Model):
     id_pago = models.AutoField(primary_key=True)
-    usuarios = models.ForeignKey('Usuarios', models.DO_NOTHING)
+    usuarios = models.ForeignKey('UsuarioUsuario', models.DO_NOTHING)
     tipo_cuenta = models.CharField(max_length=20)
     numero_cuenta = models.BigIntegerField()
     tipo_banco = models.CharField(max_length=20)
@@ -61,7 +102,7 @@ class Pedido(models.Model):
     cantidad = models.IntegerField()
     fecha = models.DateField()
     descrip = models.CharField(max_length=200)
-    usuarios = models.ForeignKey('Usuarios', models.DO_NOTHING)
+    usuarios = models.ForeignKey('UsuarioUsuario', models.DO_NOTHING)
     productos = models.ForeignKey('Productos', models.DO_NOTHING, db_column='productos', blank=True, null=True)
     estado_admin = models.BooleanField()
     estado_productor = models.BooleanField()
@@ -107,7 +148,7 @@ class Productos(models.Model):
     precio_prod = models.IntegerField()
     desc_prod = models.CharField(max_length=200)
     stock_prod = models.IntegerField()
-    usuarios = models.ForeignKey('Usuarios', models.DO_NOTHING)
+    usuarios = models.ForeignKey('UsuarioUsuario', models.DO_NOTHING)
     foto = models.BinaryField(blank=True, null=True)
 
     class Meta:
@@ -129,7 +170,7 @@ class ReportMerma(models.Model):
     id_merma = models.AutoField(primary_key=True)
     fecha_merma = models.DateField()
     descrip_merma = models.CharField(max_length=40)
-    usuarios = models.ForeignKey('Usuarios', models.DO_NOTHING)
+    usuarios = models.ForeignKey('UsuarioUsuario', models.DO_NOTHING)
 
     class Meta:
         managed = False
@@ -154,7 +195,7 @@ class Reportes(models.Model):
     tip_report = models.CharField(max_length=15)
     user_report = models.CharField(max_length=15)
     descrip_report = models.CharField(max_length=30)
-    usuarios = models.ForeignKey('Usuarios', models.DO_NOTHING)
+    usuarios = models.ForeignKey('UsuarioUsuario', models.DO_NOTHING)
 
     class Meta:
         managed = False
@@ -163,26 +204,13 @@ class Reportes(models.Model):
 
 class Saldos(models.Model):
     id_saldo = models.AutoField(primary_key=True)
-    usuarios = models.ForeignKey('Usuarios', models.DO_NOTHING)
+    usuarios = models.ForeignKey('UsuarioUsuario', models.DO_NOTHING)
     recargas = models.ForeignKey(Recargas, models.DO_NOTHING, db_column='recargas', blank=True, null=True)
     saldo_total = models.BigIntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'saldos'
-
-
-class SdwErrDb(models.Model):
-    ora_err_number_field = models.FloatField(db_column='ora_err_number$', blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it ended with '_'.
-    ora_err_mesg_field = models.CharField(db_column='ora_err_mesg$', max_length=2000, blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it ended with '_'.
-    ora_err_rowid_field = models.TextField(db_column='ora_err_rowid$', blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it ended with '_'. This field type is a guess.
-    ora_err_optyp_field = models.CharField(db_column='ora_err_optyp$', max_length=2, blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it ended with '_'.
-    ora_err_tag_field = models.CharField(db_column='ora_err_tag$', max_length=2000, blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it ended with '_'.
-    drop_table_fastferia_saldos_field = models.CharField(db_column='drop table fastferia.saldos;', max_length=32767, blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it ended with '_'.
-
-    class Meta:
-        managed = False
-        db_table = 'sdw$err$_db'
 
 
 class Seguimiento(models.Model):
@@ -202,7 +230,7 @@ class Transporte(models.Model):
     tamano_trans = models.IntegerField()
     capacidad_trans = models.IntegerField()
     refrigeracion_trans = models.BooleanField()
-    usuarios = models.ForeignKey('Usuarios', models.DO_NOTHING)
+    usuarios = models.ForeignKey('UsuarioUsuario', models.DO_NOTHING)
     foto = models.BinaryField(blank=True, null=True)
     patente = models.CharField(max_length=10)
 
@@ -211,22 +239,22 @@ class Transporte(models.Model):
         db_table = 'transporte'
 
 
-class Usuarios(models.Model):
-    id_usr = models.AutoField(primary_key=True)
-    rut_usr = models.CharField(max_length=9, blank=True, null=True)
-    nombre = models.CharField(max_length=30)
-    apellido_p = models.CharField(max_length=30)
-    apellido_m = models.CharField(max_length=30)
-    direccion = models.CharField(max_length=100)
-    telefono = models.IntegerField()
-    correo = models.CharField(max_length=150)
-    foto = models.BinaryField(blank=True, null=True)
-    contrasena = models.CharField(max_length=40)
-    rol = models.IntegerField(blank=True, null=True)
+class UsuarioUsuario(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    password = models.CharField(max_length=128, blank=True, null=True)
+    username = models.CharField(unique=True, max_length=100, blank=True, null=True)
+    email = models.CharField(unique=True, max_length=254, blank=True, null=True)
+    nombres = models.CharField(max_length=200, blank=True, null=True)
+    apellidos = models.CharField(max_length=200, blank=True, null=True)
+    imagen = models.CharField(max_length=200, blank=True, null=True)
+    usuario_activo = models.BooleanField(blank=True, null=True)
+    usuario_administrador = models.BooleanField(blank=True, null=True)
+    last_login = models.DateTimeField(blank=True, null=True)
+    tipo_usuario = models.CharField(max_length=50, blank=True, null=True)
 
     class Meta:
         managed = False
-        db_table = 'usuarios'
+        db_table = 'usuario_usuario'
 
 
 class VentExtran(models.Model):
