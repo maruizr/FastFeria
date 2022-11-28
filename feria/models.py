@@ -148,7 +148,7 @@ class Productos(models.Model):
     precio_prod = models.IntegerField()
     desc_prod = models.CharField(max_length=200)
     stock_prod = models.IntegerField()
-    usuarios = models.ForeignKey('UsuarioUsuario', models.DO_NOTHING)
+    usuarios_id = models.ForeignKey('UsuarioUsuario', models.DO_NOTHING)
     foto = models.BinaryField(blank=True, null=True)
 
     class Meta:

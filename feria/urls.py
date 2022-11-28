@@ -6,7 +6,7 @@ from .views import *
 urlpatterns=[ 
     path('dashboard/', login_required(dashboard), name="dashboard"),
     path('dashboard/tables', login_required(tables), name="tables"),
-    path('index/', login_required(index), name="index"),
+    path('index/' ,login_required(index), name="index"),
     path('registro/', login_required(registro), name="registro"),
     path('AgregarVentaLocal/',login_required(Agregar_ventas_Locales), name="AgregarVentaLol"),
     path('agregar-producto/', login_required(agregarProducto), name="agregar-producto"),
@@ -24,5 +24,13 @@ urlpatterns=[
     path('informe-interno/', login_required(informeinterno), name="informeinterno"),
     path('Proceso-Pedido/', login_required(ProcesoPedido), name="Proceso-Pedido"),
     path('publicarpedido/', login_required(publicarpedido), name="publicarpedido"),
+    path('listar_productores/', login_required(listadoproductores), name="listar_productores"),
+    path('editar_productor/<int:id>/', login_required(Editarproductores), name="editar_productores"),
+    path('registrar_productor/', login_required(RegistrarProductor.as_view()), name="registrar_productores"),
+    path('eliminar_productor/<int:id>/', login_required(Eliminarproductor), name="eliminar_productores"),
+    path('ver_productos/<int:id>/', login_required(Verproductos), name="ver_productos"),
+    path('listar_externos/', login_required(listadoexternos), name="listar_externos"),
+    path('editar_externos/<int:id>/', login_required(Editarexternos), name="editar_externos"),
+     path('eliminar_externos/<int:id>/', login_required(Eliminarexternos), name="eliminar_externos"),
 
 ]

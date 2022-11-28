@@ -1,5 +1,5 @@
 from multiprocessing import connection
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from django.db import connection
 import cx_Oracle
@@ -7,7 +7,10 @@ import base64
 from django.core.files.base import ContentFile
 from .models import *
 from .forms import *
+from django.urls import reverse_lazy
 from usuario.models import Usuario
+from usuario.forms import FormularioUsuario
+from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 
 
 # Create your views here.
@@ -135,7 +138,7 @@ def agregarProducto(request):
 def agregarPedido(request):
     data = {
         'productos': listar_productos(),
-        'usuarios': Usuarios.objects.all(),
+        'usuarios': Usuario.objects.all(),
     }
 
     if request.method == 'POST':
@@ -647,3 +650,70 @@ def agregar_proces_pedido(transportes, pedido, estado_proceso, estado_seguimient
     return salida.getvalue()
 
 
+def listadoproductores(request):
+    productores = Usuario.objects.all()
+    
+    data = {
+        'productores': productores,
+    }
+    return render(request, 'productores/listar_productores.html',data)
+
+def Editarproductores(request, id):
+    usuario = get_object_or_404(Usuario, id=id)
+    data = {
+        'form': FormularioUsuario(instance=usuario)
+    }
+    if request.method == 'POST':
+        formulario = FormularioUsuario(data = request.POST, instance=usuario, files=request.FILES)
+        if formulario.is_valid():
+            formulario.save()
+            return redirect(to="listar_productores")
+        data["form"] = formulario
+    return render(request, 'productores/editar_productor.html',data)
+
+class RegistrarProductor(CreateView):
+    model = Usuario
+    form_class = FormularioUsuario
+    template_name = 'productores/registrar_productor.html'
+    success_url = reverse_lazy('listar_productores')
+
+def Eliminarproductor(request, id):
+    usuario = get_object_or_404(Usuario, id=id)
+    usuario.delete()
+    return redirect(to="listar_productores")
+
+def Verproductos(request,id):
+    productores = get_object_or_404(Usuario, id=id)
+    productos = Productos.objects.all()
+    data={
+        'productores': productores,
+        'productos' : listar_productos(),
+        'check': productos
+    }
+    return render(request, 'productores/ver_productos.html',data)
+
+def listadoexternos(request):
+    externos = Usuario.objects.all()
+    
+    data = {
+        'externos': externos,
+    }
+    return render(request, 'externos/listar_externos.html',data)
+
+def Editarexternos(request, id):
+    usuario = get_object_or_404(Usuario, id=id)
+    data = {
+        'form': FormularioUsuario(instance=usuario)
+    }
+    if request.method == 'POST':
+        formulario = FormularioUsuario(data = request.POST, instance=usuario, files=request.FILES)
+        if formulario.is_valid():
+            formulario.save()
+            return redirect(to="listar_externos")
+        data["form"] = formulario
+    return render(request, 'externos/editar_externos.html',data)
+
+def Eliminarexternos(request, id):
+    usuario = get_object_or_404(Usuario, id=id)
+    usuario.delete()
+    return redirect(to="listar_externos")

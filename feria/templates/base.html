@@ -58,7 +58,7 @@
   <header id="header" class="d-flex align-items-center">
     <div class="container d-flex align-items-center">
 
-      <h1 class="logo me-auto"><a href="{% url 'index' %}">
+      <h1 class="logo me-auto"><a href="{% url 'index'%}">
         <img src="{% static 'img/favicon.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
         FastFeria</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
@@ -71,7 +71,7 @@
           
           <!-- <li><a class="nav-link scrollto" href="{% url 'login'%}">Logout</a></li> -->
             {%if user.tipo_usuario == 'productor' or user.usuario_administrador == True %}
-              <li><a class="nav-link scrollto " href="{% url 'productos' %}"> Productos</a></li>
+                <li><a class="nav-link scrollto " href="{% url 'productos' %}">Productos</a></li>
             {%endif %}
             {% if user.tipo_usuario == 'consultor' or user.usuario_administrador == True %}
               <li><a class="nav-link scrollto " href="{% url 'Ventas Locales' %}"> Ventas</a></li>
