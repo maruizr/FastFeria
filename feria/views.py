@@ -284,14 +284,13 @@ def agregar_ventaLocal(proces_venta, nom_cli, ape_cli, email, direc_cli, num_cal
 def informeexterno(request):
 
     data = {
-        'usuarios': listar_usuarios(),
         'proces_pedido': listar_proces_pedido(),
         'pedido': listar_pedido(),
         'listaprocesventa': DetallCompra.objects.all(),
         'ventextran': VentExtran.objects.all(),
         'tran': Transporte.objects.all(),
         'ped': Pedido.objects.all(),
-        'usu': Usuarios.objects.all(),
+        
         
     }  
     return render(request, 'ventas/informeventaexterna.html', data)
@@ -299,21 +298,21 @@ def informeexterno(request):
 def informeinterno(request):
 
     data = {
-        'usuarios': listar_usuarios(),
         'proces_pedido': listar_proces_pedido(),
         'pedido': listar_pedido(),
         'listaprocesventa': DetallCompra.objects.all(),
         'ventlocal': VentLocal.objects.all(),
         'tran': Transporte.objects.all(),
         'ped': Pedido.objects.all(),
-        'usu': Usuarios.objects.all(),
+       
         
     }  
     return render(request, 'ventas/informeventalocal.html', data)
 
 def agregarMetodoPago(request):
     data = {
-        'usuarios': listar_usuarios(),
+        'mensaje1': "agregado correctamente",
+        'mensaje2': "no se ha podido guardar"
     }
 
     if request.method == 'POST':
@@ -332,10 +331,10 @@ def agregarMetodoPago(request):
         salida = agregar_saldo(usuarios_id, recargas, saldo_total)
         
         if salida == 1:
-            data['mensaje'] = 'agregado correctamente'
+            data['mensaje1'] 
             return redirect('agregarMetodoPago')
         else:
-            data['mensaje'] = 'no se ha podido guardar'
+            data['mensaje2'] 
         
     return render(request, 'pagos/agregarMetodoPago.html', data)
 
@@ -358,7 +357,8 @@ def agregar_saldo(usuarios_id, recargas, saldo_total):
 
 def recargadeSaldo(request):
     data = {
-        'usuarios': listar_usuarios(),
+        'mensaje1': "agregado correctamente",
+        'mensaje2': "no se ha podido guardar",
         'metodopagos': listar_metodopago(),
     }
 
@@ -370,10 +370,10 @@ def recargadeSaldo(request):
         
         salida = recargar_saldo(metodo_pago, saldo_recargado)
         if salida == 1:
-            data['mensaje'] = 'agregado correctamente'
+            data['mensaje1'] 
             return redirect('recargadeSaldo')
         else:
-            data['mensaje'] = 'no se ha podido guardar'
+            data['mensaje2'] 
         
     return render(request, 'pagos/recargarSaldo.html', data)
 
@@ -402,13 +402,13 @@ def listar_metodopago():
 
 def procesodeVenta(request):
     data = {
-        'usuarios': listar_usuarios(),
+        'Usuario': Usuario.objects.all(),
         'proces_pedido': listar_proces_pedido(),
         'pedido': listar_pedido(),
         'listaprocesventa': ProcesPedido.objects.all(),
         'tran': Transporte.objects.all(),
         'ped': Pedido.objects.all(),
-        'usu': Usuarios.objects.all(),
+        
         
     }  
     return render(request, 'ventas/procesoVenta.html', data)
@@ -441,7 +441,7 @@ def listar_pedido():
 
 def agregarProcesoVenta(request,id_proc_pedido):
     data = {
-        'usuarios': listar_usuarios(),
+        
         'idventa': ProcesPedido.objects.get(id_proc_pedido = id_proc_pedido),
         'ped': Pedido.objects.all(),
     }
@@ -498,7 +498,8 @@ def editar_procesopedido(id_proc_pedido,estado_seguimiento):
 
 def ingresar_transporte(request):
     data = {
-        'usuarios': Usuario.objects.all(),
+        'mensaje1': "agregado correctamente",
+        'mensaje2': "no se ha podido guardar"
     }
 
     if request.method == 'POST':
@@ -507,8 +508,10 @@ def ingresar_transporte(request):
         capacidad_trans = request.POST.get('capacidad')
         refri = request.POST.get('refri')
         if refri == "true":
+            data['mensaje1'] 
             refrigeracion_trans = 1
         else:
+            data['mensaje1'] 
             refrigeracion_trans = 0
         
         usuarios_id = request.POST.get('usuarios')
@@ -517,9 +520,10 @@ def ingresar_transporte(request):
 
         salida = agregar_transporte(tip_transporte, tamano_trans, capacidad_trans, refrigeracion_trans, usuarios_id, foto, patente)
         if salida == 1:
-            data['mensaje'] = 'agregado correctamente'
+            data['mensaje1'] 
+            
         else:
-            data['mensaje'] = 'no se ha podido guardar'
+            data['mensaje2']
         
     return render(request, 'transporte/ingresar-transporte.html', data)
 
@@ -591,7 +595,6 @@ def listcomunas():
     
 def ProcesoPedido(request):
     data = {
-        'usuarios': listar_usuarios(),
         'transporte': listartrans(),
         'ped': Pedido.objects.all(),
     }

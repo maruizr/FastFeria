@@ -20,12 +20,13 @@
                     {% if metodopagos %}
                         <option value="" selected="">---------</option>
                         {% for MedioPago in metodopagos %}
-              
+                    	{% if  user.id == MedioPago.1%}
                                 <option value="{{ MedioPago.0 }}">{{ MedioPago.4 }}-, {{ MedioPago.2 }} {{ MedioPago.3 }}</option>
-                       
+							{% else %}
+								<h1>No tienes metodos de pago registrado </h1>
+							{% endif %}
                         {% endfor %}
-                    {% else %}
-                        <h1>No tienes metodos de pago registrado </h1>
+                    
                     {% endif %}
                 </select>
                  
@@ -49,11 +50,7 @@
 
               <div class="row">
                 <div class="col-md-12 form-group mb-3">
-                    <select class="form-control" name="usuarios" id="usuarios">
-                        {% for u in usuarios %}
-                            <option value="{{ u.data.0 }}">{{ u.data.2 }}</option>
-                        {% endfor %}
-                    </select>
+                   <input style="display: none;" type="text" class="form-control" name="usuarios" id="usuarios" value="{{user.id}}" >
                 </div>
               </div>
 
