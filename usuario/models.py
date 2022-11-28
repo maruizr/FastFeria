@@ -38,6 +38,8 @@ class Usuario(AbstractBaseUser):
     usuario_activo = models.BooleanField(default=True)
     usuario_administrador = models.BooleanField(default=False)
     objects = UsuarioManager()
+    roles = (('productor','Productor'),('interno','Interno'),('externo','Externo'),('consultor','Consultor'),('transportista','Transportista'))
+    tipo_usuario = models.CharField(max_length=50,choices=roles,default='externo')
 
 
     USERNAME_FIELD = 'username'

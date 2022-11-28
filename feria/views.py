@@ -7,11 +7,17 @@ import base64
 from django.core.files.base import ContentFile
 from .models import *
 from .forms import *
+from usuario.models import Usuario
 
 
 # Create your views here.
 
 def index(request):
+    # user = Usuario.objects.all()
+    # data = {
+    #     'user' : user
+
+    # }
     return render(request, 'index.html')
 
 def login(request):
@@ -86,9 +92,13 @@ def agregarUsuarios(request):
     return render(request, "usuarios/listarUsuarios.html", data)
 
 def agregarProducto(request):
-    data = {
-        'usuarios': listar_usuarios(),
-    }
+    # data = {
+    #     'usuarios': listar_usuarios(),
+    # }
+    # user = Usuario.objects.all()
+    # data = {
+    #     'user': user
+    # }
 
     if request.method == 'POST':
         nom_prod = request.POST.get('nombre')
@@ -105,7 +115,7 @@ def agregarProducto(request):
         else:
             data['mensaje'] = 'no se ha podido guardar'
         
-    return render(request, 'productos/agregarProducto.html', data)
+    return render(request, 'productos/agregarProducto.html')
 
 def agregarPedido(request):
     data = {
