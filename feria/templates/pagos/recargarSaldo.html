@@ -54,12 +54,42 @@
                 </div>
               </div>
 
-              
+              <!-- Replace "test" with your own sandbox Business account app client ID -->
+              <script src="https://www.paypal.com/sdk/js?client-id=AU5Cw_OSWmDPsTC6kYMj9W1eUsSMk-Acx4enSuoURQcz9_RMPiZly_qE1Tyk7mVeCPFOH_EuooTTh0ZI&currency=USD"></script>
+               <!-- Set up a container element for the button -->
+                    <div id="paypal-button-container"></div>
+                <script>
+                 paypal.Buttons({
+                    // Sets up the transaction when a payment button is clicked
+                    createOrder: (data, actions) => {
+                      return actions.order.create({
+                        purchase_units: [{
+                          amount: {
+                            value: '77.44' // Can also reference a variable or function
+                          }
+                        }]
+                      });
+                    },
+                    // Finalize the transaction after payer approval
+                    onApprove: (data, actions) => {
+                      return actions.order.capture().then(function(orderData) {
+                        // Successful capture! For dev/demo purposes:
+                        console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                        const transaction = orderData.purchase_units[0].payments.captures[0];
+                        alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
+                        // When ready to go live, remove the alert and show a success message within this page. For example:
+                        // const element = document.getElementById('paypal-button-container');
+                        // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+                        // Or go to another URL:  actions.redirect('thank_you.html');
+                      });
+                    }
+                  }).render('#paypal-button-container');
+                </script>
 
               
               <div class="row justify-content-center">
                 <div class="col-md-5 form-group text-center">
-                  <input type="submit" value="Guardar" class="btn btn-block btn-primary rounded-0 py-2 px-4">
+                  <input type="submit" value="Recargar" class="btn btn-block btn-primary rounded-0 py-2 px-4">
                   <span class="submitting"></span>
                 </div>
               </div>
@@ -74,7 +104,7 @@
       </div>
     </div>
   </div>
-  
+    
 {% endblock %}
 {% block js %}
 <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
