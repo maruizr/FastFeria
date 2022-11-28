@@ -16,12 +16,12 @@
 									<tr>
 
 										<th><center>Producto</center></th>
-										<th><center>Cliente Extranjero</center></th>
+										<th><center>Cliente Local</center></th>
 										<th><center>Fecha</center></th>
 										<th><center>Cantidad</center></th>
 										<th><center>Precio C/U</center></th>
 										<th><center>Total Compra</center></th>
-										<th><center>Total Compra</center></th>
+										
 									</tr>
 								</thead>
 
@@ -29,42 +29,34 @@
 
 							        
 
-									{% if listaprocesventa %}
+									{% if ventlocal %}
 									{% for lista in listaprocesventa %}
 										
 										<tr>
-										<td><center>{{ lista.nom_producto }} </center></td>
-										{% if ventextran %}
-										{% for lista2 in ventextran %}
+										{% for lista2 in ventlocal %}
 											{% if lista.proces_venta == lista2.proces_venta %}
-											
+											    <td><center>{{ lista.nom_producto }} </center></td>
 												<td><center>{{ lista2.nom_cli }} </center></td>
+												<td><center>{{ lista.fecha_detall }}</center></td>
+												<td><center>${{ lista.cantidad }}</center></td>
+												<td><center>${{ lista.cost_producto }}</center></td>
+												<td><center>${{ lista.total_compra }}</center></td>
 										    {% endif %}
 										{% endfor %}
-										{% else %}
-
-										<h1>No hay procesos</h1>
-
-										{% endif %}
-										<td><center>{{ lista.fecha_detall }}</center></td>
-										<td><center>${{ lista.cantidad }}</center></td>
-										<td><center>${{ lista.cost_producto }}</center></td>
-										<td><center>${{ lista.total_compra }}</center></td>
 										
-										<td><span class="total-list">{{ lista.total_compra }}</span></td>
-									    
-									
 										
-									
 										
-								    
-									
 										</tr>
 										
 									{% endfor %}
 									{% else %}
-
-									<h1>No hay procesos</h1>
+                                    <td><center>* No hay procesos</center></td>
+									<td><center>- -</center></td>
+									<td><center>- -</center></td>
+									<td><center>- -</center></td>
+									<td><center>- -</center></td>
+									<td><center>- -</center></td>
+									
 
 									{% endif %}
 

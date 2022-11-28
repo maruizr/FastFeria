@@ -295,14 +295,13 @@ def informeinterno(request):
         'proces_pedido': listar_proces_pedido(),
         'pedido': listar_pedido(),
         'listaprocesventa': DetallCompra.objects.all(),
-        'ventextran': VentLocal.objects.all(),
+        'ventlocal': VentLocal.objects.all(),
         'tran': Transporte.objects.all(),
         'ped': Pedido.objects.all(),
         'usu': Usuarios.objects.all(),
         
     }  
     return render(request, 'ventas/informeventalocal.html', data)
-
 
 def agregarMetodoPago(request):
     data = {
@@ -581,3 +580,40 @@ def listcomunas():
         lista.append(fila)
         
     return lista
+    
+def ProcesoPedido(request):
+    data = {
+        'usuarios': listar_usuarios(),
+        'transporte': listartrans(),
+        'ped': Pedido.objects.all(),
+    }
+
+    if request.method == 'POST':
+        transportes = request.POST.get('iddetransporte')
+        pedido = request.POST.get('numeropedido')
+        estado_proceso = request.POST.get('numerocero')
+        estado_seguimiento = request.POST.get('numerocero')
+        estado_proces_venta = request.POST.get('numerocero')
+        data['mensaje'] = transportes
+        
+
+        salida = agregar_proces_pedido(transportes, pedido, estado_proceso, estado_seguimiento, estado_proces_venta)
+        
+        
+        if salida == 1:
+            data['mensaje'] = 'agregado correctamente'
+            
+        else:
+            data['mensaje'] = 'no se ha podido guardar'
+        
+    return render(request, 'pedido/proces_pedido.html', data)
+
+def agregar_proces_pedido(transportes, pedido, estado_proceso, estado_seguimiento, estado_proces_venta):
+    django_cursor = connection.cursor()
+    cursor = django_cursor.connection.cursor()
+    salida = cursor.var(cx_Oracle.NUMBER)
+    cursor.callproc('FERIAFAST.SP_PROCESO_PEDIDO', [transportes, pedido, estado_proceso, estado_seguimiento, estado_proces_venta, salida])
+
+    return salida.getvalue()
+
+

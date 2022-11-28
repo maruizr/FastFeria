@@ -16,15 +16,43 @@
       <div class="row portfolio-container">
         {% csrf_token %}
         {% for p in transporte %}
+		
+		
 
         <div class="col-lg-4 col-md-6 portfolio-item filter-app">
             {% if p.imagen %}
           <div class="portfolio-wrap">
             <img src="data:imagen/png;base64, {{p.imagen}}" class="img-fluid" alt="">
             <div class="portfolio-info">
-              
-              <h4>{{ p.data.1 }}</h4>
-              <p>{{ p.data.2 }}</p>
+              {% if p.data.1 == "29" %}
+              <h4>Frigorífico</h4>
+			  {% endif %}
+			  {% if p.data.1 == "30" %}
+              <h4>Ganadero</h4>
+			  {% endif %}
+			  {% if p.data.1 == "31" %}
+              <h4>Grúa Pluma</h4>
+			  {% endif %}
+			  {% if p.data.1 == "32" %}
+              <h4>Portacontenedor o Chasis</h4>
+			  {% endif %}
+			  {% if p.data.1 == "33" %}
+              <h4>Rampla Plana (Abierta)</h4>
+			  {% endif %}
+			  {% if p.data.1 == "35" %}
+              <h4>Side Lifter</h4>
+			  {% endif %}
+			  {% if p.data.1 == "36" %}
+              <h4>Tipo Furgón / Cerrado (Carga Seca)</h4>
+			  {% endif %}
+			  {% if p.data.1 == "37" %}
+              <h4>Tipo Sider (Cerrado con Lonas)</h4>
+			  {% endif %}
+			  {% if p.data.1 == "39" %}
+              <h4>Cama Baja "Cuello Cisne"/Escalonado</h4>
+			  {% endif %}
+              <p>Capacidad: {{ p.data.3 }}</p>
+			  <p>Patente: {{ p.data.7 }}</p>
               <div class="portfolio-links">
                 <a href="data:imagen/png;base64, {{p.imagen}}" data-gallery="portfolioGallery" class="portfolio-lightbox" title="App 1"><i class="bx bx-plus"></i></a>
                 <a href="#" title="More Details"><i class="bx bx-link"></i></a>
@@ -33,7 +61,8 @@
           </div>
           {% endif %}
         </div>
-        {% endfor %}
+        
+		{% endfor %}
       </div>
 
     </div>
