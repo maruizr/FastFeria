@@ -48,9 +48,12 @@ def EliminarUsuario(request, id):
 def Agregar_ventas_Locales(request):
     data = {
         'proceso_Venta': listar_procesoVenta(),
+<<<<<<< Updated upstream
         #'region': listregiones(),
         #'comuna': listcomunas()
         
+=======
+>>>>>>> Stashed changes
     }
 
     if request.method == 'POST':
@@ -451,13 +454,78 @@ def procesodeVenta(request):
         'Usuario': Usuario.objects.all(),
         'proces_pedido': listar_proces_pedido(),
         'pedido': listar_pedido(),
-        'listaprocesventa': ProcesPedido.objects.all(),
+        'listprocespedido': ProcesPedido.objects.all(),
         'tran': Transporte.objects.all(),
         'ped': Pedido.objects.all(),
+        'segui': Seguimiento.objects.all(),
         
         
     }  
+    est_seguimiento_condicion = request.POST.get('estadoseguimiento')
+    if est_seguimiento_condicion == "Preparando Pedido":
+            est_seguimiento = request.POST.get('estadoseguimiento')
+            pedido = request.POST.get('numeropedido')
+            proces_pedido = request.POST.get('numeroprocespedido')
+            id_proc_pedido = request.POST.get('numeroprocespedido')
+            salida = modificarseguimiento(id_proc_pedido)
+            salida = agregar_seguimiento(est_seguimiento, pedido, proces_pedido)
+            if salida == 1:
+                data['mensaje'] = 'agregado correctamente'
+            
+            else:
+                data['mensaje'] = 'no se ha podido guardar'
+            
+    if est_seguimiento_condicion == "En ruta":
+            est_seguimiento = request.POST.get('estadoseguimiento')
+            id_seguimiento = request.POST.get('idseguimiento')
+            salida = modificarseguimientoestado(id_seguimiento, est_seguimiento)
+            if salida == 1:
+                data['mensaje'] = 'agregado correctamente'
+            
+            else:
+                 data['mensaje'] = 'no se ha podido guardar'
+
+    if est_seguimiento_condicion == "Entregado":
+        est_seguimiento = request.POST.get('estadoseguimiento')
+        id_seguimiento = request.POST.get('idseguimiento')
+        salida = modificarseguimientoestado(id_seguimiento, est_seguimiento)
+        if salida == 1:
+            data['mensaje'] = 'agregado correctamente'
+            
+        else:
+                data['mensaje'] = 'no se ha podido guardar'
+    
+    if est_seguimiento_condicion == "Finalizado":
+        est_seguimiento = request.POST.get('estadoseguimiento')
+        id_seguimiento = request.POST.get('idseguimiento')
+        salida = modificarseguimientoestado(id_seguimiento, est_seguimiento)
+        if salida == 1:
+            data['mensaje'] = 'agregado correctamente'
+            
+        else:
+                data['mensaje'] = 'no se ha podido guardar'
+
+    
+    
+
+
     return render(request, 'ventas/procesoVenta.html', data)
+
+
+     
+def modificarseguimiento(id_proc_pedido):
+    django_cursor = connection.cursor()
+    cursor = django_cursor.connection.cursor()
+    salida = cursor.var(cx_Oracle.NUMBER)
+    cursor.callproc('FERIAFAST.SP_ProcesoPedidoUpdateSeguimientos', [id_proc_pedido, salida])
+
+def modificarseguimientoestado(id_seguimiento, est_seguimiento):
+    django_cursor = connection.cursor()
+    cursor = django_cursor.connection.cursor()
+    salida = cursor.var(cx_Oracle.NUMBER)
+    cursor.callproc('FERIAFAST.SP_SEGUIMIENTOESTADODEPEDIDO', [id_seguimiento, est_seguimiento, salida])
+
+
 
 def listar_proces_pedido():
     django_cursor = connection.cursor()
@@ -500,7 +568,7 @@ def agregarProcesoVenta(request,id_proc_pedido):
         estado_pago_transport = request.POST.get('numerocero')
         estado_venta = request.POST.get('numerocero')
         estado_detalle = request.POST.get('numerocero')
-        #--
+       
         id_proc_pedido = request.POST.get('id_proc_pedido2')
         transportes = request.POST.get('transportes2')
         pedido = request.POST.get('pedido2')
@@ -511,6 +579,7 @@ def agregarProcesoVenta(request,id_proc_pedido):
 
         salida = agregar_procesoventa(proces_pedido, estado_pago_cliente, estado_pago_product, estado_pago_transport, estado_venta, estado_detalle)
         salida = modificarprimer(id_proc_pedido)
+        
         if salida == 1:
             subject = "Agregado"
             message = "Has agregado un proceso de venta"
@@ -671,10 +740,15 @@ def ProcesoPedido(request):
         estado_proceso = request.POST.get('numerocero')
         estado_seguimiento = request.POST.get('numerocero')
         estado_proces_venta = request.POST.get('numerocero')
-        data['mensaje'] = transportes
+
+
+
+
+        
         
 
         salida = agregar_proces_pedido(transportes, pedido, estado_proceso, estado_seguimiento, estado_proces_venta)
+        
         
         
         if salida == 1:
@@ -699,6 +773,13 @@ def agregar_proces_pedido(transportes, pedido, estado_proceso, estado_seguimient
 
     return salida.getvalue()
 
+def agregar_seguimiento(est_seguimiento, pedido, proces_pedido):
+    django_cursor = connection.cursor()
+    cursor = django_cursor.connection.cursor()
+    salida = cursor.var(cx_Oracle.NUMBER)
+    cursor.callproc('FERIAFAST.SP_AGREGAR_Seguimiento', [est_seguimiento, pedido, proces_pedido, salida])
+
+    return salida.getvalue()
 
 def listadoproductores(request):
     productores = Usuario.objects.all()

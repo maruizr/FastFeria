@@ -18,7 +18,7 @@
               <div class="row mt-5">
                 <div class="col-md-8 form-group mb-3">
                   <label for="" class="col-form-label">Pedido *</label>
-                   <select class="form-control" name="numeropedido" id="numeropedido">
+                   <select class="form-control" name="tipotransporte" id="tipotransporte">
 				   <option value="">Seleccionar una opción</option>
                         {% if ped %}
 						{% for u in ped %}
@@ -56,8 +56,6 @@
 					{% endfor %}
 	                            <input style="display: none;" type="text" name="numerocero"  required="" id="numerocero" value="0" >
 								<input style="display: none;" type="text" name="iddetransporte"  required="" id="iddetransporte" >
-								
-								
 								
 								
                 </div>
