@@ -319,3 +319,61 @@ CREATE OR REPLACE PROCEDURE FERIAFAST.SP_ProcesoPedidoUpdateEstados (v_id_proc_p
 
     END SP_ProcesoPedidoUpdateEstados;
 	
+
+
+	
+CREATE OR REPLACE PROCEDURE FERIAFAST.SP_AGREGAR_Seguimiento (
+    v_est_seguimiento VARCHAR2,
+    v_pedido number,
+    v_proces_pedido number,
+    v_salida out number
+)
+IS 
+BEGIN
+    INSERT INTO seguimiento(est_seguimiento, pedido, proces_pedido )
+    VALUES(v_est_seguimiento, v_pedido, v_proces_pedido);
+    COMMIT;
+    v_salida:=1;
+
+    EXCEPTION
+
+    when OTHERS THEN
+        v_salida:=0;
+END;
+
+
+CREATE OR REPLACE PROCEDURE FERIAFAST.SP_ProcesoPedidoUpdateSeguimientos (v_id_proc_pedido NUMBER, v_salida OUT NUMBER)
+
+
+    AS 
+    BEGIN
+        UPDATE proces_pedido
+        SET     estado_seguimiento = 1
+            WHERE id_proc_pedido = v_id_proc_pedido;
+        COMMIT;
+		v_salida:=1;
+	EXCEPTION
+
+    WHEN OTHERS THEN
+        v_salida:=0;
+
+    END SP_ProcesoPedidoUpdateSeguimientos;
+
+
+CREATE OR REPLACE PROCEDURE FERIAFAST.SP_SeguimientoEstadodePedido (v_id_seguimiento NUMBER, v_est_seguimiento VARCHAR2, v_salida OUT NUMBER)
+
+    AS 
+    BEGIN
+        UPDATE seguimiento
+        SET     est_seguimiento = v_est_seguimiento
+            WHERE id_seguimiento = v_id_seguimiento;
+        COMMIT;
+		v_salida:=1;
+	EXCEPTION
+
+    WHEN OTHERS THEN
+        v_salida:=0;
+
+    END SP_SeguimientoEstadodePedido;
+	
+	
