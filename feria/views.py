@@ -475,7 +475,7 @@ def agregarProcesoVenta(request,id_proc_pedido):
         
 
         salida = agregar_procesoventa(proces_pedido, estado_pago_cliente, estado_pago_product, estado_pago_transport, estado_venta, estado_detalle)
-       
+        salida = modificarprimer(id_proc_pedido)
         if salida == 1:
             data['mensaje'] = 'agregado correctamente'
             return redirect('procesodeVenta')
@@ -494,6 +494,13 @@ def agregar_procesoventa(proces_pedido, estado_pago_cliente, estado_pago_product
 
     return salida.getvalue()
 
+def modificarprimer(id_proc_pedido):
+    django_cursor = connection.cursor()
+    cursor = django_cursor.connection.cursor()
+    salida = cursor.var(cx_Oracle.NUMBER)
+    cursor.callproc('FERIAFAST.SP_ProcesoPedidoUpdateEstados', [id_proc_pedido, salida])
+
+    return salida.getvalue()
 
 
 
