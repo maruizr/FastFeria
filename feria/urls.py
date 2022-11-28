@@ -5,6 +5,7 @@ from .views import *
 
 urlpatterns=[ 
     path('dashboard/', login_required(dashboard), name="dashboard"),
+    path('dashboard/tables', login_required(tables), name="tables"),
     path('index/', login_required(index), name="index"),
     path('registro/', login_required(registro), name="registro"),
     path('AgregarVentaLocal/',login_required(Agregar_ventas_Locales), name="AgregarVentaLol"),

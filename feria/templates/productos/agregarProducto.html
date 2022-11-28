@@ -46,8 +46,7 @@
 
               <div class="row">
                 <div class="col-md-12 form-group mb-3">
-                    <label name="usuarios">Usuario</label>
-                    <input type="text" class="form-control" name="usuarios" id="usuarios" value="{{user.id}}" readonly>
+                    <input type="hidden" class="form-control" name="usuarios" id="usuarios" value="{{user.id}}">
                 </div>
               </div>
 
@@ -63,8 +62,7 @@
             </form>
 
             <div id="form-message-warning mt-4"></div> 
-            <div id="form-message-success">{{mensaje}}
-            </div>
+            <div id="form-message-success">{{mensaje}}</div>
 
           </div>
         </div>

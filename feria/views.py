@@ -29,6 +29,17 @@ def registro(request):
 def dashboard(request):
     return render(request, 'dashboard/index.html')
 
+def tables(request):
+    data = {
+        'usuarios': Usuario.objects.all()
+    }
+    return render(request, 'dashboard/pages/tables.html', data)
+
+def EliminarUsuario(request, id):
+    usuario = get_object_or_404(Usuario, id=id)
+    usuario.delete()
+    return redirect(to="usuario:listado_usuarios")
+
 def Agregar_ventas_Locales(request):
     data = {
         'proceso_Venta': listar_procesoVenta(),
@@ -595,6 +606,7 @@ def listcomunas():
     
 def ProcesoPedido(request):
     data = {
+        'usuarios': Usuario.objects.all(),
         'transporte': listartrans(),
         'ped': Pedido.objects.all(),
     }
