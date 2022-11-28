@@ -1,161 +1,160 @@
-
-    {% extends 'base.html' %}
-    {% load static %}
-    {% block css %}
-    <link rel="stylesheet" href="{% static 'css/form-prod.css' %}">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
-    {% endblock %}
-    {% block content %}
-    <div class="content">
-        
-        <div class="container">
-          <div class="row align-items-stretch justify-content-center no-gutters">
-            <div class="col-md-7">
-              <div class="form h-100 contact-wrap p-5">
-                <h3 class="text-center">Agregar venta local</h3>
-                <form id="basic-form" action="" method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-                  <div class="row mt-5">
-                    <div class="col-md-8 form-group mb-3">
-                      <label for="nombre_cliente" class="col-form-label">Nombre Cliente *</label>
-                      <input type="text" class="form-control" name="nombre_cliente" id="nombre_cliente" placeholder="Nombre del cliente" required>
-                    </div>
-                    <div class="col-md-4 form-group mb-3">
-                      <label for="apellido_cliente" class="col-form-label">Apellido Cliente *</label>
-                      <input type="text" class="form-control" name="apellido_cliente" id="apellido_cliente"  placeholder="Apellido del cliente" required>
-                    </div>
-                    <div class="col-md-4 form-group mb-3">
-                        <label for="correo" class="col-form-label">Correo *</label>
-                        <input type="email" class="form-control" name="correo" id="correo"  placeholder="Email" required>
-                    </div>
-                    <div class="col-md-4 form-group mb-3">
-                        <label for="direccion" class="col-form-label">Direccion *</label>
-                        <input type="text" class="form-control" name="direccion" id="direccion"  placeholder="Direccion" required>
-                    </div>
-                    <div class="col-md-4 form-group mb-3">
-                        <label for="direccion" class="col-form-label">Numero Calle *</label>
-                        <input type="text" class="form-control" name="num_calle" id="num_calle"  placeholder="Numero calle" required>
-                    </div>
-                    <div class="col-md-4 form-group mb-3">
-                        <label for="direccion" class="col-form-label">Depto *</label>
-                        <input type="text" class="form-control" name="depto" id="depto"  placeholder="Departamento" required>
-                    </div>
-                    <div class="col-md-4 form-group mb-3">
-                        <label for="direccion" class="col-form-label">Region *</label>
-                        <input type="text" class="form-control" name="region" id="region"  placeholder="Region" required>
-                    </div>
-                    <div class="col-md-4 form-group mb-3">
-                        <label for="direccion" class="col-form-label">Comuna *</label>
-                        <input type="text" class="form-control" name="comuna" id="comuna"  placeholder="Comuna" required>
-                    </div>
-                  </div>
-        
-                  <div class="row">
-                    <div class="col-md-12 form-group mb-3">
-                        <select class="form-control" name="procesosventas" id="procesosventas" required>
-                            <option value="">Seleccionar un proceso de venta</option>
-                            {% for i in proceso_Venta %}
-                                <option value="{{i.0}}">{{i.1}}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                  </div>
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/form-prod.css' %}">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+{% endblock %}
+{% block content %}
+<div class="content">
     
-                  
-    
-                  
-                  <div class="row justify-content-center">
-                    <div class="col-md-5 form-group text-center">
-                      <input type="submit" value="Guardar" class="btn btn-block btn-primary rounded-0 py-2 px-4">
-                      <span class="submitting"></span>
-                    </div>
-                  </div>
-                </form>
-    
-                <div id="form-message-warning mt-4"></div> 
-                <div id="form-message-success">{{mensaje}}
+    <div class="container">
+      <div class="row align-items-stretch justify-content-center no-gutters">
+        <div class="col-md-7">
+          <div class="form h-100 contact-wrap p-5">
+            <h3 class="text-center">Agregar venta local</h3>
+            <form id="basic-form" action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+              <div class="row mt-5">
+                <div class="col-md-8 form-group mb-3">
+                  <label for="nombre_cliente" class="col-form-label">Nombre Cliente *</label>
+                  <input type="text" class="form-control" name="nombre_cliente" id="nombre_cliente" placeholder="Nombre del cliente" required>
                 </div>
-    
+                <div class="col-md-4 form-group mb-3">
+                  <label for="apellido_cliente" class="col-form-label">Apellido Cliente *</label>
+                  <input type="text" class="form-control" name="apellido_cliente" id="apellido_cliente"  placeholder="Apellido del cliente" required>
+                </div>
+                <div class="col-md-4 form-group mb-3">
+                    <label for="correo" class="col-form-label">Correo *</label>
+                    <input type="email" class="form-control" name="correo" id="correo"  placeholder="Email" required>
+                </div>
+                <div class="col-md-4 form-group mb-3">
+                    <label for="direccion" class="col-form-label">Direccion *</label>
+                    <input type="text" class="form-control" name="direccion" id="direccion"  placeholder="Direccion" required>
+                </div>
+                <div class="col-md-4 form-group mb-3">
+                    <label for="direccion" class="col-form-label">Numero Calle *</label>
+                    <input type="text" class="form-control" name="num_calle" id="num_calle"  placeholder="Numero calle" required>
+                </div>
+                <div class="col-md-4 form-group mb-3">
+                    <label for="direccion" class="col-form-label">Depto *</label>
+                    <input type="text" class="form-control" name="depto" id="depto"  placeholder="Departamento" required>
+                </div>
+                <div class="col-md-4 form-group mb-3">
+                    <label for="direccion" class="col-form-label">Region *</label>
+                    <input type="text" class="form-control" name="region" id="region"  placeholder="Region" required>
+                </div>
+                <div class="col-md-4 form-group mb-3">
+                    <label for="direccion" class="col-form-label">Comuna *</label>
+                    <input type="text" class="form-control" name="comuna" id="comuna"  placeholder="Comuna" required>
+                </div>
               </div>
+    
+              <div class="row">
+                <div class="col-md-12 form-group mb-3">
+                    <select class="form-control" name="procesosventas" id="procesosventas" required>
+                        <option value="">Seleccionar un proceso de venta</option>
+                        {% for i in proceso_Venta %}
+                            <option value="{{i.0}}">{{i.1}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+              </div>
+
+              
+
+              
+              <div class="row justify-content-center">
+                <div class="col-md-5 form-group text-center">
+                  <input type="submit" value="Guardar" class="btn btn-block btn-primary rounded-0 py-2 px-4">
+                  <span class="submitting"></span>
+                </div>
+              </div>
+            </form>
+
+            <div id="form-message-warning mt-4"></div> 
+            <div id="form-message-success">{{mensaje}}
             </div>
+
           </div>
         </div>
       </div>
-      <script>
-        $(document).ready(function() {
-          $("#basic-form").validate({
-            rules: {
-              nombre_cliente: {
-                required: true,
-                minlength: 3
-              },
-              apellido_cliente: {
-                required: true,
-                minlength: 3
-              },
-              direccion: {
-                required: true,
-                minlength: 3
-              },
-              num_calle: {
-                required: true,
-                number: true,
-                min: 0
-              },
-              depto: {
-                required: true,
-                number: true,
-                min: 0
-              },
-              region: {
-                required: true,
-              },
-              comuna: {
-                required: true,
-              },
-              procesosventas: {
-                required: true,
-              }
-            },
-            messages : {
-                nombre_cliente: {
-                required: "Debe ingresar el nombre del producto",
-                minlength: "Debe ingresar mínimo 3 cáracteres"
-              },
-              apellido_cliente: {
-                required: "Debe ingresar el apellido",
-              },
-              direccion: {
-                required: "Debe ingresar la dirección",
-                minlength: "Debe ingresar mínimo 20 cáracteres"
-              },
-              num_calle: {
-                required: "Debe ingresar el stock del producto",
-                number: "Debe ingresar cáracteres númericos",
-              },
-              depto: {
-                required: "Debe ingresar la imagen del producto"
-              },
-              region: {
-                required: "Debe ingresar su region"
-              },
-              comuna: {
-                required: "Debe ingresar su comuna"
-              },
-              procesosventas: {
-                required: "Debe seleccionar un proceso de venta",
-              }
-              
-            }
-          });
-        });
-      </script>
-    {% endblock %}
-    {% block js %}
-    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
-    <script src="{% static 'js/popper.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/jquery.validate.min.js' %}"></script>
-    <script src="{% static 'js/main.js' %}"></script>
-    {% endblock %}
+    </div>
+  </div>
+  <script>
+    $(document).ready(function() {
+      $("#basic-form").validate({
+        rules: {
+          nombre_cliente: {
+            required: true,
+            minlength: 3
+          },
+          apellido_cliente: {
+            required: true,
+            minlength: 3
+          },
+          direccion: {
+            required: true,
+            minlength: 3
+          },
+          num_calle: {
+            required: true,
+            number: true,
+            min: 0
+          },
+          depto: {
+            required: true,
+            number: true,
+            min: 0
+          },
+          region: {
+            required: true,
+          },
+          comuna: {
+            required: true,
+          },
+          procesosventas: {
+            required: true,
+          }
+        },
+        messages : {
+            nombre_cliente: {
+            required: "Debe ingresar el nombre del producto",
+            minlength: "Debe ingresar mínimo 3 cáracteres"
+          },
+          apellido_cliente: {
+            required: "Debe ingresar el apellido",
+          },
+          direccion: {
+            required: "Debe ingresar la dirección",
+            minlength: "Debe ingresar mínimo 20 cáracteres"
+          },
+          num_calle: {
+            required: "Debe ingresar el stock del producto",
+            number: "Debe ingresar cáracteres númericos",
+          },
+          depto: {
+            required: "Debe ingresar la imagen del producto"
+          },
+          region: {
+            required: "Debe ingresar su region"
+          },
+          comuna: {
+            required: "Debe ingresar su comuna"
+          },
+          procesosventas: {
+            required: "Debe seleccionar un proceso de venta",
+          }
+          
+        }
+      });
+    });
+  </script>
+{% endblock %}
+{% block js %}
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery.validate.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+{% endblock %}

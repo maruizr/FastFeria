@@ -7,10 +7,12 @@ import base64
 from django.core.files.base import ContentFile
 from .models import *
 from .forms import *
+from FastFeria import settings
 from django.urls import reverse_lazy
 from usuario.models import Usuario
 from usuario.forms import FormularioUsuario
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
+from django.core.mail import send_mail
 
 
 # Create your views here.
@@ -46,8 +48,8 @@ def EliminarUsuario(request, id):
 def Agregar_ventas_Locales(request):
     data = {
         'proceso_Venta': listar_procesoVenta(),
-        'region': listregiones(),
-        'comuna': listcomunas()
+        #'region': listregiones(),
+        #'comuna': listcomunas()
         
     }
 
@@ -63,10 +65,16 @@ def Agregar_ventas_Locales(request):
         comuna = request.POST.get('comuna')
         salida = agregar_ventaLocal(proceso_venta, nom_cli, ape_cli, email, direccion, num_calle, depto, region, comuna)
         if salida == 1:
-            data['mensaje'] = 'Se agrego la weaasdkfjhaskdjfhasdkjfh'
-            return redirect('ventas')
+            subject = "Agregado"
+            message = "Has agregado una venta local"
+            email_from = settings.EMAIL_HOST_USER
+            to_email =  [Usuario.email, 'fastferia3@gmail.com']
+            recipient_list = ["fastferia3@gmail.com"]
+            send_mail(subject, message, email_from, to_email, recipient_list)
+            data['mensaje'] = 'Se agregó la venta local'
+            return redirect('VentasLocales')
         else:
-            data['mensaje'] = 'no se agregojfh'
+            data['mensaje'] = 'no se agregó'
 
 
     return render(request, 'ventas/AgregarVentaLocal.html', data)
@@ -128,6 +136,12 @@ def agregarProducto(request):
 
         salida = agregar_producto(nom_prod, precio_prod, desc_prod, stock_prod, usuarios_id, foto)
         if salida == 1:
+            subject = "Agregado"
+            message = "Has agregado un producto"
+            email_from = settings.EMAIL_HOST_USER
+            to_email =  [Usuario.email, 'fastferia3@gmail.com']
+            recipient_list = ["fastferia3@gmail.com"]
+            send_mail(subject, message, email_from, to_email, recipient_list)
             data['mensaje1'] 
             return redirect('productos')
         else:
@@ -156,6 +170,12 @@ def agregarPedido(request):
 
         salida = agregar_pedido(tipo, cantidad, fecha, descrip, usuarios_id, productos, estado_admin, estado_productor, refrigeracion, estado_edit_user, estado_edit_admin)
         if salida == 1:
+            subject = "Agregado"
+            message = "Has agregado un pedido"
+            email_from = settings.EMAIL_HOST_USER
+            to_email =  [Usuario.email, 'fastferia3@gmail.com']
+            recipient_list = ["fastferia3@gmail.com"]
+            send_mail(subject, message, email_from, to_email, recipient_list)
             data['mensaje'] = 'agregado correctamente'
         else:
             data['mensaje'] = 'no se ha podido agregar'
@@ -345,6 +365,12 @@ def agregarMetodoPago(request):
         salida = agregar_saldo(usuarios_id, recargas, saldo_total)
         
         if salida == 1:
+            subject = "Agregado"
+            message = "Has agregado un metodo de pago"
+            email_from = settings.EMAIL_HOST_USER
+            to_email =  [Usuario.email, 'fastferia3@gmail.com']
+            recipient_list = ["fastferia3@gmail.com"]
+            send_mail(subject, message, email_from, to_email, recipient_list)
             data['mensaje1'] 
             return redirect('agregarMetodoPago')
         else:
@@ -384,6 +410,12 @@ def recargadeSaldo(request):
         
         salida = recargar_saldo(metodo_pago, saldo_recargado)
         if salida == 1:
+            subject = "Recargado"
+            message = "Has agregado recargado saldo"
+            email_from = settings.EMAIL_HOST_USER
+            to_email =  [Usuario.email, 'fastferia3@gmail.com']
+            recipient_list = ["fastferia3@gmail.com"]
+            send_mail(subject, message, email_from, to_email, recipient_list)
             data['mensaje1'] 
             return redirect('recargadeSaldo')
         else:
@@ -480,6 +512,12 @@ def agregarProcesoVenta(request,id_proc_pedido):
         salida = agregar_procesoventa(proces_pedido, estado_pago_cliente, estado_pago_product, estado_pago_transport, estado_venta, estado_detalle)
         salida = modificarprimer(id_proc_pedido)
         if salida == 1:
+            subject = "Agregado"
+            message = "Has agregado un proceso de venta"
+            email_from = settings.EMAIL_HOST_USER
+            to_email =  [Usuario.email, 'fastferia3@gmail.com']
+            recipient_list = ["fastferia3@gmail.com"]
+            send_mail(subject, message, email_from, to_email, recipient_list)
             data['mensaje'] = 'agregado correctamente'
             return redirect('procesodeVenta')
         else:
@@ -529,6 +567,12 @@ def ingresar_transporte(request):
         capacidad_trans = request.POST.get('capacidad')
         refri = request.POST.get('refri')
         if refri == "true":
+            subject = "Ingresado"
+            message = "Has ingresado un nuevo transporte"
+            email_from = settings.EMAIL_HOST_USER
+            to_email =  [Usuario.email, 'fastferia3@gmail.com']
+            recipient_list = ["fastferia3@gmail.com"]
+            send_mail(subject, message, email_from, to_email, recipient_list)
             data['mensaje1'] 
             refrigeracion_trans = 1
         else:
@@ -634,6 +678,12 @@ def ProcesoPedido(request):
         
         
         if salida == 1:
+            subject = "Agregado"
+            message = "Agregado correctamente"
+            email_from = settings.EMAIL_HOST_USER
+            to_email =  [Usuario.email, 'fastferia3@gmail.com']
+            recipient_list = ["fastferia3@gmail.com"]
+            send_mail(subject, message, email_from, to_email, recipient_list)
             data['mensaje'] = 'agregado correctamente'
             
         else:

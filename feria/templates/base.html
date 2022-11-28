@@ -74,7 +74,7 @@
                 <li><a class="nav-link scrollto " href="{% url 'productos' %}">Productos</a></li>
             {%endif %}
             {% if user.tipo_usuario == 'consultor' or user.usuario_administrador == True %}
-              <li><a class="nav-link scrollto " href="{% url 'Ventas Locales' %}"> Ventas</a></li>
+              <li><a class="nav-link scrollto " href="{% url 'VentasLocales' %}"> Ventas</a></li>
             {%endif %}
 
 
