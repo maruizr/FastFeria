@@ -10,11 +10,12 @@
         <div class="container mt-3">
             <h2>Listado de Ventas Locales</h2>
             <div class="mb-5 mt-2 text-center">
-                <a class="btn btn-block btn-primary rounded-0 py-2 px-4" href="{% url 'AgregarVentaLol' %}" style="float: right;">Agregar producto</a>
+                <a class="btn btn-block btn-primary rounded-3 py-2 px-4" href="{% url 'AgregarVentaLol' %}" style="float: right;">Nueva venta Local</a>
             </div>
             <table class=" col-md-5 table">
                 <tr>
-                    <th>Proceso de venta</th>
+                    <th>Id venta Local</th>
+        
                     <th>Nombre Cliente </th>
                     <th>Apellido </th>
                     <th>Correo</th>
@@ -28,15 +29,19 @@
         
                 {% for i in venta_Local %}
                     <tr>
-                        <td>{{i.data.1}}</td>
-                        <td>{{i.data.2}}</td>
-                        <td>{{i.data.3}}</td>
-                        <td>{{i.data.4}}</td>
-                        <td>{{i.data.5}}</td>
-                        <td>{{i.data.6}}</td>
-                        <td>{{i.data.7}}</td>
-                        <td>{{i.data.8}}</td>
-                        <td>{{i.data.9}}</td>
+                        <td>{{i.id_vent_loc}}</td>
+                        <td>{{i.nom_cli}}</td>
+                        <td>{{i.ape_cli}}</td>
+                        <td>{{i.email}}</td>
+                        <td>{{i.direc_cli}}</td>
+                        <td>{{i.num_calle}}</td>
+                        <td>{{i.depto}}</td>
+                        <td>{{i.region}}</td>
+                        <td>{{i.comuna}}</td>
+                        <td>
+                            <a href="{% url 'editar_ventaLocal' i.id_vent_loc%}" class="btn btn-block btn-primary rounded-3 py-0.5 px-1"> Editar</a>
+                            <a href="{% url 'eliminar_ventaLocal' i.id_vent_loc%}" class="btn btn-block btn-danger rounded-3 py-0.5 px-1"> Eliminar</a>
+                        </td>
                     </tr>
                 {% endfor %}
             </table>

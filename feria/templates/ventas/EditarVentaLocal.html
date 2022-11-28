@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/form-prod.css' %}">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+{% endblock %}
+{% block content %}
+<div class="content">
+    
+    <div class="container">
+      <div class="row align-items-stretch justify-content-center no-gutters">
+        <div class="col-md-7">
+          <div class="form h-100 contact-wrap p-5">
+            <h3 class="text-center">Modificar Venta Local</h3>
+            <form id="basic-form" action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{form.as_p}}
+                <div class="d-flex justify-content-center">
+                            
+                    <a href="{% url 'VentasLocales'  %}" class="btn btn-danger">Cancelar</a>
+                    <button class="btn btn-primary" type="submit" >Editar</button>
+                    <!-- <input type="reset" value="Cancelar" class="btn btn-secondary">
+                    <input type="submit" value="Guardar" class="btn btn-primary"> -->
+                </div>
+            </form>
+
+            <div id="form-message-warning mt-4"></div> 
+            <div id="form-message-success">{{mensaje}}</div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    $(document).ready(function() {
+      $("#basic-form").validate({
+        rules: {
+          nombre: {
+            required: true,
+            minlength: 3
+          },
+          precio: {
+            required: true,
+            number: true,
+            min: 300
+          },
+          descripcion: {
+            required: true,
+            minlength: 20
+          },
+          stock: {
+            required: true,
+            number: true,
+            min: 0
+          },
+          foto: {
+            required: true
+          },
+          user: {
+            required: true,
+          }
+        },
+        messages : {
+          nombre: {
+            required: "Debe ingresar el nombre del producto",
+            minlength: "Debe ingresar mínimo 3 cáracteres"
+          },
+          precio: {
+            required: "Debe ingresar el precio",
+            number: "Debe ingresar cáracteres númericos",
+            min: "Debe ser un precio mayor a 300"
+          },
+          descripcion: {
+            required: "Debe ingresar una descripción del producto",
+            minlength: "Debe ingresar mínimo 20 cáracteres"
+          },
+          stock: {
+            required: "Debe ingresar el stock del producto",
+            number: "Debe ingresar cáracteres númericos",
+            min: "Debe ser un stock mayor a 0"
+          },
+          foto: {
+            required: "Debe ingresar la imagen del producto"
+          },
+          user: {
+            required: "Debe seleccionar una opción"
+          }
+        }
+      });
+    });
+  </script>
+{% endblock %}
+{% block js %}
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery.validate.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+{% endblock %}

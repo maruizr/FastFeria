@@ -31,6 +31,8 @@ urlpatterns=[
     path('ver_productos/<int:id>/', login_required(Verproductos), name="ver_productos"),
     path('listar_externos/', login_required(listadoexternos), name="listar_externos"),
     path('editar_externos/<int:id>/', login_required(Editarexternos), name="editar_externos"),
-     path('eliminar_externos/<int:id>/', login_required(Eliminarexternos), name="eliminar_externos"),
+    path('eliminar_externos/<int:id>/', login_required(Eliminarexternos), name="eliminar_externos"),
+    path('editar-ventaLocal/<int:id_vent_loc>/', login_required(EditarVentaLocal), name="editar_ventaLocal"),
+    path('eliminar_ventaLocal/<int:id_vent_loc>/', login_required(EliminarVentaLocal), name="eliminar_ventaLocal"),
 
 ]

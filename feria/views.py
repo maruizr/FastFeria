@@ -80,9 +80,9 @@ def Agregar_ventas_Locales(request):
     return render(request, 'ventas/AgregarVentaLocal.html', data)
 
 def listarVentasLocales(request):
-
+    venta_Local = VentLocal.objects.all()
     data = {
-        'venta_Local': listar_ventaLocal(request)
+        'venta_Local': venta_Local
     }
 
     return render(request, 'ventas/ListarVentaLocal.html', data)
@@ -767,3 +767,22 @@ def Eliminarexternos(request, id):
     usuario = get_object_or_404(Usuario, id=id)
     usuario.delete()
     return redirect(to="listar_externos")
+
+
+def EditarVentaLocal(request, id_vent_loc):
+    venta = get_object_or_404(VentLocal, id_vent_loc=id_vent_loc)
+    data = {
+        'form': FormularioVentaLocal(instance=venta)
+    }
+    if request.method == 'POST':
+        formulario = FormularioVentaLocal(data= request.POST, instance = venta, files=request.FILES)
+        if formulario.is_valid():
+            formulario.save()
+            return redirect(to="VentasLocales")
+        data["form"] = formulario
+    return render (request, 'ventas/EditarVentaLocal.html', data)
+
+def EliminarVentaLocal(request, id_vent_loc):
+    venta = get_object_or_404(VentLocal, id_vent_loc=id_vent_loc)
+    venta.delete()
+    return redirect(to="VentasLocales")
