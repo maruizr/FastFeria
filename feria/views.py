@@ -20,6 +20,9 @@ def login(request):
 def registro(request):
     return render(request, 'registration/registro.html')
 
+def dashboard(request):
+    return render(request, 'dashboard/index.html')
+
 def Agregar_ventas_Locales(request):
     data = {
         'proceso_Venta': listar_procesoVenta(),

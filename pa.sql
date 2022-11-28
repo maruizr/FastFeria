@@ -270,3 +270,33 @@ IS
 BEGIN
     OPEN transporte FOR SELECT * FROM transporte;
 END;
+
+CREATE OR REPLACE PROCEDURE FERIAFAST.SP_ELIMINAR_PRODUCTO (id_prod NUMBER)
+AS 
+BEGIN
+    UPDATE ejemplar 
+    set estado = 'disponible' 
+    WHERE id_ejem IN (  SELECT e.id_ejem FROM ejemplar E
+                        INNER JOIN detalle_solicitud_prestamo DSP
+                        ON (e.id_ejem = dsp.id_ejem)
+                        WHERE numero_solicitud IN (   select dsp.numero_solicitud from detalle_solicitud_prestamo dsp
+                        inner join prestamo p
+                        on (dsp.numero_solicitud = p.numero_solicitud)
+                        where p.rut_usr = v_rut_usr));
+        
+    DELETE FROM detalle_solicitud_prestamo
+    WHERE numero_solicitud IN (   select dsp.numero_solicitud from detalle_solicitud_prestamo dsp
+                    inner join prestamo p
+                    on (dsp.numero_solicitud = p.numero_solicitud)
+                    where p.rut_usr = v_rut_usr);
+
+    DELETE FROM prestamo
+    WHERE rut_usr = v_rut_usr;
+        
+    DELETE FROM solicitud_prestamo 
+    WHERE usuario_rut_usr = v_rut_usr;
+        
+    DELETE FROM usuario
+    WHERE rut_usr = v_rut_usr;
+    COMMIT;
+END SP_USUARIO_DELETE;
