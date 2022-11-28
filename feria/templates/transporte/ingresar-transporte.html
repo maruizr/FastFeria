@@ -54,11 +54,7 @@
               </div>
               <div class="row">
                 <div class="col-md-12 form-group mb-3">
-                    <select class="form-control" name="usuarios" id="usuarios">
-                        {% for u in usuarios %}
-                            <option value="{{ u.data.0 }}">{{ u.data.2 }}</option>
-                        {% endfor %}
-                    </select>
+                    <input style="display: none;" type="text" class="form-control" name="usuarios" id="usuarios" value="{{user.id}}" >
                 </div>
               </div>
               <div class="row justify-content-center">
@@ -68,7 +64,9 @@
                 </div>
               </div>
             </form>
-
+<div id="form-message-warning mt-4"></div> 
+            <div id="form-message-success">{{mensaje}}
+            </div>
             
             </div>
 
