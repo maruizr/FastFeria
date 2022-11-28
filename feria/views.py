@@ -97,8 +97,12 @@ def agregarProducto(request):
     # }
     # user = Usuario.objects.all()
     # data = {
-    #     'user': user
+    #      'user': user,
     # }
+    data = {
+        'mensaje1': "agregado correctamente",
+        'mensaje2': "no se ha podido guardar"
+    }
 
     if request.method == 'POST':
         nom_prod = request.POST.get('nombre')
@@ -110,12 +114,12 @@ def agregarProducto(request):
 
         salida = agregar_producto(nom_prod, precio_prod, desc_prod, stock_prod, usuarios_id, foto)
         if salida == 1:
-            data['mensaje'] = 'agregado correctamente'
+            data['mensaje1'] 
             return redirect('productos')
         else:
-            data['mensaje'] = 'no se ha podido guardar'
+            data['mensaje2']
         
-    return render(request, 'productos/agregarProducto.html')
+    return render(request, 'productos/agregarProducto.html', data)
 
 def agregarPedido(request):
     data = {
