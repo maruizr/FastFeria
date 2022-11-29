@@ -34,6 +34,7 @@ def registro(request):
 def dashboard(request):
     return render(request, 'dashboard/index.html')
 
+<<<<<<< Updated upstream
 def tables(request,id):
     usuario = get_object_or_404(Usuario, id=id)
     users = Usuario.objects.all()
@@ -47,13 +48,13 @@ def tables(request,id):
             formulario.save()
             return redirect(to="listar_externos")
         data["form"] = formulario
+=======
+def tables(request):
+    data = {
+        'usuarios': Usuario.objects.all()
+    }
+>>>>>>> Stashed changes
     return render(request, 'dashboard/pages/tables.html', data)
-    
-
-def EliminarUsuario(request, id):
-    usuario = get_object_or_404(Usuario, id=id)
-    usuario.delete()
-    return redirect(to="usuario:listado_usuarios")
 
 def Agregar_ventas_Locales(request):
     data = {
@@ -337,12 +338,6 @@ def agregarMetodoPago(request):
         salida = agregar_saldo(usuarios_id, recargas, saldo_total)
         
         if salida == 1:
-            subject = "Agregado"
-            message = "Has agregado un metodo de pago"
-            email_from = settings.EMAIL_HOST_USER
-            to_email =  [Usuario.email, 'fastferia3@gmail.com']
-            recipient_list = ["fastferia3@gmail.com"]
-            send_mail(subject, message, email_from, to_email, recipient_list)
             data['mensaje1'] 
             return redirect('agregarMetodoPago')
         else:
@@ -382,12 +377,6 @@ def recargadeSaldo(request):
         
         salida = recargar_saldo(metodo_pago, saldo_recargado)
         if salida == 1:
-            subject = "Recargado"
-            message = "Has agregado recargado saldo"
-            email_from = settings.EMAIL_HOST_USER
-            to_email =  [Usuario.email, 'fastferia3@gmail.com']
-            recipient_list = ["fastferia3@gmail.com"]
-            send_mail(subject, message, email_from, to_email, recipient_list)
             data['mensaje1'] 
             return redirect('recargadeSaldo')
         else:
@@ -421,15 +410,17 @@ def listar_metodopago():
 
 def procesodeVenta(request):
     data = {
-        'usuario': Usuario.objects.all(),
+        'Usuario': Usuario.objects.all(),
         'proces_pedido': listar_proces_pedido(),
         'pedido': listar_pedido(),
         'listprocespedido': ProcesPedido.objects.all(),
         'tran': Transporte.objects.all(),
         'ped': Pedido.objects.all(),
-        'segui': Seguimiento.objects.all(),
-        'productos': listar_productos(),
+<<<<<<< Updated upstream
+        'usu': Usuario.objects.all(),
+=======
         
+>>>>>>> Stashed changes
         
     }  
     est_seguimiento_condicion = request.POST.get('estadoseguimiento')
@@ -602,12 +593,6 @@ def ingresar_transporte(request):
         capacidad_trans = request.POST.get('capacidad')
         refri = request.POST.get('refri')
         if refri == "true":
-            subject = "Ingresado"
-            message = "Has ingresado un nuevo transporte"
-            email_from = settings.EMAIL_HOST_USER
-            to_email =  [Usuario.email, 'fastferia3@gmail.com']
-            recipient_list = ["fastferia3@gmail.com"]
-            send_mail(subject, message, email_from, to_email, recipient_list)
             data['mensaje1'] 
             refrigeracion_trans = 1
         else:
@@ -695,7 +680,10 @@ def listcomunas():
     
 def ProcesoPedido(request):
     data = {
+<<<<<<< HEAD
         'usuarios': Usuario.objects.all(),
+=======
+>>>>>>> 0fd9a3c6c08cc2243a956482638da7cf1f3d60e8
         'transporte': listartrans(),
         'ped': Pedido.objects.all(),
     }

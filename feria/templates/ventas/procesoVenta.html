@@ -34,11 +34,9 @@
 										<td><center>{{ lista.pedido.tipo }} </center></td>
 										<td><center>{{ lista.pedido.cantidad }}</center></td>
 										<td><center>{{ lista.pedido.fecha }}</center></td>
-										<td><center>{{ lista.pedido.usuarios.nombres }}</center></td>
-										{% if productos.usuarios_id == usuario.id %}
-											<td><center>{{ lista.pedido.usuarios.nombres }}</center></td>
-										{%endif%}	
-										<td><center>{{ lista.transportes.usuarios.nombres }}</center></td>
+										<td><center>{{ lista.pedido.Usuario.nombre }}</center></td>
+										<td><center>{{ lista.pedido.productos.Usuario.nombre }}</center></td>
+										<td><center>{{ lista.transportes.Usuario.nombre }}</center></td>
 											{% if lista.estado_proces_venta == False %}
 												<td><center><a class="btn btn-primary" href="{% url 'agregarProcesoVenta' lista.id_proc_pedido %}">Crear proceso de venta</a></center></td>
 											{% else %}
@@ -126,12 +124,7 @@
 									{% endfor %}
 									{% else %}
 
-										<td><center>* No hay procesos</center></td>
-										<td><center>- -</center></td>
-										<td><center>- -</center></td>
-										<td><center>- -</center></td>
-										<td><center>- -</center></td>
-										<td><center>- -</center></td>
+									<h1>No hay procesos</h1>
 
 									{% endif %}
 								
