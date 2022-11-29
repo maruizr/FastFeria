@@ -79,8 +79,8 @@ def Agregar_ventas_Locales(request):
             subject = "Agregado"
             message = "Has agregado una venta local"
             email_from = settings.EMAIL_HOST_USER
-            to_email =  [Usuario.email, 'fastferia3@gmail.com']
-            recipient_list = ["fastferia3@gmail.com"]
+            to_email =  [Usuario.email, 'feriafastoficial@gmail.com']
+            recipient_list = ["feriafastoficial@gmail.com"]
             send_mail(subject, message, email_from, to_email, recipient_list)
             data['mensaje'] = 'Se agregó la venta local'
             return redirect('VentasLocales')
@@ -158,8 +158,8 @@ def agregarPedido(request):
             subject = "Agregado"
             message = "Has agregado un pedido"
             email_from = settings.EMAIL_HOST_USER
-            to_email =  [Usuario.email, 'fastferia3@gmail.com']
-            recipient_list = ["fastferia3@gmail.com"]
+            to_email =  [Usuario.email, 'feriafastoficial@gmail.com']
+            recipient_list = ["feriafastoficial@gmail.com"]
             send_mail(subject, message, email_from, to_email, recipient_list)
             data['mensaje'] = 'agregado correctamente'
         else:
@@ -340,8 +340,8 @@ def agregarMetodoPago(request):
             subject = "Agregado"
             message = "Has agregado un metodo de pago"
             email_from = settings.EMAIL_HOST_USER
-            to_email =  [Usuario.email, 'fastferia3@gmail.com']
-            recipient_list = ["fastferia3@gmail.com"]
+            to_email =  [Usuario.email, 'feriafastoficial@gmail.com']
+            recipient_list = ["feriafastoficial@gmail.com"]
             send_mail(subject, message, email_from, to_email, recipient_list)
             data['mensaje1'] 
             return redirect('agregarMetodoPago')
@@ -385,8 +385,8 @@ def recargadeSaldo(request):
             subject = "Recargado"
             message = "Has agregado recargado saldo"
             email_from = settings.EMAIL_HOST_USER
-            to_email =  [Usuario.email, 'fastferia3@gmail.com']
-            recipient_list = ["fastferia3@gmail.com"]
+            to_email =  [Usuario.email, 'feriafastoficial@gmail.com']
+            recipient_list = ["feriafastoficial@gmail.com"]
             send_mail(subject, message, email_from, to_email, recipient_list)
             data['mensaje1'] 
             return redirect('recargadeSaldo')
@@ -550,8 +550,8 @@ def agregarProcesoVenta(request,id_proc_pedido):
             subject = "Agregado"
             message = "Has agregado un proceso de venta"
             email_from = settings.EMAIL_HOST_USER
-            to_email =  [Usuario.email, 'fastferia3@gmail.com']
-            recipient_list = ["fastferia3@gmail.com"]
+            to_email =  [Usuario.email, 'feriafastoficial@gmail.com']
+            recipient_list = ["feriafastoficial@gmail.com"]
             send_mail(subject, message, email_from, to_email, recipient_list)
             data['mensaje'] = 'agregado correctamente'
             return redirect('procesodeVenta')
@@ -605,8 +605,8 @@ def ingresar_transporte(request):
             subject = "Ingresado"
             message = "Has ingresado un nuevo transporte"
             email_from = settings.EMAIL_HOST_USER
-            to_email =  [Usuario.email, 'fastferia3@gmail.com']
-            recipient_list = ["fastferia3@gmail.com"]
+            to_email =  [Usuario.email, 'feriafastoficial@gmail.com']
+            recipient_list = ["feriafastoficial@gmail.com"]
             send_mail(subject, message, email_from, to_email, recipient_list)
             data['mensaje1'] 
             refrigeracion_trans = 1
@@ -721,8 +721,8 @@ def ProcesoPedido(request):
             subject = "Agregado"
             message = "Agregado correctamente"
             email_from = settings.EMAIL_HOST_USER
-            to_email =  [Usuario.email, 'fastferia3@gmail.com']
-            recipient_list = ["fastferia3@gmail.com"]
+            to_email =  [Usuario.email, 'feriafastoficial@gmail.com']
+            recipient_list = ["feriafastoficial@gmail.com"]
             send_mail(subject, message, email_from, to_email, recipient_list)
             data['mensaje'] = 'agregado correctamente'
             
