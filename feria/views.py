@@ -689,6 +689,12 @@ def listcomunas():
     return lista
     
 #Vistas y procedimientos productores
+def perfilproductor(request):
+    data={
+        'productos' : listar_productos(),
+    }
+    return render (request, 'productores/perfil-productor.html', data)
+
 def listadoproductores(request):
     productores = Usuario.objects.all()
     

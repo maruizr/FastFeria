@@ -17,7 +17,7 @@
        {%endif %}
 	   </div>
       </div>
-{%if user.usuario_administrador == True %}
+      {%if user.tipo_usuario == 'transportista' or user.usuario_administrador == True%}
       <div class="row portfolio-container">
         {% csrf_token %}
         {% for p in transporte %}

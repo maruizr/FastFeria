@@ -69,38 +69,22 @@
           <li><a class="nav-link scrollto" href="{% url 'index' %}">Inicio</a></li>
           
           <!-- <li><a class="nav-link scrollto" href="{% url 'login'%}">Logout</a></li> -->
-            {%if user.tipo_usuario == 'productor' or user.usuario_administrador == True %}
+            {%if user.tipo_usuario == 'externo' or user.usuario_administrador == True %}
                 <li><a class="nav-link scrollto " href="{% url 'productos' %}">Productos</a></li>
             {%endif %}
             {% if user.tipo_usuario == 'consultor' or user.usuario_administrador == True %}
               <li><a class="nav-link scrollto " href="{% url 'ventas-locales' %}">Ventas</a></li>
             {%endif %}
+            {% if user.tipo_usuario == 'transportista' or user.usuario_administrador == True %}
             <li><a class="nav-link scrollto " href="{% url 'listar-transporte' %}">Transporte</a></li>
-			{% if user.usuario_administrador == True %}
-			<li><a class="nav-link scrollto " href="{% url 'proceso-venta' %}">Proceso Ventas</a></li>
-			{%endif %}
+            {% endif %}
+            {% if user.usuario_administrador == True %}
+            <li><a class="nav-link scrollto " href="{% url 'proceso-venta' %}">Proceso Ventas</a></li>
+            {%endif %}
 
-          <!-- <li><a class="nav-link scrollto" href="#team">Team</a></li>
-          <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
-            <ul>
-              <li><a href="#">Drop Down 1</a></li>
-              <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
-                <ul>
-                  <li><a href="#">Deep Drop Down 1</a></li>
-                  <li><a href="#">Deep Drop Down 2</a></li>
-                  <li><a href="#">Deep Drop Down 3</a></li>
-                  <li><a href="#">Deep Drop Down 4</a></li>
-                  <li><a href="#">Deep Drop Down 5</a></li>
-                </ul>
-              </li>
-              <li><a href="#">Drop Down 2</a></li>
-              <li><a href="#">Drop Down 3</a></li>
-              <li><a href="#">Drop Down 4</a></li>
-            </ul>
-          </li>
-          <li><a class="nav-link scrollto" href="#contact">Contact</a></li> -->
+          
           {% if request.user.is_authenticated %}
-            <li><a class="nav-link scrollto" href="">{{ user.username | upper }}</a></li>
+            <li><a class="nav-link scrollto" href="{% url 'perfil-productor' %}">{{ user.username | upper }}</a></li>
             <li><a class="getstarted scrollto" href="{% url 'logout'%}">Logout</a></li>
           {% else %}
             <li><a class="getstarted scrollto" href="{% url 'login'%}">Iniciar sesion</a></li>

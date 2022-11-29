@@ -25,6 +25,7 @@ urlpatterns=[
     path('registrar-productor/', login_required(RegistrarProductor.as_view()), name="registrar-productores"),
     path('eliminar-productor/<int:id>/', login_required(Eliminarproductor), name="eliminar-productores"),
     path('ver-productos/<int:id>/', login_required(Verproductos), name="ver-productos"),
+    path('perfil-productor/', login_required(perfilproductor), name="perfil-productor"),
     path('listar-externos/', login_required(listadoexternos), name="lista-externos"),
     path('editar-externos/<int:id>/', login_required(Editarexternos), name="editar-externos"),
     path('eliminar-externos/<int:id>/', login_required(Eliminarexternos), name="eliminar-externos"),

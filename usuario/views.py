@@ -27,10 +27,10 @@ class RegistrarUsuario(CreateView):
 def EditarUsuario(request, id):
     usuario = get_object_or_404(Usuario, id=id)
     data = {
-        'form': FormularioEditUsuario(instance=usuario)
+        'form': FormularioUsuario(instance=usuario)
     }
     if request.method == 'POST':
-        formulario = FormularioEditUsuario(data = request.POST, instance=usuario, files=request.FILES)
+        formulario = FormularioUsuario(data = request.POST, instance=usuario, files=request.FILES)
         if formulario.is_valid():
             formulario.save()
             return redirect(to="usuario:listado_usuarios")
