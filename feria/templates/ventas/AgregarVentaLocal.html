@@ -37,8 +37,8 @@
                     <input type="text" class="form-control" name="num_calle" id="num_calle"  placeholder="Numero calle" required>
                 </div>
                 <div class="col-md-4 form-group mb-3">
-                    <label for="direccion" class="col-form-label">Depto *</label>
-                    <input type="text" class="form-control" name="depto" id="depto"  placeholder="Departamento" required>
+                    <label for="direccion" class="col-form-label">Depto </label>
+                    <input type="text" class="form-control" name="depto" id="depto"  placeholder="Departamento">
                 </div>
                 <div class="col-md-4 form-group mb-3">
                     <label for="direccion" class="col-form-label">Region *</label>
@@ -99,7 +99,7 @@
             min: 0
           },
           depto: {
-            required: true,
+            required: false,
             number: true,
             min: 0
           },

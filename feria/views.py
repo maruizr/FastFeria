@@ -75,8 +75,6 @@ def Agregar_ventas_Locales(request):
             return redirect('ventas-locales')
         else:
             data['mensaje'] = 'no se agregó'
-
-
     return render(request, 'ventas/AgregarVentaLocal.html', data)
 
 def listarVentasLocales(request):
