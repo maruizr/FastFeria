@@ -683,10 +683,11 @@ def listcomunas():
         
     return lista
     
-def ProcesoPedido(request):
+def ProcesoPedido(request, id):
     data = {
         'usuarios': Usuario.objects.all(),
         'transporte': listartrans(),
+        'transporte2': Transporte.objects.get(id_trans = id),
         'ped': Pedido.objects.all(),
     }
 

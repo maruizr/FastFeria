@@ -34,28 +34,58 @@
 				
 				<div class="row">
                 <div class="col-md-6 form-group mb-3">
-                    <label for="" class="col-form-label">Transportes * </label>
-					<select value="test" class="form-control" name="imagenes" id="combobox" onchange="cargar_imagen(this.value)">
-					<option value="">Seleccionar una opción</option>
-							{% for u in transporte %}
-						
-								<option  value="{{u.imagen}}">{{u.data.2}}</option>
-							
-								{% endfor %}
-							</select>
+                    <label for="" class="col-form-label">Información del transporte subastado </label>
+				
+					
 								
 							
 				
                 </div>
 				
                 </div>
-				<div class="col-md-6 form-group mb-3">
-                    <img  width="250" height="220" id="myimage"/>
-					{% for u in transporte %}
+				<div class="col-md-12 form-group mb-3">
+                    
+					{% for p in transporte %}
+					{% if p.data.0 ==  transporte2.id_trans%}
+					<input style="display: none;" type="text" name="iddetransporte"  required="" id="iddetransporte" value="{{p.data.0}}">
+									{% if p.data.1 == "29" %}
+              Tipo Camion: Frigorífico
+			  {% endif %}
+			  {% if p.data.1 == "30" %}
+              Tipo Camion: Ganadero
+			  {% endif %}
+			  {% if p.data.1 == "31" %}
+              Tipo Camion: Grúa Pluma
+			  {% endif %}
+			  {% if p.data.1 == "32" %}
+              Tipo Camion: Portacontenedor o Chasis
+			  {% endif %}
+			  {% if p.data.1 == "33" %}
+              Tipo Camion: Rampla Plana (Abierta)
+			  {% endif %}
+			  {% if p.data.1 == "35" %}
+              Tipo Camion: Side Lifter
+			  {% endif %}
+			  {% if p.data.1 == "36" %}
+              Tipo Camion: Tipo Furgón / Cerrado (Carga Seca)
+			  {% endif %}
+			  {% if p.data.1 == "37" %}
+              Tipo Camion: Tipo Sider (Cerrado con Lonas)
+			  {% endif %}
+			  {% if p.data.1 == "39" %}
+              Tipo Camion: Cama Baja "Cuello Cisne" /Escalonado
+			  {% endif %}
+			  <br/>
+              Capacidad: {{ p.data.3 }}
+			  <br/>
+			  
+			  Patente: {{ p.data.7 }}
+			  <img src="data:imagen/png;base64, {{p.imagen}}" class="img-fluid" alt="">
 									<a href="data:imagen/png;base64, {{p.imagen}}" ></a>
+									{% endif %}
 					{% endfor %}
 	                            <input style="display: none;" type="text" name="numerocero"  required="" id="numerocero" value="0" >
-								<input style="display: none;" type="text" name="iddetransporte"  required="" id="iddetransporte" >
+								
 								
 								
                 </div>
