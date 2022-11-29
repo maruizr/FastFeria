@@ -5,6 +5,12 @@ from .forms import FormularioUsuario,FormularioEditUsuario
 from .models import Usuario
 # Create your views here.
 
+def VerU(request):
+    data = {
+        'usuarios': Usuario.objects.all(),
+    }
+    return render(request, 'usuarios/ver.html', data)
+
 class ListadoUsuarios(ListView):
     model = Usuario
     template_name = 'usuarios/listar_usuarios.html'
