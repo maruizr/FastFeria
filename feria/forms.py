@@ -5,7 +5,7 @@ class FormularioVentaLocal(forms.ModelForm):
 
     class Meta:
         model = VentLocal
-        fields = ('nom_cli', 'ape_cli', 'email', 'direc_cli','num_calle', 'depto', 'region', 'comuna')
+        fields = ('nom_cli', 'ape_cli', 'email', 'direc_cli','num_calle', 'region', 'comuna')
         widgets ={
             'nom_cli': forms.TextInput(
                 attrs={
@@ -29,11 +29,6 @@ class FormularioVentaLocal(forms.ModelForm):
                 attrs={
                     'class':'form-control',
                     'placeholder':'Ingrese su nombre de usuario'
-                }
-            ),
-            'depto': forms.TextInput(
-                attrs={
-                    'class':'form-control',
                 }
             ),
             'num_calle': forms.TextInput(
