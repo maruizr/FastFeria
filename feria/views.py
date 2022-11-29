@@ -34,11 +34,21 @@ def registro(request):
 def dashboard(request):
     return render(request, 'dashboard/index.html')
 
-def tables(request):
+def tables(request,id):
+    usuario = get_object_or_404(Usuario, id=id)
+    users = Usuario.objects.all()
     data = {
-        'usuarios': Usuario.objects.all()
+        'form': FormularioUsuario(instance=usuario),
+        'users' : users
     }
+    if request.method == 'POST':
+        formulario = FormularioUsuario(data = request.POST, instance=usuario, files=request.FILES)
+        if formulario.is_valid():
+            formulario.save()
+            return redirect(to="listar_externos")
+        data["form"] = formulario
     return render(request, 'dashboard/pages/tables.html', data)
+    
 
 def EliminarUsuario(request, id):
     usuario = get_object_or_404(Usuario, id=id)
@@ -48,9 +58,10 @@ def EliminarUsuario(request, id):
 def Agregar_ventas_Locales(request):
     data = {
         'proceso_Venta': listar_procesoVenta(),
-        #'region': listregiones(),
-        #'comuna': listcomunas()
+        # 'region': listregiones(),
+        # 'comuna': listcomunas()
         
+
     }
 
     if request.method == 'POST':
@@ -410,7 +421,7 @@ def listar_metodopago():
 
 def procesodeVenta(request):
     data = {
-        'Usuario': Usuario.objects.all(),
+        'usuario': Usuario.objects.all(),
         'proces_pedido': listar_proces_pedido(),
         'pedido': listar_pedido(),
         'listprocespedido': ProcesPedido.objects.all(),
@@ -464,11 +475,6 @@ def procesodeVenta(request):
             
         else:
                 data['mensaje'] = 'no se ha podido guardar'
-
-    
-    
-
-
     return render(request, 'ventas/procesoVenta.html', data)
 
 

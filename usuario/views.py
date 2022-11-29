@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
-from .forms import FormularioUsuario
+from .forms import FormularioUsuario,FormularioEditUsuario
 from .models import Usuario
 # Create your views here.
 
@@ -21,10 +21,23 @@ class RegistrarUsuario(CreateView):
 def EditarUsuario(request, id):
     usuario = get_object_or_404(Usuario, id=id)
     data = {
-        'form': FormularioUsuario(instance=usuario)
+        'form': FormularioEditUsuario(instance=usuario)
     }
     if request.method == 'POST':
-        formulario = FormularioUsuario(data = request.POST, instance=usuario, files=request.FILES)
+        formulario = FormularioEditUsuario(data = request.POST, instance=usuario, files=request.FILES)
+        if formulario.is_valid():
+            formulario.save()
+            return redirect(to="usuario:listado_usuarios")
+        data["form"] = formulario
+    return render(request, 'usuarios/editar_usuario.html',data)
+
+def EditarPassUsuario(request, id):
+    usuario = get_object_or_404(Usuario, id=id)
+    data = {
+        'form': FormularioPassUsuario(instance=usuario)
+    }
+    if request.method == 'POST':
+        formulario = FormularioPassUsuario(data = request.POST, instance=usuario, files=request.FILES)
         if formulario.is_valid():
             formulario.save()
             return redirect(to="usuario:listado_usuarios")
