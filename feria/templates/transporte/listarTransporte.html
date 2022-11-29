@@ -8,11 +8,16 @@
 <section id="portfolio" class="portfolio">
     <div class="container">
 
-      <div class="section-title">
+     <div class="section-title">
         <h2>Transporte</h2>
-        <p>Aquí se encuentran todos los tipos de camiones a subastar.</p>
+        <p>Aquí podrás encontrar toda los transportes disponibles que se ofrecen.</p>
+        <div class="mb-5 mt-2 text-center">
+		{%if user.tipo_usuario == 'transportista' or user.usuario_administrador == True%}
+          <a class="btn btn-block btn-primary rounded-0 py-2 px-4" href="{% url 'ingresar-transporte' %}" style="float: right;">Agregar transporte</a>
+       {%endif %}
+	   </div>
       </div>
-
+{%if user.usuario_administrador == True %}
       <div class="row portfolio-container">
         {% csrf_token %}
         {% for p in transporte %}
@@ -66,7 +71,7 @@
         
 		{% endfor %}
       </div>
-
+{% endif %}
     </div>
   </section><!-- End Portfolio Section -->
 {% endblock %}
