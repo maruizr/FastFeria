@@ -21,7 +21,7 @@
     
     
     <div class="table-stats order-table ov-h">
-        <a class="btn btn-primary" href="{%url 'registrar_productores'%}" >Nuevo cliente</a>
+        <a class="btn btn-primary" href="{%url 'registrar-productores'%}" >Nuevo cliente</a>
         <table class="table">
             <thead>
                 <tr>
@@ -42,8 +42,8 @@
                             <td> {{p.nombres}}</td>
                             <td> {{p.tipo_usuario}}</td>
                             <td>
-                                <a href="{% url 'eliminar_externos' p.id%}" class="btn btn-danger">Eliminar</a>
-                                <a href="{%url 'editar_externos' p.id%}" class="btn btn-primary">Editar</a>
+                                <a href="{% url 'eliminar-externos' p.id%}" class="btn btn-danger">Eliminar</a>
+                                <a href="{%url 'editar-externos' p.id%}" class="btn btn-primary">Editar</a>
                             </td>
                         </tr>
                     {%endif%}

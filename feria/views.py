@@ -300,7 +300,7 @@ def procesodeVenta(request):
                 data['mensaje'] = 'agregado correctamente'
             
             else:
-                 data['mensaje'] = 'no se ha podido guardar'
+                data['mensaje'] = 'no se ha podido guardar'
 
     if est_seguimiento_condicion == "Entregado":
         est_seguimiento = request.POST.get('estadoseguimiento')
@@ -310,7 +310,7 @@ def procesodeVenta(request):
             data['mensaje'] = 'agregado correctamente'
             
         else:
-                data['mensaje'] = 'no se ha podido guardar'
+            data['mensaje'] = 'no se ha podido guardar'
     
     if est_seguimiento_condicion == "Finalizado":
         est_seguimiento = request.POST.get('estadoseguimiento')
@@ -320,7 +320,7 @@ def procesodeVenta(request):
             data['mensaje'] = 'agregado correctamente'
             
         else:
-                data['mensaje'] = 'no se ha podido guardar'
+            data['mensaje'] = 'no se ha podido guardar'
     return render(request, 'ventas/procesoVenta.html', data)
 
 def modificarseguimiento(id_proc_pedido):
@@ -703,7 +703,7 @@ def Editarproductores(request, id):
         formulario = FormularioUsuario(data = request.POST, instance=usuario, files=request.FILES)
         if formulario.is_valid():
             formulario.save()
-            return redirect(to="listar_productores")
+            return redirect(to="listar-productores")
         data["form"] = formulario
     return render(request, 'productores/editar_productor.html',data)
 
@@ -711,12 +711,12 @@ class RegistrarProductor(CreateView):
     model = Usuario
     form_class = FormularioUsuario
     template_name = 'productores/registrar_productor.html'
-    success_url = reverse_lazy('listar_productores')
+    success_url = reverse_lazy('listar-productores')
 
 def Eliminarproductor(request, id):
     usuario = get_object_or_404(Usuario, id=id)
     usuario.delete()
-    return redirect(to="listar_productores")
+    return redirect(to="listar-productores")
 
 def Verproductos(request,id):
     productores = get_object_or_404(Usuario, id=id)

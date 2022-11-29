@@ -4,9 +4,7 @@ from django.contrib.auth.decorators import login_required
 from .views import *
 
 urlpatterns=[ 
-    path('dashboard/tables/<int:id>/', login_required(tables), name="tables"),
     path('index/' ,login_required(index), name="index"),
-    path('registro/', login_required(registro), name="registro"),
     path('agregar-venta-local/',login_required(Agregar_ventas_Locales), name="agregar-venta-local"),
     path('agregar-producto/', login_required(agregarProducto), name="agregar-producto"),
     path('productos/', login_required(listarProducto), name="productos"),
@@ -22,8 +20,7 @@ urlpatterns=[
     path('informe-externo/', login_required(informeexterno), name="informe-externo"),
     path('informe-interno/', login_required(informeinterno), name="informe-interno"),
     path('proceso-pedido/<int:id>', login_required(ProcesoPedido), name="proceso-pedido"),
-    path('publicar-pedido/', login_required(publicarpedido), name="publicar-pedido"),
-    path('listar-productor/', login_required(listadoproductores), name="listar-productores"),
+    path('listar-productores/', login_required(listadoproductores), name="listar-productores"),
     path('editar-productor/<int:id>/', login_required(Editarproductores), name="editar-productores"),
     path('registrar-productor/', login_required(RegistrarProductor.as_view()), name="registrar-productores"),
     path('eliminar-productor/<int:id>/', login_required(Eliminarproductor), name="eliminar-productores"),
