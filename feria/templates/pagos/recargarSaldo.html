@@ -11,7 +11,7 @@
         <div class="col-md-7">
           <div class="form h-100 contact-wrap p-5">
             <h3 class="text-center">Recargar Saldo</h3>
-            <form action="" method="POST" enctype="multipart/form-data">
+            <form id="basic-form" action="" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
               <div class="row mt-5">
                 <div class="col-md-12 form-group mb-3">
@@ -104,6 +104,8 @@
       </div>
     </div>
   </div>
+
+  
     
 {% endblock %}
 {% block js %}
@@ -112,4 +114,24 @@
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
 <script src="{% static 'js/jquery.validate.min.js' %}"></script>
 <script src="{% static 'js/main.js' %}"></script>
+<script>
+  $(document).ready(function() {
+    $("#basic-form").validate({
+      rules: {
+        saldorecargado: {
+          required: true,
+          number: true,
+          min: 300
+        }
+      },
+      messages : {
+        saldorecargado: {
+          required: "Debe ingresar el monto",
+          number: "Debe ingresar cáracteres númericos",
+          min: "Debe ser un monto mayor a 100"
+        }
+      }
+    });
+  });
+</script>
 {% endblock %}

@@ -10,7 +10,7 @@
         <div class="col-md-7">
           <div class="form h-100 contact-wrap p-5">
             <h3 class="text-center">Ingresar Transporte</h3>
-            <form action="" method="POST" enctype="multipart/form-data">
+            <form id="basic-form" action="" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
               <div class="row mt-5">
                 <div class="col-md-6 form-group mb-3">
@@ -29,17 +29,17 @@
                     </select>
                 <div class="col-md-6 form-group mb-3">
                   <label for="" class="col-form-label">Cubicaje (m³) *</label>
-                  <input type="number" min="1" class="form-control" name="tamano" id="tamano" placeholder="m³">
+                  <input type="number" min="1" class="form-control" name="ntamano" id="tamano" placeholder="m³">
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-6 form-group mb-3">
                   <label for="" class="col-form-label">Capacidad de carga útil (Kg) *</label>
-                  <input type="number" min="1" class="form-control" name="capacidad" id="capacidad" placeholder="Kg">
+                  <input type="number" min="1" class="form-control" name="ncapacidad" id="capacidad" placeholder="Kg">
                 </div>
                 <div class="col-md-6 form-group mb-3">
                   <label for="" class="col-form-label">Patente *</label>
-                  <input type="text" class="form-control" name="patente" id="patente" maxlength="6" style="text-transform:uppercase" placeholder="XXXX00">
+                  <input type="text" class="form-control" name="npatente" id="patente" maxlength="6" style="text-transform:uppercase" placeholder="XXXX00">
                 </div>
                 <div class="col-md-6 form-group mb-3">
                   ¿Refrigerado?
@@ -82,4 +82,59 @@
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
 <script src="{% static 'js/jquery.validate.min.js' %}"></script>
 <script src="{% static 'js/main.js' %}"></script>
+<script>
+  $(document).ready(function() {
+    $("#basic-form").validate({
+      rules: {
+        tipot: {
+          required: true,
+        },
+        ntamano: {
+          required: true,
+          number: true,
+          min: 3
+        },
+        ncapacidad: {
+          required: true,
+          number: true,
+          minlength: 1
+        },
+        npatente: {
+          required: true,
+          minlength: 6
+        },
+        foto: {
+          required: true
+        },
+        user: {
+          required: true,
+        }
+      },
+      messages : {
+        tipot: {
+          required: "Debe seleccionar el tipo de transporte",
+        },
+        ntamano: {
+          required: "Debe ingresar el cubicaje",
+          number: "Debe ingresar cáracteres númericos",
+          min: "Debe ser un cubicaje mayor a 3"
+        },
+        ncapacidad: {
+          required: "Debe ingresar la capacidad del transporte",
+          minlength: "Debe ingresar mínimo 1 cáracter"
+        },
+        npatente: {
+          required: "Debe ingresar patente del vehículo",
+          min: "Debe ingresar una patente válida"
+        },
+        foto: {
+          required: "Debe ingresar la imagen del transporte"
+        },
+        user: {
+          required: "Debe seleccionar una opción"
+        }
+      }
+    });
+  });
+</script>
 {% endblock %}
