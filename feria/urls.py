@@ -34,5 +34,6 @@ urlpatterns=[
     path('eliminar_externos/<int:id>/', login_required(Eliminarexternos), name="eliminar_externos"),
     path('editar-ventaLocal/<int:id_vent_loc>/', login_required(EditarVentaLocal), name="editar_ventaLocal"),
     path('eliminar_ventaLocal/<int:id_vent_loc>/', login_required(EliminarVentaLocal), name="eliminar_ventaLocal"),
+    path('detallecompra/', login_required(detallecompra), name="detallecompra"),
 
 ]

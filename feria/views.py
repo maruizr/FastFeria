@@ -34,7 +34,6 @@ def registro(request):
 def dashboard(request):
     return render(request, 'dashboard/index.html')
 
-<<<<<<< Updated upstream
 def tables(request,id):
     usuario = get_object_or_404(Usuario, id=id)
     users = Usuario.objects.all()
@@ -48,12 +47,6 @@ def tables(request,id):
             formulario.save()
             return redirect(to="listar_externos")
         data["form"] = formulario
-=======
-def tables(request):
-    data = {
-        'usuarios': Usuario.objects.all()
-    }
->>>>>>> Stashed changes
     return render(request, 'dashboard/pages/tables.html', data)
 
 def Agregar_ventas_Locales(request):
@@ -416,17 +409,15 @@ def listar_metodopago():
 
 def procesodeVenta(request):
     data = {
-        'Usuario': Usuario.objects.all(),
+        'usuario': Usuario.objects.all(),
         'proces_pedido': listar_proces_pedido(),
         'pedido': listar_pedido(),
         'listprocespedido': ProcesPedido.objects.all(),
         'tran': Transporte.objects.all(),
         'ped': Pedido.objects.all(),
-<<<<<<< Updated upstream
-        'usu': Usuario.objects.all(),
-=======
+        'segui': Seguimiento.objects.all(),
+        'productos': listar_productos(),
         
->>>>>>> Stashed changes
         
     }  
     est_seguimiento_condicion = request.POST.get('estadoseguimiento')
@@ -487,6 +478,8 @@ def modificarseguimientoestado(id_seguimiento, est_seguimiento):
     cursor = django_cursor.connection.cursor()
     salida = cursor.var(cx_Oracle.NUMBER)
     cursor.callproc('FERIAFAST.SP_SEGUIMIENTOESTADODEPEDIDO', [id_seguimiento, est_seguimiento, salida])
+
+
 
 
 
@@ -692,10 +685,7 @@ def listcomunas():
     
 def ProcesoPedido(request):
     data = {
-<<<<<<< HEAD
         'usuarios': Usuario.objects.all(),
-=======
->>>>>>> 0fd9a3c6c08cc2243a956482638da7cf1f3d60e8
         'transporte': listartrans(),
         'ped': Pedido.objects.all(),
     }
@@ -833,3 +823,7 @@ def EliminarVentaLocal(request, id_vent_loc):
     venta = get_object_or_404(VentLocal, id_vent_loc=id_vent_loc)
     venta.delete()
     return redirect(to="VentasLocales")
+
+def detallecompra(request):
+    
+    return render(request, 'ventas/detallecompra.html')
