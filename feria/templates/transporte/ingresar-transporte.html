@@ -29,21 +29,22 @@
                     </select>
                 <div class="col-md-6 form-group mb-3">
                   <label for="" class="col-form-label">Cubicaje (m³) *</label>
-                  <input type="number" min="1" class="form-control" name="ntamano" id="tamano" placeholder="m³">
+                  <input type="number" min="1" class="form-control" name="tamano" id="tamano" placeholder="m³">
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-6 form-group mb-3">
                   <label for="" class="col-form-label">Capacidad de carga útil (Kg) *</label>
-                  <input type="number" min="1" class="form-control" name="ncapacidad" id="capacidad" placeholder="Kg">
+                  <input type="number" min="1" class="form-control" name="capacidad" id="capacidad" placeholder="Kg">
                 </div>
                 <div class="col-md-6 form-group mb-3">
                   <label for="" class="col-form-label">Patente *</label>
-                  <input type="text" class="form-control" name="npatente" id="patente" maxlength="6" style="text-transform:uppercase" placeholder="XXXX00">
+                  <input type="text" class="form-control" name="patente" id="patente" maxlength="6" style="text-transform:uppercase" placeholder="XXXX00">
                 </div>
                 <div class="col-md-6 form-group mb-3">
                   ¿Refrigerado?
                   <input type="checkbox" name="refri" id="refri">
+				  <input style="display: none;" type="text"  name="refri2" id="refri2" value="0">
                 </div>
               </div>
               <div class="col-md-6 form-group mb-3">
@@ -89,52 +90,47 @@
         tipot: {
           required: true,
         },
-        ntamano: {
+        tamano: {
           required: true,
           number: true,
           min: 3
         },
-        ncapacidad: {
+        capacidad: {
           required: true,
           number: true,
           minlength: 1
         },
-        npatente: {
+        patente: {
           required: true,
           minlength: 6
         },
-        foto: {
-          required: true
-        },
-        user: {
-          required: true,
-        }
+       
+      
       },
       messages : {
         tipot: {
           required: "Debe seleccionar el tipo de transporte",
         },
-        ntamano: {
+        tamano: {
           required: "Debe ingresar el cubicaje",
           number: "Debe ingresar cáracteres númericos",
           min: "Debe ser un cubicaje mayor a 3"
         },
-        ncapacidad: {
+        capacidad: {
           required: "Debe ingresar la capacidad del transporte",
           minlength: "Debe ingresar mínimo 1 cáracter"
         },
-        npatente: {
+        patente: {
           required: "Debe ingresar patente del vehículo",
           min: "Debe ingresar una patente válida"
         },
-        foto: {
-          required: "Debe ingresar la imagen del transporte"
-        },
-        user: {
-          required: "Debe seleccionar una opción"
-        }
+        
+       
       }
     });
   });
 </script>
+
 {% endblock %}
+
+

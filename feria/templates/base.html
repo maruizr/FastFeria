@@ -76,7 +76,9 @@
               <li><a class="nav-link scrollto " href="{% url 'ventas-locales' %}">Ventas</a></li>
             {%endif %}
             <li><a class="nav-link scrollto " href="{% url 'listar-transporte' %}">Transporte</a></li>
-
+			{% if user.usuario_administrador == True %}
+			<li><a class="nav-link scrollto " href="{% url 'proceso-venta' %}">Proceso Ventas</a></li>
+			{%endif %}
 
           <!-- <li><a class="nav-link scrollto" href="#team">Team</a></li>
           <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>

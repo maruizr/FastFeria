@@ -574,6 +574,7 @@ def ProcesoPedido(request, id):
             recipient_list = ["feriafastoficial@gmail.com"]
             send_mail(subject, message, email_from, to_email, recipient_list)
             data['mensaje'] = 'agregado correctamente'
+            return redirect('proceso-venta')
             
         else:
             data['mensaje'] = 'no se ha podido guardar'
@@ -607,21 +608,23 @@ def ingresar_transporte(request):
         tip_transporte = request.POST.get('tipot')
         tamano_trans = request.POST.get('tamano')
         capacidad_trans = request.POST.get('capacidad')
-        refri = request.POST.get('refri')
-        if refri == "true":
-            refrigeracion_trans = 1
-        else:
-            refrigeracion_trans = 0
-        
         usuarios_id = request.POST.get('usuarios')
         foto = request.FILES['foto'].read()
         patente = request.POST.get('patente')
-
+        refrigeracion_trans = request.POST.get('refri2')
+        
         salida = agregar_transporte(tip_transporte, tamano_trans, capacidad_trans, refrigeracion_trans, usuarios_id, foto, patente)
         if salida == 1:
             data['mensaje'] = 'agregado correctamente'
+            return redirect('listar-transporte')
         else:
             data['mensaje'] = 'no se ha podido guardar'
+       
+        
+      
+
+        
+        
         
     return render(request, 'transporte/ingresar-transporte.html', data)
 

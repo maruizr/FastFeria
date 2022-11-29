@@ -1,6 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
-</br></br>
+ <div class="container">
+
+      <div class="section-title">
+        <h2>Proceso Ventas</h2>
+        <div class="mb-5 mt-2 text-center">
+          <a class="btn btn-block btn-primary rounded-0 py-2 px-4" href="{% url 'informe-externo' %}" style="float: right;">Informe venta local</a>
+		  <a class="btn btn-block btn-primary rounded-0 py-2 px-4" href="{% url 'informe-interno' %}" style="float: right;">Informe venta externa</a>
+        </div>
+      </div>
+
         <div class="col-md-5 form-group text-center">
            
             <span class="submitting"></span>
