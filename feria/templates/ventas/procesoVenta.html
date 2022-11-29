@@ -40,7 +40,7 @@
 										{%endif%}	
 										<td><center>{{ lista.transportes.usuarios.nombres }}</center></td>
 											{% if lista.estado_proces_venta == False %}
-												<td><center><a class="btn btn-primary" href="{% url 'agregarProcesoVenta' lista.id_proc_pedido %}">Crear proceso de venta</a></center></td>
+												<td><center><a class="btn btn-primary" href="{% url 'agregar-proceso-venta' lista.id_proc_pedido %}">Crear proceso de venta</a></center></td>
 											{% else %}
 											<td><center>En proceso</center></td>
 											{% endif %}

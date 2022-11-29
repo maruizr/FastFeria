@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block css %}
+<link rel="stylesheet" href="{% static 'css/tables.css' %}">
 {% endblock %}
 {% block content %}
 <!-- ======= Portfolio Section ======= -->
@@ -21,22 +22,22 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Username</th>
-                        <th>Nombres</th>
-                        <th>Rol</th>
-                        <th>Opciones</th>
+                        <th scope="col">ID</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">Nombres</th>
+                        <th scope="col">Rol</th>
+                        <th scope="col">Opciones</th>
                         
                     </tr>
                 </thead>
                 <tbody>
                     {% for usuario in object_list %}
                     <tr>
-                        <td> {{usuario.id}}</td>
-                        <td> {{usuario.username}}</td>
-                        <td> {{usuario.nombres}}</td>
-                        <td> {{usuario.tipo_usuario}}</td>
-                        <td>
+                        <td data-label="ID"> {{usuario.id}}</td>
+                        <td data-label="Username"> {{usuario.username}}</td>
+                        <td data-label="Nombres"> {{usuario.nombres}}</td>
+                        <td data-label="Rol"> {{usuario.tipo_usuario}}</td>
+                        <td data-label="Opciones">
                             <a href="{% url 'usuario:eliminar_usuario' usuario.id%}" class="btn btn-danger">Eliminar</a>
                             <a href="{% url 'usuario:editar_usuario' usuario.id%}" class="btn btn-primary">Editar</a>
                         </td>
