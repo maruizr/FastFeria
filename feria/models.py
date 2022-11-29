@@ -8,6 +8,34 @@
 from django.db import models
 
 
+class AuthGroup(models.Model):
+    name = models.CharField(unique=True, max_length=150, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'auth_group'
+
+
+class AuthGroupPermissions(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    group = models.ForeignKey(AuthGroup, models.DO_NOTHING)
+    permission = models.ForeignKey('AuthPermission', models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'auth_group_permissions'
+        unique_together = (('group', 'permission'),)
+
+
+class AuthPermission(models.Model):
+    name = models.CharField(max_length=255, blank=True, null=True)
+    content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING)
+    codename = models.CharField(max_length=100, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'auth_permission'
+        unique_together = (('content_type', 'codename'),)
 
 
 class Contratos(models.Model):
@@ -148,7 +176,7 @@ class Productos(models.Model):
     precio_prod = models.IntegerField()
     desc_prod = models.CharField(max_length=200)
     stock_prod = models.IntegerField()
-    usuarios_id = models.ForeignKey('UsuarioUsuario', models.DO_NOTHING)
+    usuarios = models.ForeignKey('UsuarioUsuario', models.DO_NOTHING)
     foto = models.BinaryField(blank=True, null=True)
 
     class Meta:

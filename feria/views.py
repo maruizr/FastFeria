@@ -48,12 +48,9 @@ def EliminarUsuario(request, id):
 def Agregar_ventas_Locales(request):
     data = {
         'proceso_Venta': listar_procesoVenta(),
-<<<<<<< Updated upstream
         #'region': listregiones(),
         #'comuna': listcomunas()
         
-=======
->>>>>>> Stashed changes
     }
 
     if request.method == 'POST':
@@ -89,32 +86,6 @@ def listarVentasLocales(request):
     }
 
     return render(request, 'ventas/ListarVentaLocal.html', data)
-
-# def agregarUsuarios(request):
-#     data = {
-#         'usuarios': listar_usuarios()
-#     }
-
-#     if request.method== 'POST':
-#         rut_usr = request.POST.get('Rut')
-#         nombre = request.POST.get('Nombre')
-#         apellido_p = request.POST.get('ApellidoP')
-#         apellido_m = request.POST.get('ApellidoM')
-#         direccion = request.POST.get('Direccion')
-#         telefono = request.POST.get('Telefono')
-#         correo = request.POST.get('Correo')
-#         foto = request.FILES['foto'].read()
-#         contrasena = request.POST.get('Contraseña')
-#         rol = request.POST.get('Rol')
-        
-#         salida = agregar_usuarios(rut_usr, nombre, apellido_p, apellido_m, direccion, telefono, correo, foto, contrasena, rol)
-#         if salida == 1:
-#             data['mensaje'] = 'agregado correctamente'
-#             return redirect('usuarios')
-#         else:
-#             data['mensaje'] = 'no se pudo agregar'
-
-#     return render(request, "usuarios/listarUsuarios.html", data)
 
 def agregarProducto(request):
     # data = {
@@ -260,19 +231,6 @@ def agregar_producto(nom_prod, precio_prod, desc_prod, stock_prod, usuarios_id, 
     cursor.callproc('FERIAFAST.SP_AGREGAR_PRODUCTO', [nom_prod, precio_prod, desc_prod, stock_prod, usuarios_id, foto, salida])
 
     return salida.getvalue()
-
-def listar_pedido():
-    django_cursor = connection.cursor()
-    cursor = django_cursor.connection.cursor()
-    out_cur = django_cursor.connection.cursor()
-
-    cursor.callproc('FERIAFAST.SP_LISTAR_PEDIDO', [out_cur])
-
-    lista = []
-    for fila in out_cur:
-        lista.append(fila)
-        
-    return lista
 
 def agregar_pedido(tipo, cantidad, fecha, descrip, usuarios_id, productos, estado_admin, estado_productor, refrigeracion, estado_edit_user, estado_edit_admin):
     django_cursor = connection.cursor()
@@ -449,6 +407,7 @@ def listar_metodopago():
     
     return lista
 
+
 def procesodeVenta(request):
     data = {
         'Usuario': Usuario.objects.all(),
@@ -458,6 +417,7 @@ def procesodeVenta(request):
         'tran': Transporte.objects.all(),
         'ped': Pedido.objects.all(),
         'segui': Seguimiento.objects.all(),
+        'productos': listar_productos(),
         
         
     }  
