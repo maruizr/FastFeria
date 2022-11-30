@@ -1,151 +1,163 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/form-prod.css' %}">
+<link rel="stylesheet" href="{% static 'css/tables.css' %}">
+{% endblock %}
 {% block content %}
+
+<section id="portfolio" class="portfolio">
  <div class="container">
 
       <div class="section-title">
         <h2>Proceso Ventas</h2>
         <div class="mb-5 mt-2 text-center">
 			{%if user.tipo_usuario == 'consultor' or user.usuario_administrador == True %}	
-          		<a class="btn btn-block btn-primary rounded-0 py-2 px-4" href="{% url 'informe-interno' %}" style="float: right;">Informe venta local</a>
-		  		<a class="btn btn-block btn-primary rounded-0 py-2 px-4" href="{% url 'informe-externo' %}" style="float: right;">Informe venta externa</a>
+          		<a class="btn btn-primary" href="{% url 'informe-interno' %}" style="float: right;">Informe venta local</a>
+		  		<a class="btn btn-primary" href="{% url 'informe-externo' %}" style="float: right;">Informe venta externa</a>
 			{% endif%}	
         </div>
       </div>
 
     </br>
 	{%if user.usuario_administrador == True %}
-		<table class="table table-bordered">
-									<thead>
-										<tr>
+	
+	<div class="col-lg-12 col-md-10 portfolio-item filter-app">
+		<table class="table">
+			<thead>
+				<tr>
 
-											<th><center>Tipo de Producto</center></th>
-											<th><center>Cantidad</center></th>
-											<th><center>Fecha Solicitada</center></th>
-											<th><center>Comprador</center></th>
-											<th><center>Vendedor</center></th>
-											<th><center>Transportista</center></th>
-											<th><center>Proceso de Venta</center></th>
-											<th><center>Seguimiento</center></th>
-										</tr>
-									</thead>
+					<th scope="col">Tipo de Producto</th>
+					<th scope="col">Cantidad</th>
+					<th scope="col">Fecha Solicitada</th>
+					<th scope="col">Comprador</th>
+					<th scope="col">Vendedor</th>
+					<th scope="col">Transportista</th>
+					<th scope="col">Proceso de Venta</th>
+					<th scope="col">Seguimiento</th>
+				</tr>
+			</thead>
 
-									<tbody>
-
+			<tbody>
+				{% if listprocespedido %}
+				{% for lista in listprocespedido %}
+					
+					<tr>
+					<td data-label="Tipo de Producto"><center>{{ lista.pedido.tipo }} </center></td>
+					<td data-label="Cantidad"><center>{{ lista.pedido.cantidad }}</center></td>
+					<td data-label="Fecha Solicitada"><center>{{ lista.pedido.fecha }}</center></td>
+					<td data-label="Comprador"><center>{{ lista.pedido.usuarios.nombres }}</center></td>
+					{% if productos.usuarios_id == usuario.id %}
+						<td data-label="Vendedor"><center>{{ lista.pedido.usuarios.nombres }}</center></td>
+					{%endif%}	
+					<td data-label="Transportista"><center>{{ lista.transportes.usuarios.nombres }}</center></td>
+						{% if lista.estado_proces_venta == False %}
+							<td data-label="Proceso de Venta"><center><a class="btn btn-primary" href="{% url 'agregar-proceso-venta' lista.id_proc_pedido %}">Crear proceso de venta</a></center></td>
+						{% else %}
+						<td data-label="Proceso de Venta"><center>En proceso</center></td>
+						{% endif %}
+						{% if lista.estado_seguimiento == False %}
+						<input style="display: none;" type="text" name="estadoseguimiento"  required="" id="estadoseguimiento" value="Preparando Pedido" >
+						<form action="" method="POST" enctype="multipart/form-data">
+							{% csrf_token %}
+							<input style="display: none;" type="text" name="estadoseguimiento"  required="" id="estadoseguimiento" value="Preparando Pedido" >
+							<td data-label="Seguimiento"><center><input type="submit" value="Actualizar Seguimiento" class="btn btn-block btn-primary rounded-0 py-2 px-4"></center></td>
 								
-										
-										{% if listprocespedido %}
-										
-										{% for lista in listprocespedido %}
-											
-											<tr>
-											<td><center>{{ lista.pedido.tipo }} </center></td>
-											<td><center>{{ lista.pedido.cantidad }}</center></td>
-											<td><center>{{ lista.pedido.fecha }}</center></td>
-											<td><center>{{ lista.pedido.usuarios.nombres }}</center></td>
-											{% if productos.usuarios_id == usuario.id %}
-												<td><center>{{ lista.pedido.usuarios.nombres }}</center></td>
-											{%endif%}	
-											<td><center>{{ lista.transportes.usuarios.nombres }}</center></td>
-												{% if lista.estado_proces_venta == False %}
-													<td><center><a class="btn btn-primary" href="{% url 'agregar-proceso-venta' lista.id_proc_pedido %}">Crear proceso de venta</a></center></td>
-												{% else %}
-												<td><center>En proceso</center></td>
-												{% endif %}
-												{% if lista.estado_seguimiento == False %}
-												<input style="display: none;" type="text" name="estadoseguimiento"  required="" id="estadoseguimiento" value="Preparando Pedido" >
-												<form action="" method="POST" enctype="multipart/form-data">
-													{% csrf_token %}
-													<input style="display: none;" type="text" name="estadoseguimiento"  required="" id="estadoseguimiento" value="Preparando Pedido" >
-													<td><center><input type="submit" value="Actualizar Seguimiento" class="btn btn-block btn-primary rounded-0 py-2 px-4"></center></td>
-														
-													
-														<input style="display: none;" type="text" name="numeropedido"  required="" id="numeropedido" value="{{ lista.pedido.id_ped}}" >
-														<input style="display: none;" type="text" name="numeroprocespedido"  required="" id="numeroprocespedido" value="{{ lista.id_proc_pedido}}" >
-													</form> 
-												{% else %}
+							
+								<input style="display: none;" type="text" name="numeropedido"  required="" id="numeropedido" value="{{ lista.pedido.id_ped}}" >
+								<input style="display: none;" type="text" name="numeroprocespedido"  required="" id="numeroprocespedido" value="{{ lista.id_proc_pedido}}" >
+							</form> 
+						{% else %}
 
-												<div style="display: block;" class="test">
-													{% for s in segui %}
-														{% if  lista.id_proc_pedido == s.proces_pedido.id_proc_pedido %}
-														
-														
+						<div style="display: block;" class="test">
+							{% for s in segui %}
+								{% if  lista.id_proc_pedido == s.proces_pedido.id_proc_pedido %}
+								
+								
 
-												<td><center>
-													Estado: {{ s.est_seguimiento}}
-													{% if s.est_seguimiento == 'En ruta' %}
-													{% else %}
-													<form action="" method="POST" enctype="multipart/form-data">
-														{% csrf_token %}
-														<input style="display: none;" type="text" name="idseguimiento"  required="" id="idseguimiento" value="{{ s.id_seguimiento}}" >
-														<input style="display: none;" type="text" name="estadoseguimiento"  required="" id="estadoseguimiento" value="En ruta" >
-														<input type="submit" value="En ruta" class="btn btn-block btn-primary rounded-0 py-2 px-2">
-													
-														<br/>
-														<br/>
-													</form> 
-													
-													
-													{% endif %}
-													{% if s.est_seguimiento == 'Entregado' %}
-													{% else %}
-													<form action="" method="POST" enctype="multipart/form-data">
-														{% csrf_token %}
-														<input style="display: none;" type="text" name="idseguimiento"  required="" id="idseguimiento" value="{{ s.id_seguimiento}}" >
-														<input style="display: none;" type="text" name="estadoseguimiento"  required="" id="estadoseguimiento" value="Entregado" >	
-														<input type="submit" value="Entregado" class="btn btn-block btn-primary rounded-0 py-2 px-2">
-														
-														<br/>
-														<br/>
-														
-														
-														</form> 
-														{% endif %}
-														{% if s.est_seguimiento == 'Finalizado' %}
-														{% else %}
-														<form action="" method="POST" enctype="multipart/form-data">
-															{% csrf_token %}
-															<input style="display: none;" type="text" name="idseguimiento"  required="" id="idseguimiento" value="{{ s.id_seguimiento}}" >
-															<input style="display: none;" type="text" name="estadoseguimiento"  required="" id="estadoseguimiento" value="Finalizado" >	
-															<input type="submit" value="Finalizado" class="btn btn-block btn-primary rounded-0 py-2 px-2">
-															
-															<br/>
-															<br/>
-																	
-														</form> 
-														{% endif %}
-														
-														
-												</center></td>
-															
-														
-												{% endif %}
-														
-												{% endfor %}
-											</div>
-
-														
-														
-														
-												
-												{% endif %}
-											</tr>
-											
-										{% endfor %}
-										{% else %}
-
-											<td><center>* No hay procesos</center></td>
-											<td><center>- -</center></td>
-											<td><center>- -</center></td>
-											<td><center>- -</center></td>
-											<td><center>- -</center></td>
-											<td><center>- -</center></td>
-
-										{% endif %}
+						<td data-label="Seguimiento"><center>
+							Estado: {{ s.est_seguimiento}}
+							{% if s.est_seguimiento == 'En ruta' %}
+							{% else %}
+							<form action="" method="POST" enctype="multipart/form-data">
+								{% csrf_token %}
+								<input style="display: none;" type="text" name="idseguimiento"  required="" id="idseguimiento" value="{{ s.id_seguimiento}}" >
+								<input style="display: none;" type="text" name="estadoseguimiento"  required="" id="estadoseguimiento" value="En ruta" >
+								<input type="submit" value="En ruta" class="btn btn-block btn-primary rounded-0 py-2 px-2">
+							
+								<br/>
+								<br/>
+							</form> 
+							
+							
+							{% endif %}
+							{% if s.est_seguimiento == 'Entregado' %}
+							{% else %}
+							<form action="" method="POST" enctype="multipart/form-data">
+								{% csrf_token %}
+								<input style="display: none;" type="text" name="idseguimiento"  required="" id="idseguimiento" value="{{ s.id_seguimiento}}" >
+								<input style="display: none;" type="text" name="estadoseguimiento"  required="" id="estadoseguimiento" value="Entregado" >	
+								<input type="submit" value="Entregado" class="btn btn-block btn-primary rounded-0 py-2 px-2">
+								
+								<br/>
+								<br/>
+								
+								
+								</form> 
+								{% endif %}
+								{% if s.est_seguimiento == 'Finalizado' %}
+								{% else %}
+								<form action="" method="POST" enctype="multipart/form-data">
+									{% csrf_token %}
+									<input style="display: none;" type="text" name="idseguimiento"  required="" id="idseguimiento" value="{{ s.id_seguimiento}}" >
+									<input style="display: none;" type="text" name="estadoseguimiento"  required="" id="estadoseguimiento" value="Finalizado" >	
+									<input type="submit" value="Finalizado" class="btn btn-block btn-primary rounded-0 py-2 px-2">
 									
-									</tbody>
+									<br/>
+									<br/>
+											
+								</form> 
+								{% endif %}
 								
-								</table>
-	{%endif %}
+								
+						</center></td>
+									
+								
+						{% endif %}
+								
+						{% endfor %}
+					</div>
 
-                        </br></br></br></br></br></br></br></br>
+								
+								
+								
+						
+						{% endif %}
+					</tr>
+					
+				{% endfor %}
+				{% else %}
+
+					<td><center>* No hay procesos</center></td>
+					<td><center>- -</center></td>
+					<td><center>- -</center></td>
+					<td><center>- -</center></td>
+					<td><center>- -</center></td>
+					<td><center>- -</center></td>
+
+				{% endif %}
+			
+			</tbody>
+								
+		</table>
+	</div>
+</section>
+	{%endif %}
+{% endblock %}
+{% block js %}
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery.validate.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
 {% endblock %}

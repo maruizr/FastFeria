@@ -78,7 +78,7 @@
             {% if user.usuario_administrador == True %}
               <li><a class="nav-link scrollto " href="{% url 'ventas-locales' %}">Ventas</a></li>
             {%endif %}
-            {% if user.tipo_usuario == 'transportista' or user.usuario_administrador == True %}
+            {% if user.tipo_usuario == 'transportista' %}
             <li><a class="nav-link scrollto " href="{% url 'listar-transporte' %}">Transporte</a></li>
             {% endif %}
             {% if user.tipo_usuario == 'transportista' or user.usuario_administrador == True %}
@@ -87,10 +87,10 @@
             {% if user.tipo_usuario == 'consultor' or user.usuario_administrador == True %}
             <li><a class="nav-link scrollto " href="{% url 'proceso-venta' %}">Proceso Ventas</a></li>
             {%endif %}
-            {% if user.tipo_usuario == 'productor' or user.usuario_administrador == True %}
+            {% if user.tipo_usuario == 'productor' %}
             <li><a class="nav-link scrollto " href="{% url 'perfil-productor' %}">Mi perfil</a></li>
             {%endif %}
-            {% if user.tipo_usuario == 'externo' or user.tipo_usuario == 'interno' or user.usuario_administrador == True %}
+            {% if user.tipo_usuario == 'externo' or user.tipo_usuario == 'interno' %}
             <li><a class="nav-link scrollto " href="{% url 'pago' %}">Pagar</a></li>
             {%endif %}
 
