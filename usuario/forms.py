@@ -27,7 +27,7 @@ class FormularioUsuario(forms.ModelForm):
         attrs={
             'class':'form-control',
             'placeholder':'Verifique su contraseña',
-            'id':'password2',
+            'id':'password2',   
             'required':'requiered'
         }
     ))
