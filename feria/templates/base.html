@@ -69,22 +69,34 @@
           <li><a class="nav-link scrollto" href="{% url 'index' %}">Inicio</a></li>
           
           <!-- <li><a class="nav-link scrollto" href="{% url 'login'%}">Logout</a></li> -->
+            {%if user.usuario_administrador == True %}
+                <li><a class="nav-link scrollto " href="{% url 'listado_usuarios' %}">Usuarios</a></li>
+            {%endif %}
             {%if user.tipo_usuario == 'externo' or user.usuario_administrador == True %}
                 <li><a class="nav-link scrollto " href="{% url 'productos' %}">Productos</a></li>
             {%endif %}
-            {% if user.tipo_usuario == 'consultor' or user.usuario_administrador == True %}
+            {% if user.usuario_administrador == True %}
               <li><a class="nav-link scrollto " href="{% url 'ventas-locales' %}">Ventas</a></li>
             {%endif %}
             {% if user.tipo_usuario == 'transportista' or user.usuario_administrador == True %}
             <li><a class="nav-link scrollto " href="{% url 'listar-transporte' %}">Transporte</a></li>
             {% endif %}
-            {% if user.usuario_administrador == True %}
+            {% if user.tipo_usuario == 'transportista' or user.usuario_administrador == True %}
+            <li><a class="nav-link scrollto " href="{% url 'listar-transporte' %}">Subasta</a></li>
+            {% endif %}
+            {% if user.tipo_usuario == 'consultor' or user.usuario_administrador == True %}
             <li><a class="nav-link scrollto " href="{% url 'proceso-venta' %}">Proceso Ventas</a></li>
+            {%endif %}
+            {% if user.tipo_usuario == 'productor' or user.usuario_administrador == True %}
+            <li><a class="nav-link scrollto " href="{% url 'perfil-productor' %}">Mi perfil</a></li>
+            {%endif %}
+            {% if user.tipo_usuario == 'externo' or user.tipo_usuario == 'interno' or user.usuario_administrador == True %}
+            <li><a class="nav-link scrollto " href="{% url 'pago' %}">Pagar</a></li>
             {%endif %}
 
           
           {% if request.user.is_authenticated %}
-            <li><a class="nav-link scrollto" href="{% url 'perfil-productor' %}">{{ user.username | upper }}</a></li>
+            <li><a class="nav-link scrollto" href="#">{{ user.username | upper }}</a></li>
             <li><a class="getstarted scrollto" href="{% url 'logout'%}">Logout</a></li>
           {% else %}
             <li><a class="getstarted scrollto" href="{% url 'login'%}">Iniciar sesion</a></li>

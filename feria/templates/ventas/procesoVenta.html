@@ -5,148 +5,147 @@
       <div class="section-title">
         <h2>Proceso Ventas</h2>
         <div class="mb-5 mt-2 text-center">
-          <a class="btn btn-block btn-primary rounded-0 py-2 px-4" href="{% url 'informe-externo' %}" style="float: right;">Informe venta local</a>
-		  <a class="btn btn-block btn-primary rounded-0 py-2 px-4" href="{% url 'informe-interno' %}" style="float: right;">Informe venta externa</a>
+			{%if user.tipo_usuario == 'consultor' or user.usuario_administrador == True %}	
+          		<a class="btn btn-block btn-primary rounded-0 py-2 px-4" href="{% url 'informe-interno' %}" style="float: right;">Informe venta local</a>
+		  		<a class="btn btn-block btn-primary rounded-0 py-2 px-4" href="{% url 'informe-externo' %}" style="float: right;">Informe venta externa</a>
+			{% endif%}	
         </div>
       </div>
 
-        <div class="col-md-5 form-group text-center">
-           
-            <span class="submitting"></span>
-        </div>
     </br>
-
-    <table class="table table-bordered">
-								<thead>
-									<tr>
-
-										<th><center>Tipo de Producto</center></th>
-										<th><center>Cantidad</center></th>
-										<th><center>Fecha Solicitada</center></th>
-										<th><center>Comprador</center></th>
-										<th><center>Vendedor</center></th>
-										<th><center>Transportista</center></th>
-										<th><center>Proceso de Venta</center></th>
-										<th><center>Seguimiento</center></th>
-									</tr>
-								</thead>
-
-								<tbody>
-
-							
-									
-									{% if listprocespedido %}
-									
-									{% for lista in listprocespedido %}
-										
+	{%if user.usuario_administrador == True %}
+		<table class="table table-bordered">
+									<thead>
 										<tr>
-										<td><center>{{ lista.pedido.tipo }} </center></td>
-										<td><center>{{ lista.pedido.cantidad }}</center></td>
-										<td><center>{{ lista.pedido.fecha }}</center></td>
-										<td><center>{{ lista.pedido.usuarios.nombres }}</center></td>
-										{% if productos.usuarios_id == usuario.id %}
+
+											<th><center>Tipo de Producto</center></th>
+											<th><center>Cantidad</center></th>
+											<th><center>Fecha Solicitada</center></th>
+											<th><center>Comprador</center></th>
+											<th><center>Vendedor</center></th>
+											<th><center>Transportista</center></th>
+											<th><center>Proceso de Venta</center></th>
+											<th><center>Seguimiento</center></th>
+										</tr>
+									</thead>
+
+									<tbody>
+
+								
+										
+										{% if listprocespedido %}
+										
+										{% for lista in listprocespedido %}
+											
+											<tr>
+											<td><center>{{ lista.pedido.tipo }} </center></td>
+											<td><center>{{ lista.pedido.cantidad }}</center></td>
+											<td><center>{{ lista.pedido.fecha }}</center></td>
 											<td><center>{{ lista.pedido.usuarios.nombres }}</center></td>
-										{%endif%}	
-										<td><center>{{ lista.transportes.usuarios.nombres }}</center></td>
-											{% if lista.estado_proces_venta == False %}
-												<td><center><a class="btn btn-primary" href="{% url 'agregar-proceso-venta' lista.id_proc_pedido %}">Crear proceso de venta</a></center></td>
-											{% else %}
-											<td><center>En proceso</center></td>
-											{% endif %}
-											{% if lista.estado_seguimiento == False %}
-											<input style="display: none;" type="text" name="estadoseguimiento"  required="" id="estadoseguimiento" value="Preparando Pedido" >
-											<form action="" method="POST" enctype="multipart/form-data">
-												{% csrf_token %}
-												<input style="display: none;" type="text" name="estadoseguimiento"  required="" id="estadoseguimiento" value="Preparando Pedido" >
-												<td><center><input type="submit" value="Actualizar Seguimiento" class="btn btn-block btn-primary rounded-0 py-2 px-4"></center></td>
-													
-												
-													<input style="display: none;" type="text" name="numeropedido"  required="" id="numeropedido" value="{{ lista.pedido.id_ped}}" >
-													<input style="display: none;" type="text" name="numeroprocespedido"  required="" id="numeroprocespedido" value="{{ lista.id_proc_pedido}}" >
-												</form> 
-											{% else %}
-
-											<div style="display: block;" class="test">
-												{% for s in segui %}
-													{% if  lista.id_proc_pedido == s.proces_pedido.id_proc_pedido %}
-													
-													
-
-											<td><center>
-												Estado: {{ s.est_seguimiento}}
-												{% if s.est_seguimiento == 'En ruta' %}
+											{% if productos.usuarios_id == usuario.id %}
+												<td><center>{{ lista.pedido.usuarios.nombres }}</center></td>
+											{%endif%}	
+											<td><center>{{ lista.transportes.usuarios.nombres }}</center></td>
+												{% if lista.estado_proces_venta == False %}
+													<td><center><a class="btn btn-primary" href="{% url 'agregar-proceso-venta' lista.id_proc_pedido %}">Crear proceso de venta</a></center></td>
 												{% else %}
-												<form action="" method="POST" enctype="multipart/form-data">
-													{% csrf_token %}
-													<input style="display: none;" type="text" name="idseguimiento"  required="" id="idseguimiento" value="{{ s.id_seguimiento}}" >
-													<input style="display: none;" type="text" name="estadoseguimiento"  required="" id="estadoseguimiento" value="En ruta" >
-													<input type="submit" value="En ruta" class="btn btn-block btn-primary rounded-0 py-2 px-2">
-												
-													<br/>
-													<br/>
-												</form> 
-												
-												
+												<td><center>En proceso</center></td>
 												{% endif %}
-												{% if s.est_seguimiento == 'Entregado' %}
-												{% else %}
+												{% if lista.estado_seguimiento == False %}
+												<input style="display: none;" type="text" name="estadoseguimiento"  required="" id="estadoseguimiento" value="Preparando Pedido" >
 												<form action="" method="POST" enctype="multipart/form-data">
 													{% csrf_token %}
-													<input style="display: none;" type="text" name="idseguimiento"  required="" id="idseguimiento" value="{{ s.id_seguimiento}}" >
-													<input style="display: none;" type="text" name="estadoseguimiento"  required="" id="estadoseguimiento" value="Entregado" >	
-													<input type="submit" value="Entregado" class="btn btn-block btn-primary rounded-0 py-2 px-2">
+													<input style="display: none;" type="text" name="estadoseguimiento"  required="" id="estadoseguimiento" value="Preparando Pedido" >
+													<td><center><input type="submit" value="Actualizar Seguimiento" class="btn btn-block btn-primary rounded-0 py-2 px-4"></center></td>
+														
 													
-													<br/>
-													<br/>
-													
-													
+														<input style="display: none;" type="text" name="numeropedido"  required="" id="numeropedido" value="{{ lista.pedido.id_ped}}" >
+														<input style="display: none;" type="text" name="numeroprocespedido"  required="" id="numeroprocespedido" value="{{ lista.id_proc_pedido}}" >
 													</form> 
-													{% endif %}
-													{% if s.est_seguimiento == 'Finalizado' %}
+												{% else %}
+
+												<div style="display: block;" class="test">
+													{% for s in segui %}
+														{% if  lista.id_proc_pedido == s.proces_pedido.id_proc_pedido %}
+														
+														
+
+												<td><center>
+													Estado: {{ s.est_seguimiento}}
+													{% if s.est_seguimiento == 'En ruta' %}
 													{% else %}
 													<form action="" method="POST" enctype="multipart/form-data">
 														{% csrf_token %}
 														<input style="display: none;" type="text" name="idseguimiento"  required="" id="idseguimiento" value="{{ s.id_seguimiento}}" >
-														<input style="display: none;" type="text" name="estadoseguimiento"  required="" id="estadoseguimiento" value="Finalizado" >	
-														<input type="submit" value="Finalizado" class="btn btn-block btn-primary rounded-0 py-2 px-2">
-														
+														<input style="display: none;" type="text" name="estadoseguimiento"  required="" id="estadoseguimiento" value="En ruta" >
+														<input type="submit" value="En ruta" class="btn btn-block btn-primary rounded-0 py-2 px-2">
+													
 														<br/>
 														<br/>
-																
 													</form> 
+													
+													
 													{% endif %}
-													
-													
-											</center></td>
+													{% if s.est_seguimiento == 'Entregado' %}
+													{% else %}
+													<form action="" method="POST" enctype="multipart/form-data">
+														{% csrf_token %}
+														<input style="display: none;" type="text" name="idseguimiento"  required="" id="idseguimiento" value="{{ s.id_seguimiento}}" >
+														<input style="display: none;" type="text" name="estadoseguimiento"  required="" id="estadoseguimiento" value="Entregado" >	
+														<input type="submit" value="Entregado" class="btn btn-block btn-primary rounded-0 py-2 px-2">
 														
-													
-											{% endif %}
-													
-											{% endfor %}
-										</div>
+														<br/>
+														<br/>
+														
+														
+														</form> 
+														{% endif %}
+														{% if s.est_seguimiento == 'Finalizado' %}
+														{% else %}
+														<form action="" method="POST" enctype="multipart/form-data">
+															{% csrf_token %}
+															<input style="display: none;" type="text" name="idseguimiento"  required="" id="idseguimiento" value="{{ s.id_seguimiento}}" >
+															<input style="display: none;" type="text" name="estadoseguimiento"  required="" id="estadoseguimiento" value="Finalizado" >	
+															<input type="submit" value="Finalizado" class="btn btn-block btn-primary rounded-0 py-2 px-2">
+															
+															<br/>
+															<br/>
+																	
+														</form> 
+														{% endif %}
+														
+														
+												</center></td>
+															
+														
+												{% endif %}
+														
+												{% endfor %}
+											</div>
 
-													
-													
-													
+														
+														
+														
+												
+												{% endif %}
+											</tr>
 											
-											{% endif %}
-										</tr>
-										
-									{% endfor %}
-									{% else %}
+										{% endfor %}
+										{% else %}
 
-										<td><center>* No hay procesos</center></td>
-										<td><center>- -</center></td>
-										<td><center>- -</center></td>
-										<td><center>- -</center></td>
-										<td><center>- -</center></td>
-										<td><center>- -</center></td>
+											<td><center>* No hay procesos</center></td>
+											<td><center>- -</center></td>
+											<td><center>- -</center></td>
+											<td><center>- -</center></td>
+											<td><center>- -</center></td>
+											<td><center>- -</center></td>
 
-									{% endif %}
+										{% endif %}
+									
+									</tbody>
 								
-								</tbody>
-                            
-							</table>
+								</table>
+	{%endif %}
 
                         </br></br></br></br></br></br></br></br>
 {% endblock %}

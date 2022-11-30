@@ -11,7 +11,7 @@ urlpatterns=[
     path('agregar-pedido/', login_required(agregarPedido), name="agregar-pedido"),
     path('pedidos/', login_required(listarPedido), name="pedidos"),
     path('metodo-pago/', login_required(agregarMetodoPago), name="agregar-metodo-pago"),
-    path('recargar-saldo/', login_required(recargadeSaldo), name="recarga-saldo"),
+    path('pago/', login_required(pago), name="pago"),
     path('proceso-venta/', login_required(procesodeVenta), name="proceso-venta"),
     path('agregar-proceso-ventas/<int:id_proc_pedido>', login_required(agregarProcesoVenta), name="agregar-proceso-venta"),
     path('ventas-locales/', login_required(listarVentasLocales), name="ventas-locales"),
@@ -31,5 +31,9 @@ urlpatterns=[
     path('eliminar-externos/<int:id>/', login_required(Eliminarexternos), name="eliminar-externos"),
     path('editar-venta-local/<int:id_vent_loc>/', login_required(EditarVentaLocal), name="editar-venta-local"),
     path('eliminar-venta-local/<int:id_vent_loc>/', login_required(EliminarVentaLocal), name="eliminar-venta-local"),
+    path('compras/', login_required(compras), name="compras"),
+    path('detalle-compra/<int:id>', login_required(detallecompra), name="detallecompra"),
+    path('listado_usuarios/', login_required(ListadoUsuarios.as_view()),name='listado_usuarios'),
+    path('registrar_usuarios/',login_required(RegistrarUsuario.as_view()),name='registrar_usuario'),
 
 ]

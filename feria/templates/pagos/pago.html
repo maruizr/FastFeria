@@ -10,39 +10,13 @@
       <div class="row align-items-stretch justify-content-center no-gutters">
         <div class="col-md-7">
           <div class="form h-100 contact-wrap p-5">
-            <h3 class="text-center">Recargar Saldo</h3>
+            <h3 class="text-center">Pagar pedido</h3>
 			
             <form id="basic-form" action="" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
-              <div class="row mt-5">
-                <div class="col-md-6 form-group mb-3">
-                  <label for="" class="col-form-label">Medio de Pago *</label>
-                  <select name="metodo_pago" class="form-control col-10" required="" id="metodo_pago">
-                    {% if metodopagos %}
-                        <option value="" selected="">---------</option>
-                        {% for MedioPago in metodopagos %}
-                    	{% if  user.id == MedioPago.1%}
-                                <option value="{{ MedioPago.0 }}">{{ MedioPago.4 }}-, {{ MedioPago.2 }} {{ MedioPago.3 }}</option>
-							{% else %}
-								<h1>No tienes metodos de pago registrado </h1>
-							{% endif %}
-                        {% endfor %}
-                    
-                    {% endif %}
-                </select>
-				
-                 
-                </div>
-				 
-              </div>
+              
 
-              <div class="row">
-                <div class="col-md-5 form-group mb-3">
-                  <label for="descripcion" class="col-form-label">Monto del depósito $  *</label>
-                  <input type="text" class="form-control" name="saldorecargado" id="id_saldo_recargado"  placeholder="">
-                </div>
-              </div>
-            </br>
+              
              
 
               <div class="row">
@@ -74,6 +48,7 @@
                         console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
                         const transaction = orderData.purchase_units[0].payments.captures[0];
                         alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
+                        location.href = 'http://localhost:8000/'
                         // When ready to go live, remove the alert and show a success message within this page. For example:
                         // const element = document.getElementById('paypal-button-container');
                         // element.innerHTML = '<h3>Thank you for your payment!</h3>';
@@ -85,10 +60,6 @@
 
               
               <div class="row justify-content-center">
-                <div class="col-md-5 form-group text-center">
-                  <input type="submit" value="Recargar" class="btn btn-block btn-primary rounded-0 py-2 px-4">
-                  <span class="submitting"></span>
-                </div>
               </div>
             </form>
 

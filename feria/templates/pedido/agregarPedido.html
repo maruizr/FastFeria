@@ -33,7 +33,7 @@
                     <label for="" class="col-form-label">Usuario *</label>
                     <select class="form-control" name="usuarios" id="usuarios">
                         {% for u in usuarios %}
-                            <option value="{{ u.data.0 }}">{{ u.data.2 }}</option>
+                            <option value="{{ u.data.0 }}">{{ user.username }}</option>
                         {% endfor %}
                     </select>
                   </div>
@@ -55,33 +55,14 @@
                         {% endfor %}
                     </select>
                   </div>
-                  <div class="col-md-6 form-group mb-3">
-                    <label for="" class="col-form-label">Estado admin *</label>
-                    <input type="number" min="0" class="form-control" name="estado_admin" id="estado_admin"  placeholder="Estado admin">
-                  </div>
               </div>
 
-              <div class="row">
-                <div class="col-md-6 form-group mb-3">
-                    <label for="" class="col-form-label">Estado productor *</label>
-                    <input type="number" min="0" class="form-control" name="estado_productor" id="estado_productor"  placeholder="Estado productor">
-                </div>
                 <div class="col-md-6 form-group mb-3">
                     <label for="" class="col-form-label">Refrigeracion *</label>
                     <input type="number" min="0" class="form-control" name="refrigeracion" id="refrigeracion"  placeholder="Refrigeracion">
                 </div>
               </div>
               
-              <div class="row mb-5">
-                <div class="col-md-6 form-group mb-3">
-                    <label for="" class="col-form-label">Estado edit user *</label>
-                    <input type="number" min="0" class="form-control" name="estado_edit_user" id="estado_edit_user"  placeholder="Estado edit user">
-                </div>
-                <div class="col-md-6 form-group mb-3">
-                    <label for="" class="col-form-label">Estado edit admin *</label>
-                    <input type="number" min="0" class="form-control" name="estado_edit_admin" id="estado_edit_admin"  placeholder="Estado edit admin">
-                </div>
-              </div>
               
               <div class="row justify-content-center">
                 <div class="col-md-5 form-group text-center">

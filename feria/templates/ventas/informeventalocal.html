@@ -15,12 +15,12 @@
 								<thead>
 									<tr>
 
-										<th><center>Producto</center></th>
-										<th><center>Cliente Local</center></th>
-										<th><center>Fecha</center></th>
-										<th><center>Cantidad</center></th>
-										<th><center>Precio C/U</center></th>
-										<th><center>Total Compra</center></th>
+										<th>Producto</th>
+										<th>Cliente Local</th>
+										<th>Fecha</th>
+										<th>Cantidad</th>
+										<th>Precio C/U</th>
+										<th>Total Compra</th>
 										
 									</tr>
 								</thead>
@@ -31,22 +31,21 @@
 
 									{% if ventlocal %}
 									{% for lista in listaprocesventa %}
-										
-										<tr>
 										{% for lista2 in ventlocal %}
-											{% if lista.proces_venta == lista2.proces_venta %}
-											    <td><center>{{ lista.nom_producto }} </center></td>
-												<td><center>{{ lista2.nom_cli }} </center></td>
-												<td><center>{{ lista.fecha_detall }}</center></td>
-												<td><center>${{ lista.cantidad }}</center></td>
-												<td><center>${{ lista.cost_producto }}</center></td>
-												<td><center>${{ lista.total_compra }}</center></td>
-										    {% endif %}
+										{% if lista.proces_venta == lista2.proces_venta %}
+											<tr>
+											
+													<td>{{ lista.nom_producto }} </td>
+													<td>{{ lista2.nom_cli }} </td>
+													<td>{{ lista.fecha_detall }}</td>
+													<td>${{ lista.cantidad }}</td>
+													<td>${{ lista.cost_producto }}</td>
+													<td>${{ lista.total_compra }}</td>
+												
+											
+											</tr>
+										{% endif %}
 										{% endfor %}
-										
-										
-										
-										</tr>
 										
 									{% endfor %}
 									{% else %}

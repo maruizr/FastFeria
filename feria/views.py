@@ -474,7 +474,7 @@ def agregar_saldo(usuarios_id, recargas, saldo_total):
 
     return salida.getvalue()
 
-def recargadeSaldo(request):
+def pago(request):
     data = {
         'usuarios': Usuario.objects.all(),
         'metodopagos': listar_metodopago(),
@@ -489,11 +489,11 @@ def recargadeSaldo(request):
         salida = recargar_saldo(metodo_pago, saldo_recargado)
         if salida == 1:
             data['mensaje'] = 'agregado correctamente'
-            return redirect('recarga-saldo')
+            return redirect('pago')
         else:
             data['mensaje'] = 'no se ha podido guardar'
         
-    return render(request, 'pagos/recargarSaldo.html', data)
+    return render(request, 'pagos/pago.html', data)
 
 def recargar_saldo(metodo_pago, saldo_recargado):
     django_cursor = connection.cursor()
@@ -760,4 +760,56 @@ def Editarexternos(request, id):
 def Eliminarexternos(request, id):
     usuario = get_object_or_404(Usuario, id=id)
     usuario.delete()
-    return redirect(to="lista-externos")
+    return redirect(to="listar-externos")
+
+
+def EditarVentaLocal(request, id_vent_loc):
+    venta = get_object_or_404(VentLocal, id_vent_loc=id_vent_loc)
+    data = {
+        'form': FormularioVentaLocal(instance=venta)
+    }
+    if request.method == 'POST':
+        formulario = FormularioVentaLocal(data= request.POST, instance = venta, files=request.FILES)
+        if formulario.is_valid():
+            formulario.save()
+            return redirect(to="VentasLocales")
+        data["form"] = formulario
+    return render (request, 'ventas/EditarVentaLocal.html', data)
+
+def EliminarVentaLocal(request, id_vent_loc):
+    venta = get_object_or_404(VentLocal, id_vent_loc=id_vent_loc)
+    venta.delete()
+    return redirect(to="VentasLocales")
+
+def detallecompra(request,id):
+    productores = get_object_or_404(Usuario, id=id)
+    productos = Productos.objects.all()
+    data={
+        'productores': productores,
+        'productos' : listar_productos(),
+        'check': productos
+    }
+    return render(request, 'ventas/detallecompra.html')
+
+def compras(request):
+    productores = Usuario.objects.all()
+    productos = Productos.objects.all()
+    data={
+        'productores': productores,
+        'productos' : listar_productos(),
+        'check': productos
+    }
+    return render(request, 'ventas/detallecompra.html')
+
+#listado usuarios
+class ListadoUsuarios(ListView):
+    model = Usuario
+    template_name = 'usuarios/listar_usuarios.html'
+    queryset = Usuario.objects.filter(usuario_activo=True)
+
+class RegistrarUsuario(CreateView):
+    model = Usuario
+    form_class = FormularioUsuario
+    template_name = 'usuarios/registro_usuario.html'
+    success_url = reverse_lazy('usuario:listado_usuarios')
+
